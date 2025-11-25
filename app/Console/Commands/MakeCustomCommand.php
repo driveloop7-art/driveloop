@@ -148,13 +148,14 @@ class MakeCustomCommand extends Command
         $routeFilePath = "{$moduleBasePath}/routes.php";
         if (!$fs->exists($routeFilePath)) {
             $routeURL = Str::kebab($module);
+            $routeInternal = Str::snake($module,".");
             $routeStub = <<<PHP
             <?php
 
             use Illuminate\Support\Facades\Route;
             use App\Modules\\{$module}\Controllers\\{$name}Controller;
 
-            Route::prefix('{$routeURL}')->name('{$routeURL}')->group(function () {
+            Route::prefix('{$routeURL}')->name('{$routeInternal}')->group(function () {
                 Route::get('/', [{$name}Controller::class, 'index'])->name('index');
             });
             PHP;
