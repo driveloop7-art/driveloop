@@ -16,6 +16,6 @@ use App\Modules\SoporteComunicacion\Controllers\SoporteController;
 // </div>
 
 
-Route::prefix('soporte-comunicacion')->name('soporte.comunicacion')->group(function () {
-    Route::get('/', [SoporteController::class, 'index'])->name('index');
+Route::prefix('soporte-comunicacion')->group(function () {
+    Route::get('/', [SoporteController::class, 'index'])->name('soporte');
 });
