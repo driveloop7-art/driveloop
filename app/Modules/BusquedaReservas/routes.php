@@ -3,6 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Modules\BusquedaReservas\Controllers\ReservaController;
 
-Route::prefix('busqueda-reservas')->name('busqueda.reservas')->group(function () {
-    Route::get('/', [ReservaController::class, 'index'])->name('index');
+Route::prefix('busqueda-reservas')->group(function () {
+    Route::get('/', [ReservaController::class, 'index'])->name('reservas');
 });
