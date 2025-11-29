@@ -12,7 +12,11 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                roboto: ['Roboto', 'sans-serif'],
+                sans: ['Roboto', ...defaultTheme.fontFamily.sans],
+            },
+            skew: {
+                '25': '25deg',
             },
         },
     },

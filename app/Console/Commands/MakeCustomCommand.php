@@ -12,9 +12,9 @@ class MakeCustomCommand extends Command
 {
     protected $signature = 'make:custom
         {module : Nombre del módulo}
-        {name : Nombre del modelo/controlador}';
+        {name : Nombre del modelo/controlador en singular}';
 
-    protected $description = 'Crea un modelo y controlador dentro de app/Modules con estructura organizada (Models y Controllers)';
+    protected $description = 'Crea un modelo, controlador y migración dentro de la carpeta correspondiente con una estructura organizada (Models, Controllers, Migrations)';
 
     public function handle()
     {
@@ -75,13 +75,14 @@ class MakeCustomCommand extends Command
         use App\Modules\\{$module}\Models\\{$name};
         use App\Http\Controllers\Controller;
         use Illuminate\Http\Request;
+        use Illuminate\View\View;
 
         class {$name}Controller extends Controller
         {
             /**
              * Display a listing of the resource.
              */
-            public function index()
+            public function index(): View
             {
                 return view("modules.{$module}.index");
             }
@@ -148,15 +149,15 @@ class MakeCustomCommand extends Command
         $routeFilePath = "{$moduleBasePath}/routes.php";
         if (!$fs->exists($routeFilePath)) {
             $routeURL = Str::kebab($module);
-            $routeInternal = Str::snake($module,".");
+            $routeInternal = $name . "s";
             $routeStub = <<<PHP
             <?php
 
             use Illuminate\Support\Facades\Route;
             use App\Modules\\{$module}\Controllers\\{$name}Controller;
 
-            Route::prefix('{$routeURL}')->name('{$routeInternal}')->group(function () {
-                Route::get('/', [{$name}Controller::class, 'index'])->name('index');
+            Route::prefix('{$routeURL}')->group(function () {
+                Route::get('/', [{$name}Controller::class, 'index'])->name('{$routeInternal}');
             });
             PHP;
 
