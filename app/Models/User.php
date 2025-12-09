@@ -18,8 +18,13 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'nomusu',
+        'apeusu',
         'email',
+        'telusu',
+        'fecnac',
+        'licusu',
+        'numcue',
         'password',
     ];
 
@@ -43,6 +48,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'fecnac' => 'date' //Tratar la fecha de nacimiento como un tipo date
         ];
     }
 }
