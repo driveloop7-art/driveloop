@@ -19,14 +19,14 @@
 
         <div>
             <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="nomusu" type="text" class="mt-1 block w-full" :value="old('nomusu', $user->nomusu)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('nomusu')" />
+            <x-text-input id="name" name="nom" type="text" class="mt-1 block w-full" :value="old('nom', $user->nom)" required autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('nom')" />
         </div>
 
         <div>
             <x-input-label for="lastname" :value="__('Last Name')" />
-            <x-text-input id="name" name="apeusu" type="text" class="mt-1 block w-full" :value="old('apeusu', $user->apeusu)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('apeusu')" />
+            <x-text-input id="name" name="ape" type="text" class="mt-1 block w-full" :value="old('ape', $user->ape)" required autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('ape')" />
         </div>
 
 

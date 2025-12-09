@@ -30,23 +30,23 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'nomusu' => ['required', 'string', 'max:255'],
-            'apeusu' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'telusu' => ['nullable', 'string', 'max:30'], 
+            'nom' => ['required', 'string', 'max:80'],
+            'ape' => ['required', 'string', 'max:80'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:80', 'unique:'.User::class],
+            'tel' => ['nullable', 'string', 'max:30'], 
             'fecnac' => ['nullable', 'date'],
-            'licusu' => ['nullable', 'string', 'max:30'],
+            'lic' => ['nullable', 'string', 'max:30'],
             'numcue' => ['nullable', 'string', 'max:34'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'nomusu' => $request->nomusu,
-            'apeusu' => $request->apeusu,
+            'nom' => $request->nom,
+            'ape' => $request->ape,
             'email' => $request->email,
-            'telusu' => $request->telusu,
+            'tel' => $request->tel,
             'fecnac' => $request->fecnac,
-            'licusu' => $request->licusu,
+            'lic' => $request->lic,
             'numcue' => $request->numcue,
             'password' => Hash::make($request->password),
         ]);
