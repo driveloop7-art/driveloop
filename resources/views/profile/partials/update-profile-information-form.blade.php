@@ -1,11 +1,11 @@
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Información de perfil') }}
+            {{ __('Profile Information') }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">
-            {{ __("Actualice la información del perfil y la dirección de correo electrónico de su cuenta.") }}
+            {{ __("Update your account's profile information and email address.") }}
         </p>
     </header>
 
@@ -18,10 +18,17 @@
         @method('patch')
 
         <div>
-            <x-input-label for="name" :value="__('Nombre')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-input-label for="name" :value="__('Name')" />
+            <x-text-input id="name" name="nomusu" type="text" class="mt-1 block w-full" :value="old('nomusu', $user->nomusu)" required autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('nomusu')" />
         </div>
+
+        <div>
+            <x-input-label for="lastname" :value="__('Last Name')" />
+            <x-text-input id="name" name="apeusu" type="text" class="mt-1 block w-full" :value="old('apeusu', $user->apeusu)" required autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('apeusu')" />
+        </div>
+
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
@@ -48,7 +55,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Guardar') }}</x-primary-button>
+            <x-primary-button>{{ __('Save') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
                 <p
