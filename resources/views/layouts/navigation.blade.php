@@ -35,7 +35,7 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                <div>{{ Auth::user()->name }}</div>
+                                <div>{{ Auth::user()->nom }}</div>
 
                                 <div class="ms-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -74,10 +74,10 @@
 
                         <x-slot name="content">
                             <x-dropdown-link :href="route('login')">
-                                {{ __('Iniciar sesión') }}
+                                {{ __('Log in') }}
                             </x-dropdown-link>
                             <x-dropdown-link :href="route('register')">
-                                {{ __('Registrarse') }}
+                                {{ __('Register') }}
                             </x-dropdown-link>                            
                         </x-slot>
                     </x-dropdown>
@@ -97,7 +97,7 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-white/30">
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-white/80">
             
         @auth
             <div class="pt-2 pb-3 space-y-1">
@@ -110,7 +110,7 @@
         <div class="pt-1 pb-1">
             @auth
                 <div class="px-4">
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->nom }}</div>
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
 
@@ -133,10 +133,10 @@
             @else
                 <div class="mt-3 space-y-1">
                     <x-responsive-nav-link :href="route('login')">
-                        {{ __('Iniciar sesión') }}
+                        {{ __('Log in') }}
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('register')">
-                        {{ __('Registrarse') }}
+                        {{ __('Register') }}
                     </x-responsive-nav-link>
                 </div>
             @endauth

@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Modules\GestionUsuario\breeze\Controllers\Auth\AuthenticatedSessionController;
+use App\Modules\GestionUsuario\breeze\Controllers\Auth\ConfirmablePasswordController;
+use App\Modules\GestionUsuario\breeze\Controllers\Auth\EmailVerificationNotificationController;
+use App\Modules\GestionUsuario\breeze\Controllers\Auth\EmailVerificationPromptController;
+use App\Modules\GestionUsuario\breeze\Controllers\Auth\NewPasswordController;
+use App\Modules\GestionUsuario\breeze\Controllers\Auth\PasswordController;
+use App\Modules\GestionUsuario\breeze\Controllers\Auth\PasswordResetLinkController;
+use App\Modules\GestionUsuario\breeze\Controllers\Auth\RegisteredUserController;
+use App\Modules\GestionUsuario\breeze\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {

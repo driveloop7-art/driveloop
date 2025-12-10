@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Modules\GestionUsuario\breeze\Requests;
 
-use App\Models\User;
+use App\Modules\GestionUsuario\breeze\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
