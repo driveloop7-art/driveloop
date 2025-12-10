@@ -190,6 +190,8 @@ return [
         'display_type'             => 'tipo de visualización',
         'district'                 => 'distrito',
         'duration'                 => 'duración',
+        'nom'                      => 'nombre',
+        'ape'                      => 'apellido',
         'email'                    => 'correo electrónico',
         'excerpt'                  => 'extracto',
         'filter'                   => 'filtro',

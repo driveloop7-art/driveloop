@@ -6,7 +6,7 @@
         <a href="/gestion-usuario">Gestión de Usuarios</a>
         <a href="/pago-digital">Pagos Digitales</a>
         <a href="/publicacion-vehiculo">Publicación Vehículos</a>
-        <a href="/soporte-comunicacion">Soporte y Comunicación
+        <a href="/soporte-comunicacion">Soporte y Comunicación</a>
     </nav>
     <!-- ========== -->
 
@@ -26,7 +26,7 @@
                 </p>
 
                 <div class="flex flex-col lg:flex-row font-semibold shadow-lg space-x-0 lg:space-x-8 space-y-5 lg:space-y-0 mt-12 text-center">
-                    <a href="{{ route('publicacion.vehiculo') }}"
+                    <a href="{{ route('busqueda.reserva') }}"
                         class="bg-dl hover:bg-dl-two px-8 py-3 w-[13.5rem] tracking-wide -skew-x-25">
                         <span class="skew-x-25 block">RESERVA</span>
                     </a>
