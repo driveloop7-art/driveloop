@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +28,9 @@ class AppServiceProvider extends ServiceProvider
         foreach (File::directories($baseMigrationPath) as $dir) {
             $migrator->path($dir);
         }
+
+        $breezePath = resource_path('views/modules/GestionUsuario/breeze');
+        View::addNamespace('breeze', $breezePath); // Agrega el namespace 'breeze' que se utiliza para llamar los componentes de breeze.
+        View::addLocation($breezePath); // Agrega la ubicación para encontrar las vistas de breeze
     }
 }

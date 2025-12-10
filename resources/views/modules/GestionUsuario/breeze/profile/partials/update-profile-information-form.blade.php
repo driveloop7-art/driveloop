@@ -18,22 +18,22 @@
         @method('patch')
 
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="nom" type="text" class="mt-1 block w-full" :value="old('nom', $user->nom)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('nom')" />
+            <x-breeze::input-label for="name" :value="__('Name')" />
+            <x-breeze::text-input id="name" name="nom" type="text" class="mt-1 block w-full" :value="old('nom', $user->nom)" required autofocus autocomplete="name" />
+            <x-breeze::input-error class="mt-2" :messages="$errors->get('nom')" />
         </div>
 
         <div>
-            <x-input-label for="lastname" :value="__('Last Name')" />
-            <x-text-input id="name" name="ape" type="text" class="mt-1 block w-full" :value="old('ape', $user->ape)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('ape')" />
+            <x-breeze::input-label for="lastname" :value="__('Last Name')" />
+            <x-breeze::text-input id="name" name="ape" type="text" class="mt-1 block w-full" :value="old('ape', $user->ape)" required autofocus autocomplete="name" />
+            <x-breeze::input-error class="mt-2" :messages="$errors->get('ape')" />
         </div>
 
 
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            <x-breeze::input-label for="email" :value="__('Email')" />
+            <x-breeze::text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-breeze::input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
@@ -55,7 +55,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-breeze::primary-button>{{ __('Save') }}</x-breeze::primary-button>
 
             @if (session('status') === 'profile-updated')
                 <p
