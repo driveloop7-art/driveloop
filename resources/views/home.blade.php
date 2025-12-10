@@ -6,7 +6,7 @@
         <a href="/gestion-usuario">Gestión de Usuarios</a>
         <a href="/pago-digital">Pagos Digitales</a>
         <a href="/publicacion-vehiculo">Publicación Vehículos</a>
-        <a href="/soporte-comunicacion">Soporte y Comunicación
+        <a href="/soporte-comunicacion">Soporte y Comunicación</a>
     </nav>
     <!-- ========== -->
 
