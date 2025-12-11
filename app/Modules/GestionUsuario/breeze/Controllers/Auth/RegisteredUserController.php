@@ -3,7 +3,7 @@
 namespace App\Modules\GestionUsuario\breeze\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Modules\GestionUsuario\breeze\Models\User;
+use App\Models\MER\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

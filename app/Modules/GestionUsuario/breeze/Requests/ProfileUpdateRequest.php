@@ -2,7 +2,7 @@
 
 namespace App\Modules\GestionUsuario\breeze\Requests;
 
-use App\Modules\GestionUsuario\breeze\Models\User;
+use App\Models\MER\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
