@@ -7,21 +7,17 @@
 
         <title>{{ config('app.name', 'Driveloop') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        
         <!-- Icon -->
         <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="antialiased font-roboto text-dl-txtone">
+    <body class="antialiased">
         <div class="min-h-screen img-background">
-            <div class="mx-4 sm:mx-[5rem] sm:px-6 lg:px-8">
-                <div class="py-[0.6rem]">
-                    <div class="p-3 text-gray-900">
+            <div class="mx-4 sm:mx-16 sm:px-6 lg:px-8 min-w-60">
+                <div class="py-2">
+                    <div class="p-2">
                         @include('layouts.navigation')
                     </div>                    
                 </div>
@@ -36,9 +32,9 @@
 
                 <!-- Page Content -->
                 <main>
-                    <div class="py-5">
+                    <div class="py-1">
                         <div class="sm:rounded-lg">
-                            <div class="p-3">
+                            <div class="p-2">
                                 {{ $slot }}
                             </div>         
                         </div>

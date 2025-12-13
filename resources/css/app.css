@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 @layer base {
-    body { @apply font-roboto; }
+    body { @apply font-roboto text-dl-txtone; }    
 }
 
 .img-background {

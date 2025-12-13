@@ -17,6 +17,7 @@ export default {
             },
             skew: {
                 '25': '25deg',
+                '35': '35deg',
             },
             colors: {
                 dl: {
