@@ -54,7 +54,7 @@ $maxWidth = [
             <span class="-skew-x-35 block ml-8">{{ $tittle }}</span>
         </div>
             
-        <div class="bg-white xl:rounded-lg p-6">
+        <div class="bg-white xl:rounded-r-lg xl:rounded-bl-lg p-6">
             {{ $slot }}        
         </div>
     </div>
