@@ -4,7 +4,7 @@
         <div class="flex justify-between h-16">
             <!-- Logo -->
             <div class="shrink-0 flex mt-3 items-center">
-                <a href="{{ route('dashboard') }}">
+                <a href="/">
                     <x-breeze::application-logo class="block h-12 w-auto fill-current text-gray-800" />
                 </a>
             </div>
