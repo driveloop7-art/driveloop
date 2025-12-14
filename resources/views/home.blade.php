@@ -1,15 +1,4 @@
 <x-app-layout>
-    <!-- PROVISIONAL -->
-    <nav class="text-white space-x-16 flex justify-center bg-black">
-        <a href="/calificacion-resena">Calificaciones y Reseñas</a>
-        <a href="/contrato-garantia">Contratos y Garantias</a>
-        <a href="/gestion-usuario">Gestión de Usuarios</a>
-        <a href="/pago-digital">Pagos Digitales</a>
-        <a href="/publicacion-vehiculo">Publicación Vehículos</a>
-        <a href="/soporte-comunicacion">Soporte y Comunicación</a>
-    </nav>
-    <!-- ========== -->
-
     <section class="flex text-white min-w-[15rem]">
         <div class="flex flex-col lg:flex-row items-center lg:items-start">
             <div class="lg:ml-[10rem]">
@@ -31,7 +20,7 @@
                         <span class="skew-x-25 block">RESERVA</span>
                     </a>
                     <a href="{{ route('login') }}"
-                        class="bg-dl hover:from-dl-two hover:to-dl-two px-8 py-3 w-[13.5rem] tracking-wide -skew-x-25
+                        class="hover:from-dl-two hover:to-dl-two px-8 py-3 w-[13.5rem] tracking-wide -skew-x-25
                                 bg-gradient-to-r from-dl to-dl-two transition-all">
                         <span class="skew-x-25 block">GENERA INGRESOS</span>
                     </a>
