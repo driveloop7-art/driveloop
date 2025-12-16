@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('prioridades_ticket', function (Blueprint $table) {
             $table->integer('cod', true);
             $table->string('des', 45);
-            $table->unsignedBigInteger('codtic')->nullable()->index('codtic');
         });
     }
 

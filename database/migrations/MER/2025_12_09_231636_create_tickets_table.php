@@ -12,14 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tickets', function (Blueprint $table) {
-            $table->bigIncrements('cod');
+            $table->increments('cod', true);
             $table->dateTime('feccre')->useCurrent();
             $table->dateTime('feccie')->nullable();
             $table->string('asu', 140);
             $table->text('des');
             $table->string('res', 20);
             $table->unsignedBigInteger('codusu')->index('codusu');
-            $table->integer('codesttic')->nullable()->index('codesttic');
+            $table->integer('codesttic')->index('codesttic')->default(1);
+            $table->integer('codpritic')->index('codpritic')->default(1);
         });
     }
 

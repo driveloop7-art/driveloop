@@ -3,7 +3,6 @@
 namespace App\Models\MER;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,11 +15,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $des
  * @property string $res
  * @property int $codusu
- * @property int|null $codesttic
+ * @property int $codesttic
+ * @property int $codpritic
  * 
- * @property EstadoTicket|null $estado_ticket
+ * @property EstadoTicket $estado_ticket
  * @property User $user
- * @property Collection|PrioridadTicket[] $prioridades_tickets
+ * @property PrioridadTicket $prioridad_ticket
  *
  * @package App\Models\MER
  */
@@ -44,12 +44,13 @@ class Ticket extends Model
 		'des',
 		'res',
 		'codusu',
-		'codesttic'
+		'codesttic',
+		'codpritic'
 	];
 
 	public function estado_ticket()
 	{
-		return $this->belongsTo(EstadoTicket::class, 'codesttic');
+		return $this->belongsTo(EstadoTicket::class, 'codesttic', 'cod');
 	}
 
 	public function user()
@@ -57,8 +58,8 @@ class Ticket extends Model
 		return $this->belongsTo(User::class, 'codusu', 'cod');
 	}
 
-	public function prioridades_tickets()
+	public function prioridad_ticket()
 	{
-		return $this->hasMany(PrioridadTicket::class, 'codtic');
+		return $this->belongsTo(PrioridadTicket::class, 'codpritic', 'cod');
 	}
 }
