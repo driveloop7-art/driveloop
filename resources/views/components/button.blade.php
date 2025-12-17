@@ -15,9 +15,9 @@
     ][$width];
 
     if ($gradient) {
-        $classes = 'bg-gradient-to-r from-dl to-dl-two hover:from-dl-two hover:to-dl-two';
+        $gdnt = 'bg-gradient-to-r from-dl to-dl-two hover:from-dl-two hover:to-dl-two';
     } else {
-        $classes = 'bg-dl hover:bg-dl-two';
+        $gdnt = 'bg-dl hover:bg-dl-two';
     }
 @endphp
 
@@ -31,7 +31,7 @@
         border border-transparent
         font-semibold text-xs text-white uppercase
         active:bg-dl-two focus:outline-none focus:ring-1 focus:ring-dl-three
-        transition ease-in-out duration-150 ' . $width . ' ' . $classes]) }}>
+        transition ease-in-out duration-150 ' . $width . ' ' . $gdnt]) }}>
         
     {{ $slot }}
 </button>
