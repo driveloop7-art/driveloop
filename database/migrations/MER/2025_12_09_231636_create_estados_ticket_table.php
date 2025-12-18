@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('estados_ticket', function (Blueprint $table) {
-            $table->integer('cod', true);
+            $table->unsignedTinyInteger('cod', true);
             $table->string('des', 45)->nullable();
         });
     }

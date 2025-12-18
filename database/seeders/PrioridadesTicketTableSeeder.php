@@ -13,10 +13,13 @@ class PrioridadesTicketTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('prioridades_ticket')->insert([
-            'des' => 'Normal'
+            'des' => 'Alta'
         ]);
         DB::table('prioridades_ticket')->insert([
-            'des' => 'Urgente'
+            'des' => 'Media'
+        ]);
+        DB::table('prioridades_ticket')->insert([
+            'des' => 'Baja'
         ]);
     }
 }

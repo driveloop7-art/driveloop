@@ -16,6 +16,9 @@ class EstadosTicketTableSeeder extends Seeder
             'des' => 'Abierto'
         ]);
         DB::table('estados_ticket')->insert([
+            'des' => 'En proceso'
+        ]);
+        DB::table('estados_ticket')->insert([
             'des' => 'Cerrado'
         ]);
     }

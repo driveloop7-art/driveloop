@@ -16,6 +16,7 @@ class PrioridadTicket extends Model
 {
 	protected $table = 'prioridades_ticket';
 	protected $primaryKey = 'cod';
+	public $incrementing = true;
 	public $timestamps = false;
 
 	protected $casts = [
