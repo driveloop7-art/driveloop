@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tickets', function (Blueprint $table) {
-            $table->increments('cod', true);
+            $table->unsignedBigInteger('cod', true);
             $table->dateTime('feccre')->useCurrent();
             $table->dateTime('feccie')->nullable();
             $table->string('asu', 140);
-            $table->text('des');
-            $table->string('res', 20);
+            $table->string('des', 900);
+            $table->string('res', 900)->nullable();
             $table->unsignedBigInteger('codusu')->index('codusu');
-            $table->integer('codesttic')->index('codesttic')->default(1);
-            $table->integer('codpritic')->index('codpritic')->default(1);
+            $table->unsignedTinyInteger('codesttic')->index('codesttic')->default(1);
+            $table->unsignedTinyInteger('codpritic')->index('codpritic')->default(2);
         });
     }
 
