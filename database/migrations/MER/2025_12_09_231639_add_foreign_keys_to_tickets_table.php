@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('tickets', function (Blueprint $table) {
             $table->foreign(['codusu'], 'tickets_users_fk')->references(['cod'])->on('users')->onUpdate('cascade')->onDelete('no action');
             $table->foreign(['codesttic'], 'tickets_estadotickets_fk')->references(['cod'])->on('estados_ticket')->onUpdate('cascade')->onDelete('no action');
+            $table->foreign(['codpritic'], 'tickets_prioridadtickets_fk')->references(['cod'])->on('prioridades_ticket')->onUpdate('cascade')->onDelete('no action');
         });
     }
 
@@ -25,6 +26,7 @@ return new class extends Migration
         Schema::table('tickets', function (Blueprint $table) {
             $table->dropForeign('tickets_users_fk');
             $table->dropForeign('tickets_estadotickets_fk');
+            $table->dropForeign('tickets_prioridadtickets_fk');
         });
     }
 };

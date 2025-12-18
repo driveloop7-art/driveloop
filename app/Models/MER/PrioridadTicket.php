@@ -9,9 +9,6 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $cod
  * @property string $des
- * @property int|null $codtic
- * 
- * @property Ticket|null $ticket
  *
  * @package App\Models\MER
  */
@@ -22,16 +19,10 @@ class PrioridadTicket extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'codtic' => 'int'
+		'des' => 'string|max:45'
 	];
 
 	protected $fillable = [
-		'des',
-		'codtic'
+		'des'
 	];
-
-	public function ticket()
-	{
-		return $this->belongsTo(Ticket::class, 'codtic');
-	}
 }
