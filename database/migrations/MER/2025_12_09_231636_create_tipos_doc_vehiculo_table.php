@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tipos_doc_vehiculo', function (Blueprint $table) {
-            $table->integer('id')->primary();
+            $table->smallinteger('id', true);
             $table->string('nom', 45);
             $table->string('des', 150);
         });
