@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('documentos_vehiculo', function (Blueprint $table) {
             $table->integer('id')->primary();
-            $table->integer('idtipdocveh')->index('idtipdocveh');
+            $table->smallinteger('idtipdocveh')->index('idtipdocveh');
             $table->string('numdoc', 45);
             $table->string('empexp', 150);
             $table->string('descdoc', 150);

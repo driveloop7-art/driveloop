@@ -5,17 +5,17 @@ namespace Database\Seeders;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
-class EstadosTicketTableSeeder extends Seeder
+class ClasesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('estados_ticket')->insert([
-            ['des' => 'Abierto'],
-            ['des' => 'En proceso'],
-            ['des' => 'Cerrado']
+        DB::table('clases')->insert([
+            ['des' => 'Automóvil'],
+            ['des' => 'Campero'],
+            ['des' => 'Camioneta']
         ]);
     }
 }
