@@ -9,10 +9,10 @@
         </p>
     </header>
 
-    <x-breeze::danger-button
+    <x-button width="xl"
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >{{ __('Delete Account') }}</x-breeze::danger-button>
+    >{{ __('Delete Account') }}</x-button>
 
     <x-breeze::modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
         <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
@@ -28,27 +28,31 @@
             </p>
 
             <div class="mt-6">
-                <x-breeze::input-label for="password" value="{{ __('Password') }}" class="sr-only" />
-
-                <x-breeze::text-input
-                    id="password"
-                    name="password"
-                    type="password"
-                    class="mt-1 block w-3/4"
-                    placeholder="{{ __('Password') }}"
-                />
+                <x-input
+                name="password"
+                label="{{ __('Password') }}"
+                type="password"
+                required/>
 
                 <x-breeze::input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
             </div>
 
             <div class="mt-6 flex justify-end">
-                <x-breeze::secondary-button x-on:click="$dispatch('close')">
+                <!--<x-breeze::secondary-button x-on:click="$dispatch('close')">
                     {{ __('Cancel') }}
-                </x-breeze::secondary-button>
+                </x-breeze::secondary-button>-->
+                <x-button width="md"
+                    x-data=""
+                    x-on:click="$dispatch('close')"
+                >   {{ __('Cancel') }}
+                </x-button>
 
-                <x-breeze::danger-button class="ms-3">
+                <!--<x-breeze::danger-button class="ms-3">
                     {{ __('Delete Account') }}
-                </x-breeze::danger-button>
+                </x-breeze::danger-button> -->
+                <x-breeze::secondary-button class="ml-4">
+                    {{ __('Delete Account') }}
+                </x-breeze::secondary-button>
             </div>
         </form>
     </x-breeze::modal>
