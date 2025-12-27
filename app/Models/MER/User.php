@@ -41,49 +41,49 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
 	/** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+	use HasFactory, Notifiable;
 
 	protected $table = 'users';
-	
-	/**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'nom',
-        'ape',
-        'email',
-        'tel',
-        'fecnac',
-        'lic',
-        'numcue',
-        'password',
-    ];
 
 	/**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
+	 * The attributes that are mass assignable.
+	 *
+	 * @var list<string>
+	 */
+	protected $fillable = [
+		'nom',
+		'ape',
+		'email',
+		'tel',
+		'fecnac',
+		'lic',
+		'numcue',
+		'password',
+	];
+
+	/**
+	 * The attributes that should be hidden for serialization.
+	 *
+	 * @var list<string>
+	 */
 	protected $hidden = [
 		'password',
 		'remember_token'
 	];
 
 	/**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'fecnac' => 'date' //Tratar la fecha de nacimiento como un tipo date
-        ];
-    }
+	 * Get the attributes that should be cast.
+	 *
+	 * @return array<string, string>
+	 */
+	protected function casts(): array
+	{
+		return [
+			'email_verified_at' => 'datetime',
+			'password' => 'hashed',
+			'fecnac' => 'date' //Tratar la fecha de nacimiento como un tipo date
+		];
+	}
 
 	public function ciudad()
 	{
@@ -112,6 +112,6 @@ class User extends Authenticatable
 
 	public function tickets()
 	{
-		return $this->hasMany(Ticket::class, 'codusu', 'cod');
+		return $this->hasMany(Ticket::class, 'idusu', 'id');
 	}
 }
