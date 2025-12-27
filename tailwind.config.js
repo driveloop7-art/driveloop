@@ -24,6 +24,7 @@ export default {
                     DEFAULT: "#C91843",
                     two: "#9B1B39",
                     three: "#870027",
+                    four: "#720F29",
                     txtone: "#282828",
                     txttwo: "#111111",
                 }
