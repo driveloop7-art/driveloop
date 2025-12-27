@@ -1,11 +1,13 @@
 <x-page>
-    
-    {{ __("You're logged in!") }}
-    
-</x-page>
+    @if(session()->has('message'))
+        <script>
+            alert("{{ session('message') }}");
+        </script>
+    @endif
 
-<!-- <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Dashboard') }}
-    </h2>
-</x-slot> -->
+    <section>
+        @include('modules.SoporteComunicacion.partials.tickets.section')
+    </section>
+
+
+</x-page>
