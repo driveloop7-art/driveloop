@@ -32,5 +32,8 @@ class AppServiceProvider extends ServiceProvider
         $breezePath = resource_path('views/modules/GestionUsuario/breeze');
         View::addNamespace('breeze', $breezePath); // Agrega el namespace 'breeze' que se utiliza para llamar los componentes de breeze.
         View::addLocation($breezePath); // Agrega la ubicación para encontrar las vistas de breeze
+
+        // Fix for missing mail namespace
+        View::addNamespace('mail', resource_path('views/vendor/mail/html'));
     }
 }
