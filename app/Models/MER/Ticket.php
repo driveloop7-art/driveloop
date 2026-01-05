@@ -33,6 +33,7 @@ class Ticket extends Model
 
 	protected $casts = [
 		'feccre' => 'datetime',
+		'fecpro' => 'datetime',
 		'feccie' => 'datetime',
 		'asu' => 'string',
 		'des' => 'string',
@@ -45,6 +46,7 @@ class Ticket extends Model
 	protected $fillable = [
 		'cod',
 		'feccre',
+		'fecpro',
 		'feccie',
 		'asu',
 		'des',

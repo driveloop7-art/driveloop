@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('tickets', function (Blueprint $table) {
             $table->string('cod', 10)->primary();
             $table->dateTime('feccre')->useCurrent();
+            $table->dateTime('fecpro')->nullable();
             $table->dateTime('feccie')->nullable();
             $table->string('asu', 140);
             $table->string('des', 900);
