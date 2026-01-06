@@ -18,9 +18,9 @@ return new class extends Migration {
             $table->string('asu', 140);
             $table->string('des', 900);
             $table->string('res', 900)->nullable();
-            $table->unsignedBigInteger('idusu')->index('idusu');
-            $table->unsignedTinyInteger('codesttic')->index('codesttic')->default(1);
-            $table->unsignedTinyInteger('codpritic')->index('codpritic')->default(2);
+            $table->unsignedBigInteger('idusu')->index();
+            $table->unsignedTinyInteger('codesttic')->index()->default(1);
+            $table->unsignedTinyInteger('codpritic')->index()->default(2);
         });
     }
 

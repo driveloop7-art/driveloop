@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -18,7 +17,7 @@ return new class extends Migration
             $table->string('dim', 45);
             $table->string('mim', 25);
             $table->integer('pes');
-            $table->unsignedBigInteger('codveh')->nullable()->index('codveh');
+            $table->unsignedBigInteger('codveh')->nullable()->index();
         });
     }
 

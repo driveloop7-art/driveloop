@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -17,9 +16,9 @@ return new class extends Migration
             $table->dateTime('fecini');
             $table->dateTime('fecfin');
             $table->decimal('val', 12)->nullable();
-            $table->unsignedBigInteger('codusu')->index('codusu');
-            $table->unsignedBigInteger('codveh')->index('codveh');
-            $table->unsignedTinyInteger('codestres')->index('codestres');
+            $table->unsignedBigInteger('codusu')->index();
+            $table->unsignedBigInteger('codveh')->index();
+            $table->unsignedTinyInteger('codestres')->index();
         });
     }
 
