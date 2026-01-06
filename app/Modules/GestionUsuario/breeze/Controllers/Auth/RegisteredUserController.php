@@ -38,6 +38,7 @@ class RegisteredUserController extends Controller
             'lic' => ['nullable', 'string', 'max:30'],
             'numcue' => ['nullable', 'string', 'max:34'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'terms' => ['required', 'accepted'],
         ]);
 
         $user = User::create([
