@@ -14,18 +14,15 @@
             @csrf
 
             <div>
-                <x-button width="full"
-                    x-data=""
-                >{{ __('Resend Verification Email') }}</x-button>
+                <x-button x-data="">{{ __('Resend Verification Email') }}</x-button>
             </div>
         </form>
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-
-            <button type="submit" class="underline text-sm text-black-600 hover:text-black-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <x-breeze::secondary-button class="ml-4">
                 {{ __('Log Out') }}
-            </button>
+            </x-breeze::secondary-button>
         </form>
     </div>
 </x-guest-layout>
