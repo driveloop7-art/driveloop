@@ -67,7 +67,7 @@ class SoporteController extends Controller
     {
         $ticket = Ticket::find($cod);
         if ($ticket === null) {
-            return throw new \Exception("El ticket $cod no existe.");
+            throw new \Exception("El ticket $cod no existe.");
         }
 
         $ticket->update([
