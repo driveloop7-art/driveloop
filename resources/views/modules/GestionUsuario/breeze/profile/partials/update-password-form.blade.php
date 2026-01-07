@@ -1,10 +1,10 @@
 <section>
     <header>
-        <h2 class="text-lg font-medium text-gray-900">
+        <h2 class="text-lg font-medium text-black-900">
             {{ __('Update Password') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600">
+        <p class="mt-1 text-sm text-black-600">
             {{ __('Ensure your account is using a long, random password to stay secure.') }}
         </p>
     </header>
@@ -14,25 +14,36 @@
         @method('put')
 
         <div>
-            <x-breeze::input-label for="update_password_current_password" :value="__('Current Password')" />
-            <x-breeze::text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
+            <x-input
+            name="current_password"
+            label="{{ __('Current Password') }}"
+            type="password"
+            required/>
             <x-breeze::input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
         </div>
 
         <div>
-            <x-breeze::input-label for="update_password_password" :value="__('New Password')" />
-            <x-breeze::text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+            <x-input
+            name="password"
+            label="{{ __('New Password') }}"
+            type="password"
+            required/>
             <x-breeze::input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
         </div>
 
         <div>
-            <x-breeze::input-label for="update_password_password_confirmation" :value="__('Confirmar contraseña')" />
-            <x-breeze::text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+            <x-input
+            name="password_confirmation"
+            label="{{ __('Confirm Password') }}"
+            type="text"
+            required/>
             <x-breeze::input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
         </div>
 
         <div class="flex items-center gap-4">
-            <x-breeze::primary-button>{{ __('Save') }}</x-breeze::primary-button>
+            <x-button width="md"
+                x-data=""
+            >{{ __('Save') }}</x-button>
 
             @if (session('status') === 'password-updated')
                 <p
