@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Ticket
  * 
- * @property int $cod
+ * @property string $cod
  * @property Carbon $feccre
  * @property Carbon|null $feccie
  * @property string $asu
  * @property string $des
  * @property string $res
- * @property int $codusu
+ * @property int $idusu
  * @property int $codesttic
  * @property int $codpritic
  * 
@@ -28,34 +28,37 @@ class Ticket extends Model
 {
 	protected $table = 'tickets';
 	protected $primaryKey = 'cod';
-	public $incrementing = true;
+	public $incrementing = false;
 	public $timestamps = false;
 
 	protected $casts = [
 		'feccre' => 'datetime',
+		'fecpro' => 'datetime',
 		'feccie' => 'datetime',
-		'asu' => 'string|max:140',
-		'des' => 'string|max:900',
-		'res' => 'string|max:900',
-		'codusu' => 'int',
+		'asu' => 'string',
+		'des' => 'string',
+		'res' => 'string',
+		'idusu' => 'int',
 		'codesttic' => 'int',
 		'codpritic' => 'int'
 	];
 
 	protected $fillable = [
+		'cod',
 		'feccre',
+		'fecpro',
 		'feccie',
 		'asu',
 		'des',
 		'res',
-		'codusu',
+		'idusu',
 		'codesttic',
 		'codpritic'
 	];
 
 	public function user()
 	{
-		return $this->belongsTo(User::class, 'codusu', 'cod');
+		return $this->belongsTo(User::class, 'idusu', 'cod');
 	}
 	public function estado_ticket()
 	{

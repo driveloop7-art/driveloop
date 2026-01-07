@@ -1,5 +1,6 @@
 @props([
     'width' => 'auto',
+    'type' => 'primary',
     'gradient' => false,
 ])
 
@@ -14,11 +15,17 @@
         'full' => 'w-full',
     ][$width];
 
-    if ($gradient) {
-        $gdnt = 'bg-gradient-to-r from-dl to-dl-two hover:from-dl-two hover:to-dl-two';
-    } else {
-        $gdnt = 'bg-dl hover:bg-dl-two';
-    }
+    $types = [
+        'primary' => 'bg-dl hover:bg-dl-two border border-transparent text-white',
+        'secondary' => 'bg-dl-two hover:bg-dl-four border border-transparent text-white',
+        'tertiary' => 'bg-white hover:bg-dl hover:text-white border-2 border-dl text-dl',
+    ];
+    $gradients = [
+        'primary' => 'bg-gradient-to-r from-dl to-dl-two hover:from-dl-two hover:to-dl-two text-white',
+        'secondary' => 'bg-gradient-to-r from-dl-two to-dl-four hover:from-dl-four hover:to-dl-four text-white',
+        'tertiary' => '',
+    ];
+    $gdnt = $gradient ? $gradients[$type] : '';
 @endphp
 
 <button {{ $attributes->merge([
@@ -28,10 +35,8 @@
         justify-center
         px-14 py-3
         tracking-widest
-        border border-transparent
-        font-semibold text-xs text-white uppercase
-        active:bg-dl-two focus:outline-none focus:ring-1 focus:ring-dl-three
-        transition ease-in-out duration-150 ' . $width . ' ' . $gdnt]) }}>
+        font-semibold text-xs uppercase
+        transition ease-in-out duration-150 ' . $width . ' ' . $types[$type] . ' ' . $gdnt]) }}>
         
     {{ $slot }}
 </button>
