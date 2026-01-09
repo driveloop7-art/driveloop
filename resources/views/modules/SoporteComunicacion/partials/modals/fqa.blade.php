@@ -1,4 +1,4 @@
-<x-modal name="mdl-fqa" title="preguntas frecuentes" :show="$errors->isNotEmpty()" focusable>
+<x-modal class="xl:max-w-4xl" name="mdl-fqa" title="preguntas frecuentes" :show="$errors->isNotEmpty()" focusable>
     <x-toggle>
         <x-toggle title="¿Cuáles son los requisitos para alquilar un vehículo?">
             Debes tener una licencia de conducir vigente (con al menos 1 o 2 años de antigüedad, según la categoría del
