@@ -15,35 +15,36 @@
 
         <!-- Name -->
         <div>
-            <x-input name="nom" label="{{ __('Name') }}" type="text" :value="old('nom')" required />
+            <x-input class="h-14" name="nom" label="{{ __('Name') }}" type="text" :value="old('nom')" required />
 
             <x-input-error :messages="$errors->get('nom')" class="mt-2" />
         </div>
 
         <!-- Last Name -->
         <div class="mt-4">
-            <x-input name="ape" label="{{ __('Last Name') }}" type="text" :value="old('ape')" required />
+            <x-input class="h-14" name="ape" label="{{ __('Last Name') }}" type="text" :value="old('ape')" required />
 
             <x-input-error :messages="$errors->get('ape')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
         <div class="mt-4">
-            <x-input name="email" label="{{ __('Email') }}" type="email" :value="old('email')" required />
+            <x-input class="h-14" name="email" label="{{ __('Email') }}" type="email" :value="old('email')" required />
 
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input name="password" label="{{ __('Password') }}" type="password" :value="old('password')" required />
+            <x-input class="h-14" name="password" label="{{ __('Password') }}" type="password" :value="old('password')"
+                required />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
         <div class="mt-4">
-            <x-input name="password_confirmation" label="{{ __('Confirm Password') }}" type="password"
+            <x-input class="h-14" name="password_confirmation" label="{{ __('Confirm Password') }}" type="password"
                 :value="old('password_confirmation')" required />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
@@ -55,9 +56,9 @@
                 <input id="terms" type="checkbox"
                     class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="terms"
                     required>
-                <span class="ms-2 text-sm text-gray-600">{{ __('Acepto') }} <a href="{{ asset('terminos.pdf') }}" target="_blank"
-                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >{{ __('Terminos y Condiciones') }}</a></span>
+                <span class="ms-2 text-sm text-gray-600">{{ __('Acepto') }} <a href="{{ asset('terminos.pdf') }}"
+                        target="_blank"
+                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">{{ __('Terminos y Condiciones') }}</a></span>
             </label>
             <x-input-error :messages="$errors->get('terms')" class="mt-2" />
         </div>

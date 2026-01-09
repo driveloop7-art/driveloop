@@ -35,5 +35,10 @@ class AppServiceProvider extends ServiceProvider
 
         // Fix for missing mail namespace
         View::addNamespace('mail', resource_path('views/vendor/mail/html'));
+
+        // View Composer for Navigation (Search Modal Brands)
+        View::composer('layouts.navigation', function ($view) {
+            $view->with('marcas', \App\Models\MER\Marca::all());
+        });
     }
 }
