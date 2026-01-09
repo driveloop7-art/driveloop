@@ -38,8 +38,11 @@
                                             'cod' => $ticket->cod,
                                             'asu' => $ticket->asu,
                                             'des' => $ticket->des,
-                                            'feccre' => $ticket->feccre,
+                                            'feccre' => $ticket->feccre
                                         ];
+                                        if ($ticket->urlpdf !== null) {
+                                            $ticket_dto['urlpdf'] = $ticket->urlpdf;
+                                        }
                                         switch ($i) {
                                             case 1:
                                                 $ticket_dto['fecpro'] = $ticket->fecpro;
@@ -53,7 +56,7 @@
                                     <button
                                         x-on:click.prevent="$dispatch('open-modal', {name:'mdl-ticket-detail', ticket: {{ json_encode($ticket_dto) }}})">
                                         <span
-                                            class="px-4 py-1 text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">
+                                            class="px-4 py-1 text-xs leading-5 font-semibold rounded-full bg-indigo-100 hover:bg-indigo-200 text-indigo-800">
                                             Ver
                                         </span>
                                     </button>

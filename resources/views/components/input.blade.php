@@ -29,7 +29,13 @@
         {{ $attributes->merge([
             'class' => 'w-full px-4 pt-7
             text-sm 
-            border border-dl rounded-md']) }}>
+            border border-dl rounded-md
+            file:mr-4 file:mb-1 file:px-3
+            file:h-6
+            file:rounded-full file:border-0
+            file:text-xs file:font-semibold
+            file:bg-indigo-100 file:text-indigo-800
+            hover:file:bg-indigo-200']) }}>
         </input>
     @endif
 </div>

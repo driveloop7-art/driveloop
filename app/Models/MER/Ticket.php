@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $feccie
  * @property string $asu
  * @property string $des
+ * @property string $urlpdf
  * @property string $res
  * @property int $idusu
  * @property int $codesttic
@@ -37,6 +38,7 @@ class Ticket extends Model
 		'feccie' => 'datetime',
 		'asu' => 'string',
 		'des' => 'string',
+		'urlpdf' => 'string',
 		'res' => 'string',
 		'idusu' => 'int',
 		'codesttic' => 'int',
@@ -50,6 +52,7 @@ class Ticket extends Model
 		'feccie',
 		'asu',
 		'des',
+		'urlpdf',
 		'res',
 		'idusu',
 		'codesttic',

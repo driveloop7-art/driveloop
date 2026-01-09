@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Modules\SoporteComunicacion\Controllers\SoporteController;
+use Illuminate\Support\Facades\Storage;
+use App\Models\MER\Ticket;
 
 //// Solo se ingresa con inicio de sesion
 // Route::prefix('soporte-comunicacion')->name('soporte.comunicacion')->group(function () {
@@ -20,4 +22,21 @@ Route::prefix('soporte-comunicacion')->group(function () {
     Route::post('/{id}', [SoporteController::class, 'edit'])->name('soporte.edit');
     Route::post('/', [SoporteController::class, 'store'])->name('soporte.store');
     Route::fallback(fn() => abort(404));
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/tickets/{cod}', function ($cod) {
+
+        $ticket = Ticket::findOrFail($cod);
+
+        if (auth()->id() !== $ticket->idusu) {
+            abort(403, 'Permiso denegado.');
+        }
+
+        if ($ticket->urlpdf === null || !Storage::disk('local')->exists($ticket->urlpdf)) {
+            abort(404);
+        }
+
+        return response()->file(Storage::disk('local')->path($ticket->urlpdf));
+    })->name('tickets');
 });

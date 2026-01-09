@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->dateTime('feccie')->nullable();
             $table->string('asu', 140);
             $table->string('des', 900);
+            $table->string('urlpdf', 30)->nullable();
             $table->string('res', 900)->nullable();
             $table->unsignedBigInteger('idusu')->index();
             $table->unsignedTinyInteger('codesttic')->index()->default(1);

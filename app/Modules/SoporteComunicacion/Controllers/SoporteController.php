@@ -37,7 +37,8 @@ class SoporteController extends Controller
     {
         $data = $request->validate([
             'asu' => 'required|string|max:140',
-            'des' => 'required|string|max:900'
+            'des' => 'required|string|max:900',
+            'pdf' => 'file|mimes:pdf|max:5120'
         ]);
 
         do {
@@ -47,7 +48,14 @@ class SoporteController extends Controller
         $data['cod'] = $cod;
         $data['idusu'] = $request->user()->id;
 
-        Ticket::create($data);
+        $ticket = Ticket::create($data);
+
+        if ($request->hasFile('pdf')) {
+            $file = $request->file('pdf');
+            $ruta = $file->storeAs('tickets', "$cod.pdf", 'local');
+            $ticket->urlpdf = $ruta;
+            $ticket->save();
+        }
 
         return redirect()->route('dashboard')->with(['message' => "El ticket se ha creado correctamente con el código $cod"]);
     }

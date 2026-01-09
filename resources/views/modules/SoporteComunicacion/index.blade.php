@@ -1,4 +1,10 @@
 <x-page>
+    @error('pdf')
+        <script>
+            alert("{{ $message }}");
+            window.location.reload();
+        </script>
+    @enderror
     <section class="flex justify-center">
         <div class="mx-auto px-8">
             <h1 class="text-2xl md:text-4xl font-extrabold text-center mb-10">
@@ -16,7 +22,10 @@
 
         <x-card class="text-center p-8 max-w-sm">
             <h3 class="text-xl font-bold mb-3">Preguntas Frecuentes</h3>
-            <p class="mb-6">Encuentra respuestas rápidas sobre reservas, pagos, cuentas y más.</p><br>
+            <p class="mb-6">Encuentra respuestas rápidas sobre reservas, pagos, cuentas y más.</p>
+            @auth
+                <br>
+            @endauth
             <x-button width="full" x-data="" x-on:click.prevent="$dispatch('open-modal', 'mdl-fqa')">ver fqa</x-button>
         </x-card>
 
