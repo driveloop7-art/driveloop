@@ -44,13 +44,14 @@
             <!-- Settings Dropdown -->
             <div class="hidden xl:flex sm:items-center">
 
-                <div class="flex items-center rounded-full px-4 ring-1 ring-gray-300 mx-2 w-48">
+                <div class="flex items-center rounded-full px-4 ring-1 ring-gray-300 mx-2 w-48 hover:ring-dl transition-all cursor-pointer"
+                    x-on:click="$dispatch('open-modal', 'search-modal')">
                     <svg class="h-5 w-5 text-black" fill="none" stroke="currentColor" stroke-width="2"
                         viewBox="0 0 24 24">
                         <path d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1 0 5.65 5.65a7.5 7.5 0 0 0 10.6 10.6Z" />
                     </svg>
-                    <input type="text" class="ml-2 w-full outline-none text-sm border-none focus:ring-0"
-                        placeholder="Buscar...">
+                    <input type="text" class="ml-2 w-full outline-none text-sm border-none focus:ring-0 cursor-pointer"
+                        placeholder="Buscar..." readonly>
                 </div>
 
                 @auth
@@ -189,4 +190,172 @@
 
         </div>
     </div>
+    <!-- Search Modal -->
+    <x-modal name="search-modal" focusable maxWidth="7xl">
+        <style>
+            input[type="date"]::-webkit-calendar-picker-indicator {
+                background: transparent;
+                bottom: 0;
+                color: transparent;
+                cursor: pointer;
+                height: auto;
+                left: 0;
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: auto;
+            }
+        </style>
+        <div class="relative bg-white pb-6">
+            <!-- Header Rojo Superior -->
+            <div class="absolute top-0 left-0 w-full h-2 bg-dl"></div>
+            
+            <!-- Botón de Cerrar -->
+            <button x-on:click="$dispatch('close-modal', 'search-modal')" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 z-10">
+                 <div class="rounded-full bg-dl p-1">
+                    <svg class="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                 </div>
+            </button>
+
+            <!-- Contenido del Formulario -->
+            <div class="px-8 py-10">
+                <form action="#" method="GET" class="flex flex-col lg:flex-row items-stretch gap-4 justify-between">
+                    
+                    <!-- Marca -->
+                    <div class="border border-pink-200 p-2 min-w-[140px] relative group hover:border-dl transition-colors">
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Marca</label>
+                        <div class="flex items-center justify-between">
+                            <select class="w-full border-none p-0 text-gray-700 font-medium text-sm focus:ring-0 bg-transparent cursor-pointer appearance-none bg-none">
+                                <option value="">Seleccione marca</option>
+                                @foreach($marcas as $marca)
+                                    <option value="{{ $marca->cod }}">{{ $marca->des }}</option>
+                                @endforeach
+                            </select>
+                           <svg class="w-3 h-3 text-dl" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+
+                    <!-- Fecha y hora de recogida -->
+                    <div class="border border-pink-200 p-2 flex-grow min-w-[280px] relative group hover:border-dl transition-colors">
+                         <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Fecha y hora de recogida</label>
+                         <div class="flex items-center text-gray-700">
+                            <svg class="w-4 h-4 text-dl mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <input type="date" name="pickup_date" class="border-none p-0 text-sm focus:ring-0 text-gray-700 bg-transparent w-28 cursor-pointer" required>
+                            <span class="text-gray-300 mx-3">|</span>
+                            <select name="pickup_time" class="border-none p-0 text-sm focus:ring-0 text-gray-700 bg-transparent cursor-pointer appearance-none bg-none w-20">
+                                <option>6:00 am</option>
+                                <option>6:30 am</option>
+                                <option>7:00 am</option>
+                                <option>7:30 am</option>
+                                <option>8:00 am</option>
+                                <option>8:30 am</option>
+                                <option>9:00 am</option>
+                                <option>9:30 am</option>
+                                <option>10:00 am</option>
+                                <option>10:30 am</option>
+                                <option>11:00 am</option>
+                                <option>11:30 am</option>
+                                <option>12:00 pm</option>
+                                <option>12:30 pm</option>
+                                <option>1:00 pm</option>
+                                <option>1:30 pm</option>
+                                <option>2:00 pm</option>
+                                <option>2:30 pm</option>
+                                <option>3:00 pm</option>
+                                <option>3:30 pm</option>
+                                <option>4:00 pm</option>
+                                <option>4:30 pm</option>
+                                <option>5:00 pm</option>
+                                <option>5:30 pm</option>
+                                <option>6:00 pm</option>
+                                <option>6:30 pm</option>
+                                <option>7:00 pm</option>
+                            </select>
+                            <svg class="w-3 h-3 text-dl ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+
+                    <!-- Fecha y hora de entrega -->
+                    <div class="border border-pink-200 p-2 flex-grow min-w-[280px] relative group hover:border-dl transition-colors">
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Fecha y hora de entrega</label>
+                        <div class="flex items-center text-gray-700">
+                           <svg class="w-4 h-4 text-dl mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                           <input type="date" name="return_date" class="border-none p-0 text-sm focus:ring-0 text-gray-700 bg-transparent w-28 cursor-pointer" required>
+                           <span class="text-gray-300 mx-3">|</span>
+                           <select name="return_time" class="border-none p-0 text-sm focus:ring-0 text-gray-700 bg-transparent cursor-pointer appearance-none bg-none w-20">
+                               <option>6:00 am</option>
+                               <option>6:30 am</option>
+                               <option>7:00 am</option>
+                               <option>7:30 am</option>
+                               <option>8:00 am</option>
+                               <option>8:30 am</option>
+                               <option>9:00 am</option>
+                               <option>9:30 am</option>
+                               <option>10:00 am</option>
+                               <option>10:30 am</option>
+                               <option>11:00 am</option>
+                               <option>11:30 am</option>
+                               <option>12:00 pm</option>
+                               <option>12:30 pm</option>
+                               <option>1:00 pm</option>
+                               <option>1:30 pm</option>
+                               <option>2:00 pm</option>
+                               <option>2:30 pm</option>
+                               <option>3:00 pm</option>
+                               <option>3:30 pm</option>
+                               <option>4:00 pm</option>
+                               <option>4:30 pm</option>
+                               <option>5:00 pm</option>
+                               <option>5:30 pm</option>
+                               <option>6:00 pm</option>
+                               <option>6:30 pm</option>
+                               <option>7:00 pm</option>
+                           </select>
+                           <svg class="w-3 h-3 text-dl ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                       </div>
+                   </div>
+                    
+                    <!-- Capacidad -->
+                    <div class="border border-pink-200 p-2 min-w-[100px] relative group hover:border-dl transition-colors">
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Capacidad</label>
+                        <div class="flex items-center">
+                             <svg class="w-4 h-4 text-dl mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                            <select name="capacity" class="w-full border-none p-0 text-gray-700 font-medium text-sm focus:ring-0 bg-transparent cursor-pointer appearance-none bg-none">
+                                <option value="2">2</option>
+                                <option value="4" selected>4</option>
+                                <option value="5">5</option>
+                                <option value="7">7+</option>
+                            </select>
+                            <svg class="w-3 h-3 text-dl ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+
+                    <!-- Rango de precio -->
+                    <div class="border border-pink-200 p-2 min-w-[150px] relative group hover:border-dl transition-colors">
+                         <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Rango de precio</label>
+                          <div class="flex items-center justify-between">
+                            <select name="price_range" class="w-full border-none p-0 text-gray-700 font-medium text-sm focus:ring-0 bg-transparent cursor-pointer appearance-none bg-none">
+                                <option value="">Precio</option>
+                                <option value="0-100000">$0 - $100k</option>
+                                <option value="100000-200000">$100k - $200k</option>
+                                <option value="200000-300000">$200k - $300k</option>
+                                <option value="300000+">$300k+</option>
+                            </select>
+                            <svg class="w-3 h-3 text-dl ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                          </div>
+                    </div>
+
+                    <!-- Botón Buscar -->
+                    <div class="w-auto flex items-stretch">
+                        <x-button class="text-sm pt-4 w-[70px]">
+                            Buscar
+                        </x-button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </x-modal>
 </nav>
