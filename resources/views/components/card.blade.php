@@ -1,3 +1,3 @@
-<div class="xl:rounded-xl p-8 shadow-xl ring-1 ring-dl/30 text-center">
+<div {{ $attributes->merge(['class' => 'xl:rounded-xl ring-1 ring-dl/60']) }}>
     {{ $slot }}
 </div>

@@ -4,15 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
         Schema::create('documentos_vehiculo', function (Blueprint $table) {
-            $table->integer('id')->primary();
+            $table->unsignedBigInteger('id')->primary();
             $table->smallinteger('idtipdocveh')->index('idtipdocveh');
             $table->string('numdoc', 45);
             $table->string('empexp', 150);
