@@ -1,10 +1,10 @@
 <x-app-layout>
-    <div class="min-h-[calc(100vh-10rem)] flex bg-white rounded-md">
+    <div class="min-h-[calc(100vh-10rem)] flex bg-white xl:rounded-lg">
 
-        <div class="hidden lg:flex lg:w-1/2 relative bg-gray-900 justify-center items-center bg-cover bg-center rounded-md"
+        <div class="hidden lg:flex lg:w-1/2 relative bg-gray-900 justify-center items-center bg-cover bg-center xl:rounded-tl-lg xl:rounded-bl-lg"
             style="background-image: url('{{ asset('images/imagen_log_reg.avif') }}');">
             {{ $banner ?? '' }}
-            <div class="absolute inset-0 bg-black opacity-50 rounded-md"></div>
+            <div class="absolute inset-0 bg-black opacity-50 xl:rounded-tl-lg xl:rounded-bl-lg"></div>
         </div>
 
         <div class="w-full lg:w-1/2 flex items-center justify-center p-4 overflow-y-auto ">
