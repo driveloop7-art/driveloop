@@ -18,42 +18,28 @@
         @method('patch')
 
         <div>
-            <x-input
-            name="nom"
-            label="{{ __('Name') }}"
-            type="text"
-            :value="old('nom', $user->nom)"
-            required/>
+            <x-input name="nom" label="{{ __('Name') }}" type="text" :value="old('nom', $user->nom)" required />
             <x-breeze::input-error class="mt-2" :messages="$errors->get('nom')" />
         </div>
 
         <div>
-            <x-input
-            name="ape"
-            label="{{ __('Last Name') }}"
-            type="text"
-            :value="old('ape', $user->ape)"
-            required/>
+            <x-input name="ape" label="{{ __('Last Name') }}" type="text" :value="old('ape', $user->ape)" required />
             <x-breeze::input-error class="mt-2" :messages="$errors->get('ape')" />
         </div>
 
 
         <div>
-            <x-input
-            name="email"
-            label="{{ __('Email') }}"
-            type="email"
-            :value="old('email', $user->email)"
-            required/>
+            <x-input name="email" label="{{ __('Email') }}" type="email" :value="old('email', $user->email)" required />
             <x-breeze::input-error class="mt-2" :messages="$errors->get('email')" />
 
 
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
+            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
                 <div>
                     <p class="text-sm mt-2 text-black-800">
                         {{ __('Your email address is unverified.') }}
 
-                        <button form="send-verification" class="underline text-sm text-black-600 hover:text-black-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <button form="send-verification"
+                            class="underline text-sm text-black-600 hover:text-black-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
                     </p>
@@ -68,18 +54,11 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-button width="md"
-                x-data=""
-            >{{ __('Save') }}</x-button>
+            <x-button class="text-xs w-60" x-data="">{{ __('Save') }}</x-button>
 
             @if (session('status') === 'profile-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-black-600"
-                >{{ __('Saved.') }}</p>
+                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                    class="text-sm text-black-600">{{ __('Saved.') }}</p>
             @endif
         </div>
     </form>

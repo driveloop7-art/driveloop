@@ -9,10 +9,9 @@
         </p>
     </header>
 
-    <x-button width="xl"
-        x-data=""
-        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >{{ __('Delete Account') }}</x-button>
+    <x-button class="text-xs w-60" x-data="" x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')">
+        {{ __('Delete Account') }}
+    </x-button>
 
     <x-breeze::modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
         <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
@@ -28,25 +27,17 @@
             </p>
 
             <div class="mt-6">
-                <x-input
-                name="password"
-                label="{{ __('Password') }}"
-                type="password"
-                required/>
-
+                <x-input name="password" label="{{ __('Password') }}" type="password" required />
                 <x-breeze::input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
             </div>
 
-            <div class="mt-6 flex justify-end">
-                <x-button width="md"
-                    x-data=""
-                    x-on:click="$dispatch('close')"
-                >   {{ __('Cancel') }}
+            <div class="mt-6 flex justify-end space-x-2 h-11">
+                <x-button class="text-xs w-60" x-data="" x-on:click="$dispatch('close')">
+                    {{ __('Cancel') }}
                 </x-button>
-
-                <x-breeze::secondary-button class="ml-4">
+                <x-button class="text-xs w-60" x-data="" type="tertiary">
                     {{ __('Delete Account') }}
-                </x-breeze::secondary-button>
+                </x-button>
             </div>
         </form>
     </x-breeze::modal>

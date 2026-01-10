@@ -45,7 +45,7 @@
     </x-card>
     <div :class="params.ticket.feccie || params.ticket.fecpro?'hidden':''">
         <div class="md:mt-6 md:space-x-2 md:flex md:justify-end grid grid-cols-1 gap-4">
-            <x-button type="tertiary"
+            <x-button class="text-xs" type="tertiary"
                 x-on:click="if (confirm('Esta acción cambiará el estado del ticket a cerrado.\n\n¿Está seguro que desea continuar?')) { $dispatch('close'); axios.post('{{ route('soporte.index') }}/' + params.ticket.cod).then(res => { alert(res.data.message) }).catch(err => { alert(err.response.data.message) }).finally(() => { window.location.reload() }) }">
                 Cerrar ticket
             </x-button>

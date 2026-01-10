@@ -9,20 +9,17 @@
         </div>
     @endif
 
-    <div class="mt-4 flex items-center justify-between">
+    <div class="mt-4 flex flex-col sm:flex-row items-center justify-between">
         <form method="POST" action="{{ route('verification.send') }}">
             @csrf
-
-            <div>
-                <x-button x-data="">{{ __('Resend Verification Email') }}</x-button>
-            </div>
+            <x-button class="text-xs w-60 sm:w-full">{{ __('Resend Verification Email') }}</x-button>
         </form>
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <x-breeze::secondary-button class="ml-4">
+            <x-button class="text-xs w-60 mt-2 sm:ml-2 sm:mt-0 sm:w-24" type="tertiary">
                 {{ __('Log Out') }}
-            </x-breeze::secondary-button>
+            </x-button>
         </form>
     </div>
 </x-guest-layout>

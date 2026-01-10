@@ -15,7 +15,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <x-button width="full">
+            <x-button class="text-xs w-full">
                 {{ __('Send') }}
             </x-button>
         </div>

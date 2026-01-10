@@ -14,45 +14,26 @@
         @method('put')
 
         <div>
-            <x-input
-            name="current_password"
-            label="{{ __('Current Password') }}"
-            type="password"
-            required/>
+            <x-input name="current_password" label="{{ __('Current Password') }}" type="password" required />
             <x-breeze::input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
         </div>
 
         <div>
-            <x-input
-            name="password"
-            label="{{ __('New Password') }}"
-            type="password"
-            required/>
+            <x-input name="password" label="{{ __('New Password') }}" type="password" required />
             <x-breeze::input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
         </div>
 
         <div>
-            <x-input
-            name="password_confirmation"
-            label="{{ __('Confirm Password') }}"
-            type="text"
-            required/>
+            <x-input name="password_confirmation" label="{{ __('Confirm Password') }}" type="text" required />
             <x-breeze::input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
         </div>
 
         <div class="flex items-center gap-4">
-            <x-button width="md"
-                x-data=""
-            >{{ __('Save') }}</x-button>
+            <x-button class="text-xs w-60" x-data="">{{ __('Save') }}</x-button>
 
             @if (session('status') === 'password-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
+                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                    class="text-sm text-gray-600">{{ __('Saved.') }}</p>
             @endif
         </div>
     </form>

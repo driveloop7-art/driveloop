@@ -5,6 +5,7 @@
             window.location.reload();
         </script>
     @enderror
+
     <section class="flex justify-center">
         <div class="mx-auto px-8">
             <h1 class="text-2xl md:text-4xl font-extrabold text-center mb-10">
@@ -26,22 +27,26 @@
             @auth
                 <br>
             @endauth
-            <x-button width="full" x-data="" x-on:click.prevent="$dispatch('open-modal', 'mdl-fqa')">ver fqa</x-button>
+            <x-button class="text-xs w-full" x-data="" x-on:click.prevent="$dispatch('open-modal', 'mdl-fqa')">
+                ver fqa
+            </x-button>
         </x-card>
 
         <x-card class="text-center p-8 max-w-sm">
             <h3 class="text-xl font-bold mb-3">Centro de Ayuda</h3>
             <p class="mb-6">Tutoriales e instructivos detallados para resolver tus dudas.</p>
-            <x-button width="full" x-data="" x-on:click.prevent="$dispatch('open-modal', 'mdl-atention')">ir a
-                ayuda</x-button>
+            <x-button class="text-xs w-full" x-data="" x-on:click.prevent="$dispatch('open-modal', 'mdl-atention')">
+                ir a ayuda
+            </x-button>
         </x-card>
 
         @auth
             <x-card class="text-center p-8 max-w-sm">
                 <h3 class="text-xl font-bold mb-3">Contacto Directo</h3>
                 <p class="mb-6">¿Necesitas atención personalizada? Nuestro equipo te ayudará.</p>
-                <x-button width="full" x-data=""
-                    x-on:click.prevent="$dispatch('open-modal', 'mdl-pqr')">contactar</x-button>
+                <x-button class="text-xs w-full" x-data="" x-on:click.prevent="$dispatch('open-modal', 'mdl-pqr')">
+                    contactar
+                </x-button>
             </x-card>
             @include('modules.SoporteComunicacion.partials.modals.pqr')
         @endauth
