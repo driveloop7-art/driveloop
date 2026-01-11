@@ -20,7 +20,7 @@
             {{ $attributes->merge([
                 'class' => 'w-full px-4 pt-7
                 text-sm leading-relaxed
-                border border-dl rounded-md']) }}
+                border border-dl xl:rounded-md']) }}
         ></textarea>
     @else
         <input
@@ -29,7 +29,7 @@
         {{ $attributes->merge([
             'class' => 'w-full px-4 pt-7
             text-sm 
-            border border-dl rounded-md
+            border border-dl xl:rounded-md
             file:mr-4 file:mb-1 file:px-3
             file:h-6
             file:rounded-full file:border-0
