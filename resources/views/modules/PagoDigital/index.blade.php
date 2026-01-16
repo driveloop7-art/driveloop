@@ -21,6 +21,10 @@
             #payment-toggles button > span.text-dl {
                 display: none !important;
             }
+            /* Make the title span take full width to allow internal flex justify-between to work */
+            #payment-toggles button > span:first-child {
+                width: 100%;
+            }
         </style>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
