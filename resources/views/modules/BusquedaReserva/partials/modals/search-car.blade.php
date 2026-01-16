@@ -10,7 +10,9 @@
         }
     </style>
     <!-- Contenido del Formulario -->
-    <form action="#" method="GET" class="flex flex-col xl:flex-row justify-between px-8 gap-4">
+    <form action="{{ route('busqueda.reserva')}}" method="POST"
+        class="flex flex-col xl:flex-row justify-between px-8 gap-4">
+        @csrf
         <!-- Marca -->
         <x-card class="p-[6px] min-w-36 h-[52px]">
             <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Marca</label>
