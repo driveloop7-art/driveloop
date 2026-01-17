@@ -13,7 +13,8 @@
         {{ __('Delete Account') }}
     </x-button>
 
-    <x-breeze::modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
+    <x-modal class="xl:max-w-1xl" name="confirm-user-deletion" title="Eliminar cuenta" :show="$errors->isNotEmpty()"
+        focusable>
         <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
             @csrf
             @method('delete')
@@ -31,8 +32,8 @@
                 <x-breeze::input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
             </div>
 
-            <div class="mt-6 flex justify-end space-x-2 h-11">
-                <x-button class="text-xs w-60" x-data="" x-on:click="$dispatch('close')">
+            <div class="mt-6 flex justify-end space-x-2">
+                <x-button class="text-xs w-60 " x-data="" x-on:click="$dispatch('close')">
                     {{ __('Cancel') }}
                 </x-button>
                 <x-button class="text-xs w-60" x-data="" type="tertiary">
@@ -40,5 +41,5 @@
                 </x-button>
             </div>
         </form>
-    </x-breeze::modal>
+    </x-modal>
 </section>

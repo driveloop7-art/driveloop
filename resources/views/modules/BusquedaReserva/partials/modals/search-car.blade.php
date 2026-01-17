@@ -1,3 +1,4 @@
+@vite('resources/js/validar_fecha_busqueda.js')
 <x-modal class="xl:max-w-6xl" name="search-car" title="Buscar Vehículo" focusable>
     <style>
         input[type="date"]::-webkit-calendar-picker-indicator {
@@ -10,13 +11,16 @@
         }
     </style>
     <!-- Contenido del Formulario -->
-    <form action="#" method="GET" class="flex flex-col xl:flex-row justify-between px-8 gap-4">
+    <form action="{{ route('busqueda.reserva')}}" method="POST"
+        class="flex flex-col xl:flex-row justify-between px-8 gap-4" id="search-car-form">
+        @csrf
         <!-- Marca -->
         <x-card class="p-[6px] min-w-36 h-[52px]">
             <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Marca</label>
             <div class="flex items-center justify-between">
                 <select
-                    class="w-full border-none p-0 text-gray-700 font-medium text-sm focus:ring-0 bg-transparent cursor-pointer appearance-none bg-none">
+                    class="w-full border-none p-0 text-gray-700 font-medium text-sm focus:ring-0 bg-transparent cursor-pointer appearance-none bg-none"
+                    name="marca">
                     <option value="">Seleccione marca</option>
                     @foreach($marcas as $marca)
                         <option value="{{ $marca->cod }}">{{ $marca->des }}</option>

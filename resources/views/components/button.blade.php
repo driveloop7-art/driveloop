@@ -25,7 +25,7 @@
         px-14 py-3
         tracking-widest
         font-semibold uppercase
-        transition ease-in-out duration-150 ' . $types[$type] . ' ' . $gdnt]) }}>
+        transition ease-in-out duration-150 items-center ' . $types[$type] . ' ' . $gdnt]) }}>
         
     {{ $slot }}
-</button>
+</button>   
