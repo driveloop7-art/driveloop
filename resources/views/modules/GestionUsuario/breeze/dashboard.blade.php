@@ -1,29 +1,36 @@
-<x-settings-layout active="Mi perfil">
-    <!-- Email Section -->
-    <div class="bg-white p-6 md:p-8 border border-gray-400 rounded-lg shadow-sm h-58 flex flex-col justify-between">
-        <div>
-            <h3 class="text-gray-600 text-base mb-2">Correo electrónico</h3>
-            <p class="text-gray-900 font-normal text-lg">juanvelez@gmail.com</p>
-        </div>
-        <div>
-            <div class="border-t border-gray-300 mb-6"></div>
-            <button class="bg-dl text-white px-8 py-2.5 uppercase font-bold text-sm tracking-wider hover:bg-dl-two transition rounded shadow-sm">
-                Modificar
-            </button>
-        </div>
-    </div>
+<x-page>
+    @if(session()->has('message'))
+        <script>
+            alert("{{ session('message') }}");
+        </script>
+    @endif
 
-    <!-- Phone Section -->
-    <div class="bg-white p-6 md:p-8 border  border-gray-400 rounded-lg shadow-sm h-58 flex flex-col justify-between">
-        <div>
-            <h3 class="text-gray-600 text-base mb-2">Teléfono</h3>
-            <p class="text-gray-900 font-normal text-lg">+57 305 8191471</p>
+    <div class="w-full px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center mb-16">
+            <h1 class="text-4xl font-bold text-gray-900">Panel de control</h1>
+             <div class="w-24 h-1 bg-gray-200 mx-auto mt-4 rounded"></div>
         </div>
-        <div>
-            <div class="border-t border-gray-300 mb-6"></div>
-            <button class="bg-dl text-white px-8 py-2.5 uppercase font-bold text-sm tracking-wider hover:bg-dl-two transition rounded shadow-sm">
-                Modificar
-            </button>
-        </div>
+
+        <x-settings-layout>
+            <!-- Mis vehículos -->
+            <x-settings-tab name="vehicles" label="Mis vehículos">
+                <div class="bg-white p-6 md:p-8 border border-gray-400 rounded-lg shadow-sm">
+                    <p class="text-gray-500">Gestión de vehículos próximamente.</p>
+                </div>
+            </x-settings-tab>
+
+             <!-- Mis viajes -->
+             <x-settings-tab name="trips" label="Mis viajes">
+                <div class="bg-white p-6 md:p-8 border border-gray-400 rounded-lg shadow-sm">
+                     <p class="text-gray-500">Historial de viajes próximamente.</p>
+                </div>
+            </x-settings-tab>
+
+            <!-- Tickets -->
+             <x-settings-tab name="tickets" label="Tickets">
+                @include('modules.SoporteComunicacion.partials.tickets.section')
+            </x-settings-tab>
+
+        </x-settings-layout>
     </div>
-</x-settings-layout>
+</x-page>
