@@ -114,4 +114,22 @@ class User extends Authenticatable implements MustVerifyEmail
 	{
 		return $this->hasMany(Ticket::class, 'idusu', 'id');
 	}
+	/**
+	 * Verifica si el usuario tiene aprobados sus documentos de identidad y licencia.
+	 * Nota:
+	 * idtipdocusu = 1 es Cedula de ciudadania
+	 * idtipdocusu = 2 es Licencia de Conducción
+	 * idtipdocusu = 3 es Pasaporte
+	 * idtipdocusu = 4 es Otro
+	 */
+	public function isVerified(): bool
+	{
+		// Obtener los documentos del usuario
+		$docs = $this->documentos_usuarios;
+		// Consultar si tiene cedula o pasaporte aprobado
+		$hasIdentity = $docs->where('idtipdocusu', 1)->where('estado', 'APROBADO')->isNotEmpty() || $docs->where('idtipdocusu', 3)->where('estado', 'APROBADO')->isNotEmpty();
+		// Verificar si tiene licencia APROBADA
+		$hasLicense = $docs->where('idtipdocusu', 2)->where('estado', 'APROBADO')->isNotEmpty();
+		return $hasIdentity && $hasLicense;
+	}
 }
