@@ -52,7 +52,7 @@
                                 @endif
                             </p>
 
-                            <div class="mt-2 flex flex-col gap-3 text-xs justify-center items-center">
+                            <div class="mt-2 flex xl:flex-row lg:flex-col md:flex-row flex-col gap-3 text-xs justify-center items-center">
                                 @if($docIdentidad->url_anverso)
                                     <a href="{{ asset('storage/' . $docIdentidad->url_anverso) }}" target="_blank">
                                         <x-button class="text-xs w-30" x-data="" type="tertiary">
@@ -156,7 +156,7 @@
                                 @endif
                             </p>
 
-                            <div class="mt-2 flex flex-col gap-3 text-xs justify-center items-center">
+                            <div class="mt-2 flex xl:flex-row lg:flex-col md:flex-row flex-col gap-3 text-xs justify-center items-center">
                                 @if($docLicencia->url_anverso)
                                     <a href="{{ asset('storage/' . $docLicencia->url_anverso) }}" target="_blank">
                                         <x-button class="text-xs w-30" x-data="" type="tertiary">
