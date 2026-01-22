@@ -18,9 +18,9 @@ return new class extends Migration {
             //Nuevos campos
             // Ruta relativa donde se almacenará el anverso 
             // Se usa string 255 es suficiente para rutas relativas.
-            $table->string('url_anverso', 255)->nullable()->after('num');
+            $table->string('url_anverso', 255)->nullable();
             // Ruta relativa donde se almacenará el reverso 
-            $table->string('url_reverso', 255)->nullable()->after('url_anverso');
+            $table->string('url_reverso', 255)->nullable();
 
             // Estado de la verificación. Por defecto es PENDIENTE al subirlo.
             $table->enum('estado', ['PENDIENTE', 'APROBADO', 'RECHAZADO'])
@@ -28,9 +28,6 @@ return new class extends Migration {
 
             // Mensaje opcional para explicar por qué se rechazó (si aplica)
             $table->text('mensaje_rechazo')->nullable();
-
-            // Relación con la tabla users
-            $table->foreign(['codusu'], 'docsusuario_users_fk')->references(['id'])->on('users')->onUpdate('cascade')->onDelete('no action');
         });
     }
 
