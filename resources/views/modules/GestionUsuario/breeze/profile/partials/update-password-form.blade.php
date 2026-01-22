@@ -24,7 +24,7 @@
         </div>
 
         <div>
-            <x-input name="password_confirmation" label="{{ __('Confirm Password') }}" type="text" required />
+            <x-input name="password_confirmation" label="{{ __('Confirm Password') }}" type="password" required />
             <x-breeze::input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
         </div>
 

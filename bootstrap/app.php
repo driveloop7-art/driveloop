@@ -13,6 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         //
+        // Registrar alias del middleware para verificar documentos aprobados
+        $middleware->alias([
+            'verified_docs' => \App\Modules\GestionUsuario\Middleware\EnsureUserIsVerified::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(fn(PostTooLargeException $e, $request) => back());

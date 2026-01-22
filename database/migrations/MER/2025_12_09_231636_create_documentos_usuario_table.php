@@ -15,6 +15,19 @@ return new class extends Migration {
             $table->integer('idtipdocusu')->index();
             $table->string('num', 45);
             $table->unsignedBigInteger('codusu')->nullable()->index();
+            //Nuevos campos
+            // Ruta relativa donde se almacenará el anverso 
+            // Se usa string 255 es suficiente para rutas relativas.
+            $table->string('url_anverso', 255)->nullable();
+            // Ruta relativa donde se almacenará el reverso 
+            $table->string('url_reverso', 255)->nullable();
+
+            // Estado de la verificación. Por defecto es PENDIENTE al subirlo.
+            $table->enum('estado', ['PENDIENTE', 'APROBADO', 'RECHAZADO'])
+                ->default('PENDIENTE');
+
+            // Mensaje opcional para explicar por qué se rechazó (si aplica)
+            $table->text('mensaje_rechazo')->nullable();
         });
     }
 
