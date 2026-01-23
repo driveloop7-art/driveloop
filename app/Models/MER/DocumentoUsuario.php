@@ -11,6 +11,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $idtipdocusu
  * @property string $num
  * @property int|null $codusu
+ * @property string|null $url_anverso
+ * @property string|null $url_reverso
+ * @property string|null $estado
+ * @property string|null $mensaje_rechazo
  * 
  * @property TipoDocUsuario $tipo_doc_usuario
  * @property User|null $user
@@ -32,7 +36,11 @@ class DocumentoUsuario extends Model
 	protected $fillable = [
 		'idtipdocusu',
 		'num',
-		'codusu'
+		'codusu',
+		'url_anverso',
+		'url_reverso',
+		'estado',
+		'mensaje_rechazo'
 	];
 
 	public function tipo_doc_usuario()
@@ -42,6 +50,6 @@ class DocumentoUsuario extends Model
 
 	public function user()
 	{
-		return $this->belongsTo(User::class, 'codusu', 'cod');
+		return $this->belongsTo(User::class, 'codusu', 'id');
 	}
 }
