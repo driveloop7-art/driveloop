@@ -111,7 +111,7 @@ class Vehiculo extends Model
 	public function accesorios()
 	{
 		return $this->belongsToMany(
-			\App\Models\MER\Accesorios::class,
+			\App\Models\MER\Accesorio::class,
 			'vehiculos_accesorios',
 			'codveh',
 			'idacc',

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\PublicacionVehiculos\Controllers;
+namespace App\Modules\PublicacionVehiculo\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -8,7 +8,7 @@ use App\Models\MER\Clase;
 use App\Models\MER\Combustible;
 use App\Models\MER\Marca;
 use App\Models\MER\User;
-use App\Models\MER\Accesorios;
+use App\Models\MER\Accesorio;
 use App\Models\MER\Ciudad;
 use App\Models\MER\Departamento;
 use App\Models\MER\Linea;
@@ -23,7 +23,7 @@ class VehController extends Controller
         return view('modules.PublicacionVehiculo.registroVeh', [
             'vehiculoClase' => Clase::all(),
             'vehiculoMarca' => Marca::all(),
-            'vehiculoAccesorios' => Accesorios::all(),
+            'vehiculoAccesorios' => Accesorio::all(),
             'vehiculoCombustible' => Combustible::all(),
             'deptoVehiculo' => Departamento::all(),
 
@@ -110,24 +110,4 @@ class VehController extends Controller
         ]);
     }
 
-
-    // public function show(ClaseVeh $claseVeh) 
-    // {
-
-    // }
-
-    // public function edit(ClaseVeh $claseVeh) 
-    // {
-
-    // }
-
-    // public function update(Request $request, ClaseVeh $claseVeh) 
-    // {
-
-    // }
-
-    // public function destroy(ClaseVeh $claseVeh) 
-    // {
-
-    // }
 }

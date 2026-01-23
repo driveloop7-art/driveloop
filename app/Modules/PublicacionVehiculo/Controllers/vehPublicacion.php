@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\PublicacionVehiculos\Controllers;
+namespace App\Modules\PublicacionVehiculo\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\MER\Clase;
 use App\Models\MER\Combustible;
 use App\Models\MER\Marca;
-use App\Models\MER\Accesorios;
-use App\Models\MER\DepartamentoVehiculo;
+use App\Models\MER\Accesorio;
+use App\Models\MER\Departamento;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Auth;
@@ -27,10 +27,10 @@ class vehPublicacion extends Controller
         return view('modules.PublicacionVehiculo.index', [
             'vehiculoClase' => Clase::all(),
             'vehiculoMarca' => Marca::all(),
-            'vehiculoAccesorios' => Accesorios::all(),
+            'vehiculoAccesorios' => Accesorio::all(),
             'vehiculoCombustible' => Combustible::all(),
-            'deptoVehiculo' => DepartamentoVehiculo::all(),
-            'vehiculos' => $vehiculos, // ✅ aquí viajas la lista
+            'deptoVehiculo' => Departamento::all(),
+            'vehiculos' => $vehiculos, 
         ]);
     }
 }

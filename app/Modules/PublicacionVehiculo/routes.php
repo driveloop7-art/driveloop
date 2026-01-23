@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Modules\PublicacionVehiculos\Controllers\VehController;
-use App\Modules\PublicacionVehiculos\Controllers\VehiculoDocumentosController;
+use App\Modules\PublicacionVehiculo\Controllers\VehController;
+use App\Modules\PublicacionVehiculo\Controllers\VehiculoDocumentosController;
 
 Route::prefix('publi-vehiculo')->group(function () {
     Route::get('/publicacion-vehiculo', [VehController::class, 'index'])

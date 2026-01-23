@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Accesorios extends Model
+class Accesorio extends Model
 {
 	protected $table = 'accesorios';
 	protected $primaryKey = 'id';
