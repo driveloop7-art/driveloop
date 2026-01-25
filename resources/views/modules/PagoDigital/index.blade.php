@@ -6,6 +6,31 @@
                 vehículo.</p>
         </div>
 
+        {{-- Display validation errors --}}
+        @if ($errors->any())
+        <div class="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-red-800">
+                        Se encontraron los siguientes errores:
+                    </h3>
+                    <div class="mt-2 text-sm text-red-700">
+                        <ul class="list-disc pl-5 space-y-1">
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
         <style>
             /* Hack to override toggle component hardcoded styles without modifying the component file */
             #payment-toggles .bg-gray-50 {
@@ -47,7 +72,7 @@
                         {{-- Credit/Debit Card --}}
                         <x-toggle>
                             <x-slot:title>
-                                <div @click="metodo_pago = 'card'" class="w-full">
+                                <div @click="metodo_pago = (active === $id('item') ? null : 'card')" class="w-full">
                                     {{-- Marker to detect active state in parent via CSS :has --}}
                                     <div class="is-active-marker hidden" x-show="active === $id('item')"></div>
 
@@ -83,48 +108,13 @@
                             </x-slot:title>
 
                             {{-- Form Content --}}
-                            <div class="mt-2 space-y-4">
-                                <x-input type="text" name="card_number" label="Número de la tarjeta" />
-                                <x-input type="text" name="card_holder" label="Nombre del titular"
-                                    @input="event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" />
-                                <div class="grid grid-cols-2 gap-4">
-                                    <x-input type="text" name="card_expiry" label="Vencimiento" maxlength="5" placeholder="MM/AA"
-                                        @input="
-                                            let value = event.target.value.replace(/\D/g, '');
-                                            if (value.length >= 2) {
-                                                value = value.substring(0, 2) + '/' + value.substring(2, 4);
-                                            }
-                                            event.target.value = value;
-                                        " />
-                                    <x-input type="text" name="card_cvv" label="Código de seguridad (CVV)" />
-                                </div>
-                                <x-input type="text" name="card_doc" label="Documento del titular" maxlength="10"
-                                    @input="event.target.value = event.target.value.replace(/\D/g, '').substring(0, 10)" />
-
-                                <div class="flex items-center gap-2 mt-2">
-                                    <span class="text-xs text-gray-500">¿Quieres guardar este método de pago para
-                                        alquileres
-                                        futuros?</span>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <label class="flex items-center gap-2 cursor-pointer">
-                                        <input type="radio" name="save_card" value="yes"
-                                            class="text-dl focus:ring-dl">
-                                        <span class="text-xs text-gray-600">Si</span>
-                                    </label>
-                                    <label class="flex items-center gap-2 cursor-pointer">
-                                        <input type="radio" name="save_card" value="no"
-                                            class="text-dl focus:ring-dl" checked>
-                                        <span class="text-xs text-gray-600">No</span>
-                                    </label>
-                                </div>
-                            </div>
+                            @include('modules.PagoDigital.partials.form-card')
                         </x-toggle>
 
                         {{-- Transferencia Bancaria --}}
                         <x-toggle>
                             <x-slot:title>
-                                <div @click="metodo_pago = 'pse'" class="w-full">
+                                <div @click="metodo_pago = (active === $id('item') ? null : 'pse')" class="w-full">
                                     <div class="is-active-marker hidden" x-show="active === $id('item')"></div>
                                     <div class="flex items-center justify-between w-full">
                                         <div class="flex items-center gap-4">
@@ -149,45 +139,13 @@
                                 </div>
                             </x-slot:title>
 
-                            <div class="mt-2 space-y-4">
-                                <div class="grid grid-cols-2 gap-4">
-                                    <x-input type="text" name="pse_name" label="Nombre"
-                                        @input="event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" />
-                                    <x-input type="text" name="pse_lastname" label="Apellido"
-                                        @input="event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" />
-                                </div>
-                                <div class="grid grid-cols-2 gap-4">
-                                    <x-input type="text" name="pse_doc" label="Documento del titular" maxlength="10"
-                                        @input="event.target.value = event.target.value.replace(/\D/g, '').substring(0, 10)" />
-                                    <x-input type="text" name="pse_phone" label="Número celular" />
-                                </div>
-                                <x-input type="text" name="pse_bank" label="Selecciona el banco" />
-                                <!-- Simulate select with input for now -->
-
-                                <div class="flex items-center gap-2 mt-2">
-                                    <span class="text-xs text-gray-500">¿Quieres guardar este método de pago para
-                                        alquileres
-                                        futuros?</span>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <label class="flex items-center gap-2 cursor-pointer">
-                                        <input type="radio" name="save_pse" value="yes"
-                                            class="text-dl focus:ring-dl">
-                                        <span class="text-xs text-gray-600">Si</span>
-                                    </label>
-                                    <label class="flex items-center gap-2 cursor-pointer">
-                                        <input type="radio" name="save_pse" value="no"
-                                            class="text-dl focus:ring-dl" checked>
-                                        <span class="text-xs text-gray-600">No</span>
-                                    </label>
-                                </div>
-                            </div>
+                            @include('modules.PagoDigital.partials.form-pse')
                         </x-toggle>
 
                         {{-- Nequi --}}
                         <x-toggle>
                             <x-slot:title>
-                                <div @click="metodo_pago = 'nequi'" class="w-full">
+                                <div @click="metodo_pago = (active === $id('item') ? null : 'nequi')" class="w-full">
                                     <div class="is-active-marker hidden" x-show="active === $id('item')"></div>
                                     <div class="flex items-center justify-between w-full">
                                         <div class="flex items-center gap-4">
@@ -210,33 +168,7 @@
                                 </div>
                             </x-slot:title>
 
-                            <div class="mt-2 space-y-4">
-                                <div class="grid grid-cols-2 gap-4">
-                                    <x-input type="text" name="nequi_name" label="Nombre"
-                                        @input="event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" />
-                                    <x-input type="text" name="nequi_lastname" label="Apellido"
-                                        @input="event.target.value = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" />
-                                </div>
-                                <x-input type="text" name="nequi_phone" label="Numero de telefono" />
-
-                                <div class="flex items-center gap-2 mt-2">
-                                    <span class="text-xs text-gray-500">¿Quieres guardar este método de pago para
-                                        alquileres
-                                        futuros?</span>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <label class="flex items-center gap-2 cursor-pointer">
-                                        <input type="radio" name="save_nequi" value="yes"
-                                            class="text-dl focus:ring-dl">
-                                        <span class="text-xs text-gray-600">Si</span>
-                                    </label>
-                                    <label class="flex items-center gap-2 cursor-pointer">
-                                        <input type="radio" name="save_nequi" value="no"
-                                            class="text-dl focus:ring-dl" checked>
-                                        <span class="text-xs text-gray-600">No</span>
-                                    </label>
-                                </div>
-                            </div>
+                            @include('modules.PagoDigital.partials.form-nequi')
                         </x-toggle>
 
                     </x-toggle>
@@ -305,90 +237,5 @@
 
     </div>
 
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('paymentForm', () => ({
-                metodo_pago: null,
-                validateForm() {
-                    if (!this.metodo_pago) {
-                        alert('Por favor, seleccione un método de pago.');
-                        return;
-                    }
-
-                    let fields = [];
-                    if (this.metodo_pago === 'card') {
-                        fields = [{
-                                name: 'card_number',
-                                label: 'Número de la tarjeta'
-                            },
-                            {
-                                name: 'card_holder',
-                                label: 'Nombre del titular'
-                            },
-                            {
-                                name: 'card_expiry',
-                                label: 'Vencimiento'
-                            },
-                            {
-                                name: 'card_cvv',
-                                label: 'Código de seguridad (CVV)'
-                            },
-                            {
-                                name: 'card_doc',
-                                label: 'Documento del titular'
-                            }
-                        ];
-                    } else if (this.metodo_pago === 'pse') {
-                        fields = [{
-                                name: 'pse_name',
-                                label: 'Nombre'
-                            },
-                            {
-                                name: 'pse_lastname',
-                                label: 'Apellido'
-                            },
-                            {
-                                name: 'pse_doc',
-                                label: 'Documento del titular'
-                            },
-                            {
-                                name: 'pse_phone',
-                                label: 'Número celular'
-                            },
-                            {
-                                name: 'pse_bank',
-                                label: 'Banco'
-                            }
-                        ];
-                    } else if (this.metodo_pago === 'nequi') {
-                        fields = [{
-                                name: 'nequi_name',
-                                label: 'Nombre'
-                            },
-                            {
-                                name: 'nequi_lastname',
-                                label: 'Apellido'
-                            },
-                            {
-                                name: 'nequi_phone',
-                                label: 'Número de teléfono'
-                            }
-                        ];
-                    }
-
-                    for (let field of fields) {
-                        let input = document.querySelector(`[name='${field.name}']`);
-                        if (input && !input.value.trim()) {
-                            alert(`El campo '${field.label}' es obligatorio.`);
-                            input.focus();
-                            return;
-                        }
-                    }
-
-                    // If all valid, submit the form via the native DOM element
-                    this.$el.submit();
-                }
-            }));
-        });
-    </script>
+    @include('modules.PagoDigital.partials.payment-script')
 </x-page>

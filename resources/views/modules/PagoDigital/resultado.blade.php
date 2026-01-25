@@ -1,20 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultado del Pago</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-</head>
-
-<body class="bg-gray-50">
-    <div class="min-h-screen flex items-center justify-center px-4 py-12">
+<x-page>
+    <div class="min-h-screen flex items-center justify-center px-4 py-12 bg-gray-50">
         <div class="max-w-2xl w-full bg-white rounded-lg shadow-lg p-12">
 
             <div x-data="{ 
-                estado: '{{ $pago->estado }}',
+                estado: '{{ $pago->paymentStatus->name }}',
                 showResult: false,
                 init() {
                     setTimeout(() => {
@@ -48,11 +37,12 @@
                 {{-- Result Screen --}}
                 <div class="flex flex-col items-center justify-center text-center"
                     x-show="showResult"
+                    style="display: none;"
                     x-transition:enter="transition ease-out duration-500"
                     x-transition:enter-start="opacity-0 scale-90"
                     x-transition:enter-end="opacity-100 scale-100">
 
-                    @if($pago->estado === 'aceptado')
+                    @if($pago->paymentStatus->name === 'aceptado')
                     <h2 class="text-2xl font-semibold text-green-600 mb-8">Pago exitoso</h2>
 
                     {{-- Success Checkmark Animation --}}
@@ -104,7 +94,7 @@
                             </div>
                             <div class="flex justify-between">
                                 <span>Método de pago:</span>
-                                <span class="capitalize">{{ $pago->metodo_pago === 'card' ? 'Tarjeta' : ($pago->metodo_pago === 'pse' ? 'PSE' : 'Nequi') }}</span>
+                                <span class="capitalize">{{ $pago->paymentMethod->label }}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span>Monto:</span>
@@ -112,8 +102,8 @@
                             </div>
                             <div class="flex justify-between">
                                 <span>Estado:</span>
-                                <span class="font-semibold {{ $pago->estado === 'aceptado' ? 'text-green-600' : 'text-red-600' }}">
-                                    {{ ucfirst($pago->estado) }}
+                                <span class="font-semibold {{ $pago->paymentStatus->name === 'aceptado' ? 'text-green-600' : 'text-red-600' }}">
+                                    {{ ucfirst($pago->paymentStatus->label) }}
                                 </span>
                             </div>
                         </div>
@@ -121,7 +111,7 @@
 
                     {{-- Action Buttons --}}
                     <div class="w-full mt-8">
-                        @if($pago->estado === 'aceptado')
+                        @if($pago->paymentStatus->name === 'aceptado')
                         <a href="{{ route('pago.digital') }}"
                             class="block w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-6 rounded-lg transition-colors text-center">
                             Finalizar
@@ -169,6 +159,4 @@
             stroke-dasharray: 0 100;
         }
     </style>
-</body>
-
-</html>
+</x-page>
