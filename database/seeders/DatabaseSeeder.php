@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RolesTableSeeder::class);
         $this->call(EstadosTicketTableSeeder::class);
+        $this->call(EstadosReservaTableSeeder::class);
         $this->call(PrioridadesTicketTableSeeder::class);
         $this->call(ClasesTableSeeder::class);
         $this->call(CombustiblesTableSeeder::class);
@@ -34,5 +35,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'email' => 'test@example.com',
         ]);
+
+        $this->call(PruebaViajeSeeder::class);
     }
 }
