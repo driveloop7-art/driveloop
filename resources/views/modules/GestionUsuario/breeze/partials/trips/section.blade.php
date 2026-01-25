@@ -2,7 +2,6 @@
     <h3 class="text-lg font-medium mb-6 text-left">{{ __('Mis Viajes') }}</h3>
     @php
         $reservas = auth()->user()->reservas()
-            ->with(['vehiculo.marca', 'vehiculo.linea', 'vehiculo.fotos_vehiculos'])
             ->orderBy('cod', 'desc')
             ->get();
     @endphp
