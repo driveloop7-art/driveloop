@@ -44,18 +44,39 @@ class PruebaViajeSeeder extends Seeder
         ]);
 
         // 3. Obtener Referencias (asumiendo que los seeders bases ya corrieron)
-        $marca = Marca::first() ?? Marca::create(['nom' => 'Toyota']);
-        $linea = Linea::first() ?? Linea::create(['nom' => 'Corolla', 'codmar' => $marca->cod]);
-        $clase = Clase::first() ?? Clase::create(['nom' => 'Automovil']);
-        $combustible = Combustible::first() ?? Combustible::create(['nom' => 'Gasolina']);
+        $marca = Marca::where('des', 'TOYOTA')->first();
+        if (!$marca) {
+             $marca = Marca::create(['des' => 'TOYOTA']);
+        }
+        
+        $linea = Linea::where('des', 'COROLLA')->first();
+        if (!$linea) {
+             $linea = Linea::create(['des' => 'COROLLA', 'codmar' => $marca->cod]);
+        }
+
+        $clase = Clase::first();
+        if (!$clase) {
+             $clase = Clase::create(['nom' => 'Automovil']);
+        }
+        
+        $combustible = Combustible::first();
+        if (!$combustible) {
+             $combustible = Combustible::create(['nom' => 'Gasolina']);
+        }
 
         // 4. Crear Vehiculo
+        // Obtener la primera ciudad disponible
+        $ciudad = DB::table('ciudades')->first();
+        $codciu = $ciudad ? $ciudad->cod : 1;
+        
         $vehiculoId = DB::table('vehiculos')->insertGetId([
             'vin' => 'JDKS93849JD93',
             'mod' => 2022,
             'col' => 'Rojo',
             'pas' => 5,
             'cil' => 2000,
+            'prerent' => 150000, // Precio de renta por día
+            'codciu' => $codciu, // Código de ciudad
             'codpol' => $poliza->cod,
             'codmar' => $marca->cod,
             'codlin' => $linea->cod,

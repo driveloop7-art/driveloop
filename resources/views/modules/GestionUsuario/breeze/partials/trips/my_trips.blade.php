@@ -26,7 +26,7 @@
             
             <div class="flex flex-col">
                 <h4 class="text-xl font-bold text-gray-900">{{ $marca->des }}</h4>
-                <p class="text-gray-500 text-sm">{{ $linea->des }} {{ $vehiculo->mod ? $vehiculo->mod->format('Y') : '' }}</p>
+                <p class="text-gray-500 text-sm">{{ $linea->des }} {{ $vehiculo->mod ?? '' }}</p>
             </div>
         </div>
 
