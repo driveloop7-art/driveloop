@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $cod
  * @property string $vin
- * @property Carbon $mod
+ * @property int $mod
  * @property string $col
  * @property int $pas
  * @property int|null $cil
@@ -39,7 +39,7 @@ class Vehiculo extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'mod' => 'datetime',
+		'mod' => 'int',
 		'pas' => 'int',
 		'cil' => 'int',
 		'codpol' => 'int',

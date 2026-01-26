@@ -99,7 +99,7 @@
                                         </label>
                                     </div>
                                     <select name="documento_tipo"
-                                        class="w-full px-4 pt-4 pb-2 text-sm border border-dl xl:rounded-md bg-white appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-dl"
+                                        class="w-full px-6 pt-6 pb-3 text-sm border border-dl xl:rounded-md bg-white appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-dl"
                                         required>
                                         <option value="">Seleccione...</option>
                                         @foreach ($documentosTipo as $tipo)

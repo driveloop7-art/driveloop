@@ -24,10 +24,6 @@ document.getElementById('search-car-form').addEventListener('submit', function (
     if (pickupDate < today) {
         errors.push("La fecha de recogida no puede ser en el pasado.");
     }
-    // Validar coherencia (Return <= Pickup)
-    if (returnDate <= pickupDate) {
-        errors.push("La fecha de entrega debe ser posterior a la fecha de recogida.");
-    }
     // 4. Resultado
     if (errors.length > 0) {
         e.preventDefault(); // DETIENE EL ENVÍO/REDIRECCIÓN

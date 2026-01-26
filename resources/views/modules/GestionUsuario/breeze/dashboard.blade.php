@@ -21,9 +21,7 @@
 
              <!-- Mis viajes -->
              <x-settings-tab name="trips" label="Mis viajes">
-                <div class="bg-white p-6 md:p-8 border border-gray-400 rounded-lg shadow-sm">
-                     <p class="text-gray-500">Historial de viajes próximamente.</p>
-                </div>
+                @include('modules.GestionUsuario.breeze.partials.trips.section')
             </x-settings-tab>
 
             <!-- Tickets -->
