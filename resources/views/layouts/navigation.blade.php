@@ -17,24 +17,22 @@
                     </x-breeze::nav-link>
                 @endauth
                 <!-- PROVISIONAL -->
-                <x-breeze::nav-link :href="route('calificacion.resena')"
-                    :active="request()->routeIs('calificacion.resena')">
-                    {{ __('Reseñas') }}
-                </x-breeze::nav-link>
-                <x-breeze::nav-link :href="route('contrato.garantia')"
-                    :active="request()->routeIs('contrato.garantia')">
-                    {{ __('Contratos') }}
-                </x-breeze::nav-link>
-                <x-breeze::nav-link :href="route('gestion.usuario')" :active="request()->routeIs('gestion.usuario')">
-                    {{ __('Usuarios') }}
-                </x-breeze::nav-link>
-                <x-breeze::nav-link :href="route('pago.digital')" :active="request()->routeIs('pago.digital')">
-                    {{ __('Pagos') }}
-                </x-breeze::nav-link>
-                <x-breeze::nav-link :href="route('publicacion.vehiculo')"
-                    :active="request()->routeIs('publicacion.vehiculo')">
-                    {{ __('Vehiculos') }}
-                </x-breeze::nav-link>
+                    <x-breeze::nav-link :href="route('calificacion.resena')" :active="request()->routeIs('calificacion.resena')">
+                        {{ __('Reseñas') }}
+                    </x-breeze::nav-link>
+                    <x-breeze::nav-link :href="route('contrato.garantia')" :active="request()->routeIs('contrato.garantia')">
+                        {{ __('Contratos') }}
+                    </x-breeze::nav-link>
+                    <x-breeze::nav-link :href="route('gestion.usuario')" :active="request()->routeIs('gestion.usuario')">
+                        {{ __('Usuarios') }}
+                    </x-breeze::nav-link>
+                    <x-breeze::nav-link :href="route('pago.digital')" :active="request()->routeIs('pago.digital')">
+                        {{ __('Pagos') }}
+                    </x-breeze::nav-link>
+                    <x-breeze::nav-link :href="auth()->check() ? route('publicacion.vehiculo') : route('login')">
+                        {{ __('Vehiculos') }}
+                    </x-breeze::nav-link>
+                   
                 <!-- ========== -->
                 <x-breeze::nav-link :href="route('soporte.index')" :active="request()->routeIs('soporte.index')">
                     {{ __('Soporte') }}

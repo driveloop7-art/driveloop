@@ -21,14 +21,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class FotoVehiculo extends Model
 {
+	
 	protected $table = 'fotos_vehiculo';
 	protected $primaryKey = 'cod';
 	public $timestamps = false;
-
-	protected $casts = [
-		'pes' => 'int',
-		'codveh' => 'int'
-	];
 
 	protected $fillable = [
 		'nom',
@@ -36,7 +32,7 @@ class FotoVehiculo extends Model
 		'dim',
 		'mim',
 		'pes',
-		'codveh'
+		'codveh',
 	];
 
 	public function vehiculo()

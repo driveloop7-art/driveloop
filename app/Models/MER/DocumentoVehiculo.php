@@ -21,23 +21,38 @@ use Illuminate\Database\Eloquent\Model;
  */
 class DocumentoVehiculo extends Model
 {
+	// protected $table = 'documentos_vehiculo';
+	// public $incrementing = false;
+	// public $timestamps = false;
+
+	// protected $casts = [
+	// 	'id' => 'int',
+	// 	'idtipdocveh' => 'int',
+	// 	'codveh' => 'int'
+	// ];
+
+	// protected $fillable = [
+	// 	'idtipdocveh',
+	// 	'numdoc',
+	// 	'empexp',
+	// 	'descdoc',
+	// 	'codveh'
+	// ];
+
 	protected $table = 'documentos_vehiculo';
-	public $incrementing = false;
-	public $timestamps = false;
+    protected $primaryKey = 'id';
+    public $incrementing = true; 
+    protected $keyType = 'int';
+    public $timestamps = false;
 
-	protected $casts = [
-		'id' => 'int',
-		'idtipdocveh' => 'int',
-		'codveh' => 'int'
-	];
-
-	protected $fillable = [
-		'idtipdocveh',
-		'numdoc',
-		'empexp',
-		'descdoc',
-		'codveh'
-	];
+    protected $fillable = [
+        'idtipdocveh',
+        'numdoc',
+        'empexp',
+        'descdoc',
+        'codveh'
+    ];
+	
 
 	public function tipo_doc_vehiculo()
 	{
