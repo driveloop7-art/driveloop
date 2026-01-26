@@ -21,11 +21,10 @@ class BusquedaReservaController extends Controller
             // 1. Validaciones
             $validator = Validator::make($request->all(), [
                 'pickup_date' => 'required|date|after_or_equal:today',
-                'return_date' => 'required|date|after:pickup_date',
+                'return_date' => 'required|date|after_or_equal:pickup_date',
                 // 'marca' => 'nullable|exists:marcas,cod', // Opcional
             ], [
-                'pickup_date.after_or_equal' => 'La fecha de recogida no puede ser en el pasado.',
-                'return_date.after' => 'La fecha de entrega debe ser posterior a la de recogida.'
+                'pickup_date.after_or_equal' => 'La fecha de recogida no puede ser en el pasado.'
             ]);
 
             if ($validator->fails()) {
