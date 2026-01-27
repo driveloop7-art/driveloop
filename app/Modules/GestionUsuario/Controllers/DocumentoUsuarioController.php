@@ -25,7 +25,7 @@ class DocumentoUsuarioController extends Controller
         $docIdentidad = $documentos->whereIn('idtipdocusu', [1, 3])->first();
         ;
         $docLicencia = $documentos->where('idtipdocusu', 2)->first();
-        return view('modules.gestionusuario.documentos.index', compact('docIdentidad', 'docLicencia', 'documentosTipo'));
+        return view('modules.GestionUsuario.documentos.index', compact('docIdentidad', 'docLicencia', 'documentosTipo'));
     }
     // Procesar la subida de documentos
     public function store(Request $request)
