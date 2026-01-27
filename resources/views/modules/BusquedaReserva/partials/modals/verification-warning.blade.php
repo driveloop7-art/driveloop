@@ -1,6 +1,6 @@
 <!--Si es un usuario registrado: -->
 @if (Auth::check())
-    <x-modal name="verification-warning" title="Documentos No Verificados" focusable>
+    <x-modal xs:max-w-xs name="verification-warning" title="Documentos No Verificados" focusable>
         <div class="p-6 text-center">
             <h2 class="text-lg font-medium text-gray-900">
                 ¡Atención!
@@ -21,7 +21,7 @@
     </x-modal>
 @else
     <!--Si es un usuario no registrado: -->
-    <x-modal name="verification-warning" title="{{ __('Log In') }}" focusable>
+    <x-modal xs:max-w-xs name="verification-warning" title="{{ __('Log In') }}" focusable>
         <div class="p-6 text-center">
             <h2 class="text-lg font-medium text-gray-900">
                 ¡Atención!
