@@ -10,5 +10,3 @@ require __DIR__ . '/breeze/auth.php';
 foreach (glob(app_path('Modules/*/routes.php')) as $route) {
     require $route;
 }
-
-
