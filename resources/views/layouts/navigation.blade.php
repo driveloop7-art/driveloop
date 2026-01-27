@@ -192,4 +192,6 @@
 
     <!-- Search Modal -->
     @include('modules.BusquedaReserva.partials.modals.search-car')
+    <!-- Warning Modal -->
+    @include('modules.BusquedaReserva.partials.modals.verification-warning')
 </nav>

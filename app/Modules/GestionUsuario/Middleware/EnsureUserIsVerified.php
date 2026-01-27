@@ -15,9 +15,9 @@ class EnsureUserIsVerified
         // 1. Verificar si el usuario está logueado y si NO está verificado
         if ($user && !$user->isVerified()) {
 
-            // Si intenta entrar a una ruta protegida sin documentos, lo mandamos a subir documentos.
-            return redirect()->route('usuario.documentos.index')
-                ->with('error', 'Para realizar esta acción, primero debes verificar tu identidad y licencia.');
+            // Si intenta entrar a una ruta protegida sin documentos, redirigir al home y mostrar modal.
+            return redirect('/')
+                ->with('show_verification_modal', true);
         }
         return $next($request);
     }
