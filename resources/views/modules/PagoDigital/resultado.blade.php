@@ -3,7 +3,7 @@
         <div class="max-w-2xl w-full bg-white rounded-lg shadow-lg p-12">
 
             <div x-data="{ 
-                estado: '{{ $pago->paymentStatus->name }}',
+                estado: '{{ $pago->estado_pago }}',
                 showResult: false,
                 init() {
                     setTimeout(() => {
@@ -42,7 +42,7 @@
                     x-transition:enter-start="opacity-0 scale-90"
                     x-transition:enter-end="opacity-100 scale-100">
 
-                    @if($pago->paymentStatus->name === 'aceptado')
+                    @if($pago->estado_pago === 'aceptado')
                     <h2 class="text-2xl font-semibold text-green-600 mb-8">Pago exitoso</h2>
 
                     {{-- Success Checkmark Animation --}}
@@ -94,16 +94,16 @@
                             </div>
                             <div class="flex justify-between">
                                 <span>Método de pago:</span>
-                                <span class="capitalize">{{ $pago->paymentMethod->label }}</span>
+                                <span class="capitalize">{{ $pago->metodo_pago }}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span>Monto:</span>
-                                <span class="font-semibold">${{ number_format($pago->monto, 0, ',', '.') }} COP</span>
+                                <span class="font-semibold">${{ number_format($pago->monto, 0, ',', '.') }} Pesos Colombianos (COP)</span>
                             </div>
                             <div class="flex justify-between">
                                 <span>Estado:</span>
-                                <span class="font-semibold {{ $pago->paymentStatus->name === 'aceptado' ? 'text-green-600' : 'text-red-600' }}">
-                                    {{ ucfirst($pago->paymentStatus->label) }}
+                                <span class="font-semibold {{ $pago->estado_pago === 'aceptado' ? 'text-green-600' : 'text-red-600' }}">
+                                    {{ $pago->estado_pago === 'aceptado' ? 'Transacción Aceptada' : 'Transacción Rechazada' }}
                                 </span>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
 
                     {{-- Action Buttons --}}
                     <div class="w-full mt-8">
-                        @if($pago->paymentStatus->name === 'aceptado')
+                        @if($pago->estado_pago === 'aceptado')
                         <a href="{{ route('pago.digital') }}"
                             class="block w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-6 rounded-lg transition-colors text-center">
                             Finalizar

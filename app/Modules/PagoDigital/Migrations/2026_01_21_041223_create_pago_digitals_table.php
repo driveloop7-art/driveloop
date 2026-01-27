@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('pago_digitals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('reserva_id')->nullable()->constrained('reservas');
-            $table->foreignId('payment_method_id')->constrained('payment_methods');
+            $table->string('metodo_pago');
             $table->decimal('monto', 15, 2)->default(0);
             $table->string('moneda', 3)->default('COP');
-            $table->foreignId('payment_status_id')->default(1)->constrained('payment_statuses'); // Default to 'pendiente' (id 1)
+            $table->string('estado_pago')->default('pendiente');
             $table->json('datos_proveedor')->nullable();
             $table->string('transaccion_id')->unique()->nullable();
             $table->timestamps();

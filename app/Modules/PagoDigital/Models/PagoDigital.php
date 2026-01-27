@@ -13,10 +13,10 @@ class PagoDigital extends Model
 
     protected $fillable = [
         'reserva_id',
-        'payment_method_id',
+        'metodo_pago',
         'monto',
         'moneda',
-        'payment_status_id',
+        'estado_pago',
         'datos_proveedor',
         'transaccion_id',
     ];
@@ -24,16 +24,6 @@ class PagoDigital extends Model
     protected $casts = [
         'datos_proveedor' => 'array',
     ];
-
-    public function paymentMethod()
-    {
-        return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
-    }
-
-    public function paymentStatus()
-    {
-        return $this->belongsTo(PaymentStatus::class, 'payment_status_id');
-    }
 
     public function reserva()
     {

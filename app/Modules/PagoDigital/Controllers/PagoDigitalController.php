@@ -97,20 +97,10 @@ class PagoDigitalController extends Controller
 
             $pago = new PagoDigital();
 
-            // Get ID for payment method
-            $methodId = \Illuminate\Support\Facades\DB::table('payment_methods')
-                ->where('name', $request->metodo_pago)
-                ->value('id');
-
-            $pago->payment_method_id = $methodId;
+            $pago->metodo_pago = $request->metodo_pago;
             $pago->monto = 150000; // Hardcoded for now based on mockup
 
-            // Get ID for pending status
-            $pendingStatusId = \Illuminate\Support\Facades\DB::table('payment_statuses')
-                ->where('name', 'pendiente')
-                ->value('id');
-
-            $pago->payment_status_id = $pendingStatusId;
+            $pago->estado_pago = 'pendiente';
 
             $datos = [];
             if ($request->metodo_pago === 'card') {
@@ -130,15 +120,11 @@ class PagoDigitalController extends Controller
 
             // Generate random acceptance (50% chance)
             $aceptado = rand(0, 1) === 1;
-            $statusName = $aceptado ? 'aceptado' : 'rechazado';
-
-            $pago->payment_status_id = \Illuminate\Support\Facades\DB::table('payment_statuses')
-                ->where('name', $statusName)
-                ->value('id');
+            $pago->estado_pago = $aceptado ? 'aceptado' : 'rechazado';
 
             $pago->save();
 
-            Log::info('Payment saved successfully', ['id' => $pago->id, 'status_id' => $pago->payment_status_id]);
+            Log::info('Payment saved successfully', ['id' => $pago->id, 'status' => $pago->estado_pago]);
 
             // Redirect to result page with payment ID
             return redirect()->route('pago.digital.resultado', ['id' => $pago->id]);
