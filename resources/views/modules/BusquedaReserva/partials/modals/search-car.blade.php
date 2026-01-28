@@ -1,4 +1,4 @@
-@vite('resources/js/validar_fecha_busqueda.js')
+@vite('resources/js/BusquedaReserva/validar_fecha_busqueda.js')
 <x-modal class="xl:max-w-6xl" name="search-car" title="Buscar Vehículo" focusable>
     <style>
         input[type="date"]::-webkit-calendar-picker-indicator {
@@ -170,7 +170,30 @@
 
         <!-- Botón Buscar -->
         <div class="mt-3 xl:mt-0 flex justify-end">
-            <x-button class="text-xs xl:text-[16px] xl:pt-[16px]">{{ __('Search') }}</x-button>
+            <!-- Usamos un contenedor auxiliar para la lógica Alpine -->
+            <div x-data="{
+                isVerified: @json(Auth::check() && Auth::user()->isVerified()),
+                isAuthenticated: @json(Auth::check())
+            }">
+                <x-button x-on:click.prevent="
+                        if (isAuthenticated && !isVerified) {
+                            $dispatch('close-modal', 'search-car');
+                            /* Pequeño delay para suavizar la transición de modales */
+                            setTimeout(() => $dispatch('open-modal', 'verification-warning'), 200);
+                        } 
+                        else if (!isAuthenticated) {
+                            $dispatch('close-modal', 'search-car');
+                            /* Pequeño delay para suavizar la transición de modales */
+                            setTimeout(() => $dispatch('open-modal', 'verification-warning'), 200);
+                        }
+                        else {
+                            /* Disparamos el submit nativo del formulario para que corran las validaciones */
+                            document.getElementById('search-car-form').requestSubmit();
+                        }
+                    ">
+                    {{ __('Search') }}
+                </x-button>
+            </div>
         </div>
     </form>
 </x-modal>

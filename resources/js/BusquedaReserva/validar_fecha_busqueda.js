@@ -20,10 +20,21 @@ document.getElementById('search-car-form').addEventListener('submit', function (
     const returnDate = new Date(returnDateStr + 'T00:00:00');
     // 3. Validaciones
     let errors = [];
-    // Validar fecha pasada (Pickup < Hoy)
-    if (pickupDate < today) {
+    //Validar si las dos fechas son pasadas
+    if (pickupDate < today && returnDate < today) {
+        errors.push("Las fechas de recogida y entrega no pueden ser en el pasado.")
+    }
+    // Validar si la fecha de recogida es pasada
+    else if (pickupDate < today) {
         errors.push("La fecha de recogida no puede ser en el pasado.");
     }
+    // Validar si la fecha de entrega es pasada
+    else if (returnDate < today) {
+        errors.push("La fecha de entrega no puede ser en el pasado.");
+    }
+
+
+
     // 4. Resultado
     if (errors.length > 0) {
         e.preventDefault(); // DETIENE EL ENVÍO/REDIRECCIÓN
