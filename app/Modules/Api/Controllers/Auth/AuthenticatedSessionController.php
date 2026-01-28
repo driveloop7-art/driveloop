@@ -27,7 +27,7 @@ class AuthenticatedSessionController extends Controller
             return $this->error('Credenciales incorrectas', 422);
         }
 
-        $token = $user->createToken($request->device_name, expiresAt: now()->addMinutes(15))->plainTextToken;
+        $token = $user->createToken($request->device_name, expiresAt: now()->addDay())->plainTextToken;
         $userDTO = new UserDTO(
             $user->nom,
             $user->email,
@@ -42,11 +42,13 @@ class AuthenticatedSessionController extends Controller
 
     public function getUser(Request $request): JsonResponse
     {
+        $user = User::where('email', $request->user()->email)->firstOrFail();
+        $token = $user->createToken('mobile_app', expiresAt: now()->addDay())->plainTextToken;
         $userDTO = new UserDTO(
-            $request->user()->nom,
-            $request->user()->email,
-            $request->user()->currentAccessToken()->token,
-            $request->user()->email_verified_at,
+            $user->nom,
+            $user->email,
+            $token,
+            $user->email_verified_at,
         );
         return $this->success([
             'user' => $userDTO->toArray(),
