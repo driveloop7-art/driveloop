@@ -172,25 +172,18 @@
         <div class="mt-3 xl:mt-0 flex justify-end">
             <!-- Usamos un contenedor auxiliar para la lógica Alpine -->
             <div x-data="{
-                isVerified: @json(Auth::check() && Auth::user()->isVerified()),
                 isAuthenticated: @json(Auth::check())
             }">
                 <x-button x-on:click.prevent="
-                        if (isAuthenticated && !isVerified) {
-                            $dispatch('close-modal', 'search-car');
-                            /* Pequeño delay para suavizar la transición de modales */
-                            setTimeout(() => $dispatch('open-modal', 'verification-warning'), 200);
-                        } 
-                        else if (!isAuthenticated) {
-                            $dispatch('close-modal', 'search-car');
-                            /* Pequeño delay para suavizar la transición de modales */
-                            setTimeout(() => $dispatch('open-modal', 'verification-warning'), 200);
-                        }
-                        else {
-                            /* Disparamos el submit nativo del formulario para que corran las validaciones */
-                            document.getElementById('search-car-form').requestSubmit();
-                        }
-                    ">
+                    if (!isAuthenticated) {
+                        $dispatch('close-modal', 'search-car');
+                        /* Pequeño delay para suavizar la transición de modales */
+                        setTimeout(() => $dispatch('open-modal', 'verification-warning'), 200);
+                    } else {
+                        /* Disparamos el submit nativo del formulario para que corran las validaciones */
+                        document.getElementById('search-car-form').requestSubmit();
+                    }
+                ">
                     {{ __('Search') }}
                 </x-button>
             </div>
