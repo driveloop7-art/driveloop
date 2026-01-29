@@ -15,24 +15,24 @@ class VerifyEmailController extends Controller
     public function sendNotification(Request $request): JsonResponse
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return $this->success(null, __('Email already verified.'));
+            return $this->success(null, __('Email already verified'));
         }
 
         $request->user()->sendEmailVerificationNotification();
 
-        return $this->success(null, __('Verification link sent.'));
+        return $this->success(null, __('Email verification link sent'));
     }
 
     public function verifyNotification(Request $request): JsonResponse
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return $this->success(null, __('Email already verified.'));
+            return $this->success(null, __('Email already verified'));
         }
 
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
         }
 
-        return $this->success(null, __('Email verified.'));
+        return $this->success(null, __('Email verified'));
     }
 }

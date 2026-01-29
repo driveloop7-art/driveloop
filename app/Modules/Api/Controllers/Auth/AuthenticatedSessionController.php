@@ -42,13 +42,11 @@ class AuthenticatedSessionController extends Controller
 
     public function getUser(Request $request): JsonResponse
     {
-        $user = User::where('email', $request->user()->email)->firstOrFail();
-        $token = $user->createToken('mobile_app', expiresAt: now()->addDay())->plainTextToken;
         $userDTO = new UserDTO(
-            $user->nom,
-            $user->email,
-            $token,
-            $user->email_verified_at,
+            $request->user()->nom,
+            $request->user()->email,
+            $request->user()->currentAccessToken()->token,
+            $request->user()->email_verified_at,
         );
         return $this->success([
             'user' => $userDTO->toArray(),
