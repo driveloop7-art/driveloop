@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('vehiculos', function (Blueprint $table) {
             $table->unsignedBigInteger('cod', true);
+            $table->unsignedBigInteger('user_id');
             $table->string('vin', 17);
             $table->year('mod');
             $table->string('col', 30);
@@ -22,6 +23,8 @@ return new class extends Migration {
             $table->unsignedInteger('codlin')->index();
             $table->unsignedSmallInteger('codcla')->index();
             $table->unsignedSmallInteger('codcom')->index();
+            $table->unsignedInteger('codciu')->index();
+            $table->decimal('prerent', 12, 2);
         });
     }
 

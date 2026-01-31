@@ -11,12 +11,12 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('documentos_vehiculo', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary();
-            $table->smallinteger('idtipdocveh')->index('idtipdocveh');
+            $table->bigIncrements('id');
+            $table->smallinteger('idtipdocveh')->index();
             $table->string('numdoc', 45);
             $table->string('empexp', 150);
             $table->string('descdoc', 150);
-            $table->unsignedBigInteger('codveh')->nullable()->index('codveh');
+            $table->unsignedBigInteger('codveh')->index();
         });
     }
 

@@ -2,28 +2,32 @@
 
 namespace App\Modules\PublicacionVehiculo\Models;
 
+use App\Models\MER\Vehiculo;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Class Accesorio
- * 
- * @property int $id
- * @property string $des
- * 
- * @package App\Modules\PublicacionVehiculo\Models
- */
 
 class Accesorio extends Model
 {
-    protected $table = 'accesorios';
+	protected $table = 'accesorios';
 	protected $primaryKey = 'id';
 	public $timestamps = false;
 
-    protected $casts = [
-        'des' => 'string|max:80'
-    ];
+	protected $casts = [
+		'id' => 'int'
+	];
 
 	protected $fillable = [
 		'des'
-    ];
+	];
+	public function vehiculos()
+	{
+		return $this->belongsToMany(
+			Vehiculo::class,
+			'vehiculos_accesorios',
+			'idacc',   // FK en pivote que apunta a accesorios
+			'codveh',  // FK en pivote que apunta a vehiculos
+			'id',      // PK local en accesorios
+			'cod'      // PK local en vehiculos
+		);
+	}
 }

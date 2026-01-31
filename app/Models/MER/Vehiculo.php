@@ -2,9 +2,10 @@
 
 namespace App\Models\MER;
 
-use Carbon\Carbon;
+use App\Modules\PublicacionVehiculo\Models\Accesorio;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\MER\FotoVehiculo;
 
 /**
  * Class Vehiculo
@@ -46,10 +47,13 @@ class Vehiculo extends Model
 		'codmar' => 'int',
 		'codlin' => 'int',
 		'codcla' => 'int',
-		'codcom' => 'int'
+		'codcom' => 'int',
+		'codciu' => 'int',
+		'prerent' => 'decimal:2'
 	];
 
 	protected $fillable = [
+		'user_id',
 		'vin',
 		'mod',
 		'col',
@@ -59,7 +63,9 @@ class Vehiculo extends Model
 		'codmar',
 		'codlin',
 		'codcla',
-		'codcom'
+		'codcom',
+		'codciu',
+		'prerent'
 	];
 
 	public function clase()
@@ -100,5 +106,31 @@ class Vehiculo extends Model
 	public function reservas()
 	{
 		return $this->hasMany(Reserva::class, 'codveh');
+	}
+
+
+
+	public function accesorios()
+	{
+		return $this->belongsToMany(
+			Accesorio::class,
+			'vehiculos_accesorios',
+			'codveh',
+			'idacc',
+			'cod',
+			'id'
+		);
+	}
+
+
+	public function ciudad()
+	{
+		return $this->belongsTo(Ciudad::class, 'cod', 'cod');
+
+	}
+
+	public function fotos()
+	{
+		return $this->hasMany(FotoVehiculo::class, 'codveh', 'cod');
 	}
 }

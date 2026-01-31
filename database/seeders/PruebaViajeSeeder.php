@@ -70,18 +70,19 @@ class PruebaViajeSeeder extends Seeder
         $codciu = $ciudad ? $ciudad->cod : 1;
         
         $vehiculoId = DB::table('vehiculos')->insertGetId([
+            'user_id' => $user->id,                                                          
             'vin' => 'JDKS93849JD93',
             'mod' => 2022,
             'col' => 'Rojo',
             'pas' => 5,
             'cil' => 2000,
-            'prerent' => 150000, // Precio de renta por día
-            'codciu' => $codciu, // Código de ciudad
             'codpol' => $poliza->cod,
             'codmar' => $marca->cod,
             'codlin' => $linea->cod,
             'codcla' => $clase->cod,
             'codcom' => $combustible->cod,
+            'codciu' => $codciu, // Código de ciudad
+            'prerent' => 150000, // Precio de renta por día                                                          
         ]);
 
         // 5. Crear Foto Vehiculo
