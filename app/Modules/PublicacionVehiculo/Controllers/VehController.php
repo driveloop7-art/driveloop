@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\MER\Clase;
 use App\Models\MER\Combustible;
 use App\Models\MER\Marca;
-use App\Models\MER\User;
+use App\Modules\PublicacionVehiculo\Models\Accesorio;
 use App\Models\MER\Accesorio;
 use App\Models\MER\Ciudad;
 use App\Models\MER\Departamento;
@@ -82,7 +82,7 @@ class VehController extends Controller
 
         return DB::transaction(function () use ($data) {
 
-            $vehiculo = \App\Models\MER\Vehiculo::create([
+            $vehiculo = Vehiculo::create([
                 'user_id' => Auth::id(),
                 'vin' => $data['vin'],
                 'mod' => $data['mod'],
