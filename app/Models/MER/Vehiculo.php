@@ -2,7 +2,7 @@
 
 namespace App\Models\MER;
 
-use Carbon\Carbon;
+use App\Modules\PublicacionVehiculo\Models\Accesorio;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\MER\FotoVehiculo;
@@ -40,7 +40,7 @@ class Vehiculo extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'mod' => 'integer',
+		'mod' => 'int',
 		'pas' => 'int',
 		'cil' => 'int',
 		'codpol' => 'int',
@@ -113,7 +113,7 @@ class Vehiculo extends Model
 	public function accesorios()
 	{
 		return $this->belongsToMany(
-			\App\Models\MER\Accesorio::class,
+			Accesorio::class,
 			'vehiculos_accesorios',
 			'codveh',
 			'idacc',
