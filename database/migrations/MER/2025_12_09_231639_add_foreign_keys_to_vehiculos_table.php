@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreign(['codlin'], 'vehiculos_lineas_fk')->references(['cod'])->on('lineas')->onUpdate('cascade')->onDelete('no action');
             $table->foreign(['codcla'], 'vehiculos_clases_fk')->references(['cod'])->on('clases')->onUpdate('cascade')->onDelete('no action');
             $table->foreign(['codcom'], 'vehiculos_combustibles_fk')->references(['cod'])->on('combustibles')->onUpdate('cascade')->onDelete('no action');
+            $table->foreign(['codciu'], 'vehiculos_ciudades_fk')->references(['cod'])->on('ciudades')->onUpdate('cascade')->onDelete('no action');
+            $table->foreign(['user_id'], 'vehiculos_usuarios_fk')->references(['id'])->on('users')->onUpdate('cascade')->onDelete('no action');
         });
     }
 
@@ -31,6 +33,8 @@ return new class extends Migration
             $table->dropForeign('vehiculos_lineas_fk');
             $table->dropForeign('vehiculos_clases_fk');
             $table->dropForeign('vehiculos_combustibles_fk');
+            $table->dropForeign('vehiculos_ciudades_fk');
+            $table->dropForeign('vehiculos_usuarios_fk');
         });
     }
 };
