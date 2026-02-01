@@ -1,0 +1,7 @@
+php : The environment file is invalid!
+En línea: 1
+Carácter: 1
++ php artisan migrate --path=databa 
+
+-].------------------ 
+    + CategoryInfo
