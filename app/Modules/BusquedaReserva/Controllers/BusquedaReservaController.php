@@ -44,7 +44,7 @@ class BusquedaReservaController extends Controller
                 $query->where('pas', '>=', $request->capacity);
             }
 
-            /*if ($request->filled('price_range')) {
+            if ($request->filled('price_range')) {
                 $range = $request->price_range;
 
                 if ($range === '300000+') {
@@ -57,7 +57,7 @@ class BusquedaReservaController extends Controller
                         $query->whereBetween('prerent', [(float) $prices[0], (float) $prices[1]]);
                     }
                 }
-            } */
+            }
             $vehiculos = $query->get();
         }
 
