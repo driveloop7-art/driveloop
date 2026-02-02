@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User
@@ -42,7 +43,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable implements MustVerifyEmail
 {
 	/** @use HasFactory<\Database\Factories\UserFactory> */
-	use HasApiTokens, HasFactory, Notifiable;
+	use HasApiTokens, HasFactory, HasRoles, Notifiable;
 
 	protected $table = 'users';
 
@@ -60,7 +61,7 @@ class User extends Authenticatable implements MustVerifyEmail
 		'lic',
 		'numcue',
 		'password',
-		'codrol',
+		// 'codrol', // Eliminado - ahora se usa Spatie Permission
 	];
 
 	/**
@@ -97,10 +98,14 @@ class User extends Authenticatable implements MustVerifyEmail
 		return $this->belongsTo(Direccion::class, 'numdir');
 	}
 
-	public function role()
-	{
-		return $this->belongsTo(Role::class, 'codrol');
-	}
+	/**
+	 * NOTA: El método role() fue reemplazado por Spatie Permission.
+	 * Ahora usa:
+	 * - $user->roles                    // Colección de roles
+	 * - $user->hasRole('Administrador') // Verificar si tiene un rol
+	 * - $user->hasAnyRole(['Admin', 'Soporte']) // Verificar si tiene alguno
+	 * - $user->getRoleNames()           // Obtener nombres de roles
+	 */
 
 	public function documentos_usuarios()
 	{

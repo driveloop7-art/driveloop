@@ -17,6 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
         // Registrar alias del middleware para verificar documentos aprobados
         $middleware->alias([
             'verified_docs' => \App\Modules\GestionUsuario\Middleware\EnsureUserIsVerified::class,
+            // Spatie Laravel Permission Middleware
+            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
