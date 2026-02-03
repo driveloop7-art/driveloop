@@ -61,7 +61,6 @@ class User extends Authenticatable implements MustVerifyEmail
 		'lic',
 		'numcue',
 		'password',
-		// 'codrol', // Eliminado - ahora se usa Spatie Permission
 	];
 
 	/**
