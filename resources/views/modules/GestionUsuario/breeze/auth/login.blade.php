@@ -21,7 +21,7 @@
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input name="password" label="{{ __('Password') }}" type="password" :value="old('password')" required />
+            <x-password_show name="password" label="{{ __('Password') }}" type="password" :value="old('password')" required />
         </div>
 
         <!-- Errors -->
