@@ -37,6 +37,12 @@
                 <x-breeze::nav-link :href="route('soporte.index')" :active="request()->routeIs('soporte.index')">
                     {{ __('Soporte') }}
                 </x-breeze::nav-link>
+
+                @role('Administrador')
+                    <x-breeze::nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
+                        {{ __('Roles') }}
+                    </x-breeze::nav-link>
+                @endrole
             </div>
 
             <!-- Settings Dropdown -->

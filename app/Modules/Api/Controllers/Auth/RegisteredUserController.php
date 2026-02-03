@@ -29,8 +29,9 @@ class RegisteredUserController extends Controller
             'ape' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'codrol' => 3,
         ]);
+
+        $user->assignRole('Soporte');
 
         $token = $user->createToken($request->device_name, expiresAt: now()->addDay())->plainTextToken;
         $userDTO = new UserDTO(
