@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('lic', 30)->nullable();
             $table->dateTime('fecreg')->useCurrent();
             $table->string('numcue', 34)->nullable();
-            $table->unsignedTinyInteger('codrol')->index('codrol')->default(1);
             $table->unsignedBigInteger('numdir')->nullable()->index('numdir');
             $table->unsignedInteger('codciu')->nullable()->index('codciu');
             $table->timestamp('email_verified_at')->nullable();
