@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('idusu')->index();
             $table->unsignedTinyInteger('codesttic')->index()->default(1);
             $table->unsignedTinyInteger('codpritic')->index()->default(2);
+            $table->unsignedBigInteger('codres')->index();
         });
     }
 
