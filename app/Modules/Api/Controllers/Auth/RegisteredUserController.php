@@ -31,7 +31,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $user->assignRole('Usuario');
+        $user->assignRole('Soporte');
 
         $token = $user->createToken($request->device_name, expiresAt: now()->addDay())->plainTextToken;
         $userDTO = new UserDTO(
