@@ -21,10 +21,10 @@
         ]) }}
     />
 
-    <button type="button" @click="show = !show" class="absolute right-3 top-1/3 translate-y-1 focus:outline-none">
+    <button type="button" @click="show = !show" class="absolute right-3 top-3.5 translate-y-1 focus:outline-none">
         <!-- ojo abierto-->
-        <img src="{{ asset('images/logo_ojo1.png') }}" alt="Mostrar Contraseña" x-show="!show" class="w-5 h-5" />
+        <img src="{{ asset('images/logo_ojo1.png') }}" alt="Mostrar Contraseña" x-show="!show" class="w-7 h-5" />
         <!-- ojo cerrado-->
-        <img src="{{ asset('images/logo_ojo2.png') }}" alt="Ocultar Contraseña" x-show="show" class="w-5 h-5" style="display: none;" />
+        <img src="{{ asset('images/logo_ojo2.png') }}" alt="Ocultar Contraseña" x-show="show" class="w-7 h-5" style="display: none;" />
     </button>
 </div>
