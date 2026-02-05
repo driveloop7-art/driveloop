@@ -38,7 +38,8 @@ class SoporteController extends Controller
         $data = $request->validate([
             'asu' => 'required|string|max:140',
             'des' => 'required|string|max:900',
-            'pdf' => 'file|mimes:pdf|max:5120'
+            'pdf' => 'file|mimes:pdf|max:5120',
+            'codres' => 'required|exists:reservas,cod'
         ]);
 
         do {

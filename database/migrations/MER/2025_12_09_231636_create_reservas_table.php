@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->dateTime('fecini');
             $table->dateTime('fecfin');
             $table->decimal('val', 12)->nullable();
-            $table->unsignedBigInteger('codusu')->index();
+            $table->unsignedBigInteger('idusu')->index();
             $table->unsignedBigInteger('codveh')->index();
             $table->unsignedTinyInteger('codestres')->index();
         });

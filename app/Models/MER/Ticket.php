@@ -18,10 +18,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $idusu
  * @property int $codesttic
  * @property int $codpritic
+ * @property int $codres
  * 
  * @property User $user
  * @property EstadoTicket $estado_ticket
  * @property PrioridadTicket $prioridad_ticket
+ * @property Reserva $reserva
  *
  * @package App\Models\MER
  */
@@ -42,7 +44,8 @@ class Ticket extends Model
 		'res' => 'string',
 		'idusu' => 'int',
 		'codesttic' => 'int',
-		'codpritic' => 'int'
+		'codpritic' => 'int',
+		'codres' => 'int'
 	];
 
 	protected $fillable = [
@@ -56,7 +59,8 @@ class Ticket extends Model
 		'res',
 		'idusu',
 		'codesttic',
-		'codpritic'
+		'codpritic',
+		'codres'
 	];
 
 	public function user()
@@ -70,5 +74,9 @@ class Ticket extends Model
 	public function prioridad_ticket()
 	{
 		return $this->belongsTo(PrioridadTicket::class, 'codpritic', 'cod');
+	}
+	public function reserva()
+	{
+		return $this->hasOne(Reserva::class, 'cod', 'codres');
 	}
 }
