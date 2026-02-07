@@ -13,14 +13,14 @@
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input class="h-14" name="password" label="{{ __('Password') }}" type="password" required
+            <x-password_show class="h-14" name="password" label="{{ __('Password') }}" type="password" required
                 autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
         <div class="mt-4">
-            <x-input class="h-14" name="password_confirmation" label="{{ __('Confirm Password') }}" type="password"
+            <x-password_show class="h-14" name="password_confirmation" label="{{ __('Confirm Password') }}" type="password"
                 required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />

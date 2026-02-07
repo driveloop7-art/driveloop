@@ -36,7 +36,7 @@
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input class="h-14" name="password" label="{{ __('Password') }}" type="password" :value="old('password')"
+            <x-password_show class="h-14" name="password" label="{{ __('Password') }}" type="password" :value="old('password')"
                 required />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
@@ -44,7 +44,7 @@
 
         <!-- Confirm Password -->
         <div class="mt-4">
-            <x-input class="h-14" name="password_confirmation" label="{{ __('Confirm Password') }}" type="password"
+            <x-password_show class="h-14" name="password_confirmation" label="{{ __('Confirm Password') }}" type="password"
                 :value="old('password_confirmation')" required />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
