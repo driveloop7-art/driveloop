@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="grid grid-cols-2 gap-6 p-8">
+    <div class="grid grid-col-1 p-2 gap-6 md:grid-cols-2 md:p-8 ">
         <x-card class="p-4 sm:p-8 bg-white shadow xl:rounded-lg">
             @include('modules.GestionUsuario.breeze.profile.partials.update-profile-information-form')
         </x-card>
