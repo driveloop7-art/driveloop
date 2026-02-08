@@ -54,7 +54,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-button class="text-xs w-60" x-data="">{{ __('Save') }}</x-button>
+            <x-button class="text-xs w-full lg:w-60" x-data="">{{ __('Save') }}</x-button>
 
             @if (session('status') === 'profile-updated')
                 <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"

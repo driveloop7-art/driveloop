@@ -9,7 +9,8 @@
         </p>
     </header>
 
-    <x-button class="text-xs w-60" x-data="" x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')">
+    <x-button class="text-xs w-full lg:w-60" type="tertiary" x-data=""
+        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')">
         {{ __('Delete Account') }}
     </x-button>
 
