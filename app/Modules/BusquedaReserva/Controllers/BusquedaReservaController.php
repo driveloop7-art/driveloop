@@ -10,19 +10,18 @@ use App\Models\MER\Vehiculo;
 
 class BusquedaReservaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+ 
+
     public function index(Request $request)
     {
         $vehiculos = [];
+        
 
         if ($request->isMethod('post')) {
-            // 1. Validaciones
+
             $validator = Validator::make($request->all(), [
                 'pickup_date' => 'required|date|after_or_equal:today',
                 'return_date' => 'required|date|after_or_equal:pickup_date',
-                // 'marca' => 'nullable|exists:marcas,cod', // Opcional
             ], [
                 'pickup_date.after_or_equal' => 'La fecha de recogida no puede ser en el pasado.'
             ]);
@@ -33,21 +32,36 @@ class BusquedaReservaController extends Controller
                     ->withInput();
             }
 
-            // 2. Query
-            $query = Vehiculo::query();
-            // Filtros
+            $query = Vehiculo::query()->with(['marca', 'linea', 'ciudad', 'fotos']);
+
+
             if ($request->filled('marca')) {
                 $query->where('codmar', $request->marca);
             }
 
             if ($request->filled('capacity')) {
-                $query->where('pas', '>=', $request->capacity);
+                $query->where('pas', '>=', (int)$request->capacity);
             }
-            $vehiculos = $query->get();
+
+            
+            if ($request->filled('price_range')) {
+                $range = $request->price_range;
+
+                if (str_ends_with($range, '+')) {
+                    $min = (int) rtrim($range, '+');
+                    $query->where('prerent', '>=', $min);
+                } else {
+                    [$min, $max] = array_map('intval', explode('-', $range));
+                    $query->whereBetween('prerent', [$min, $max]);
+                }
+            }
+
+            $vehiculos = $query->orderByDesc('cod')->get();
         }
 
         return view("modules.busquedareserva.index", compact('vehiculos'));
     }
+
 
     /**
      * Show the form for creating a new resource.

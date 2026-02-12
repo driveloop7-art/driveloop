@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\MER\Clase;
 use App\Models\MER\Combustible;
 use App\Models\MER\Marca;
-use App\Models\MER\Accesorio;
+Use App\Modules\PublicacionVehiculo\Models\Accesorio;
 use App\Models\MER\Departamento;
 use App\Http\Controllers\Controller;
 
@@ -20,7 +20,7 @@ class vehPublicacion extends Controller
     {
         $vehiculos = Vehiculo::query()
             ->where('user_id', Auth::id())
-            ->with(['fotos' => fn($q) => $q->orderBy('cod')]) // trae fotos
+            ->with(['fotos' => fn($q) => $q->orderBy('cod')]) 
             ->orderByDesc('cod')
             ->get();
 
