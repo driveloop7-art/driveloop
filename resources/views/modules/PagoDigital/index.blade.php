@@ -35,7 +35,7 @@
 
 
 
-        <!-- -------------------------------------------------- CUADRO CONTENEDOR DE INFORMACION------------------------------------------------- -->
+        <!------------------------------------------------- CUADRO CONTENEDOR DE INFORMACION------------------------------------------------- -->
 
         <div class="flex justify-center w-full">
             {{-- Left Column: Payment Methods --}}
