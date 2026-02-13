@@ -35,15 +35,20 @@ class BusquedaReservaController extends Controller
 
             // 2. Query
             $query = Vehiculo::query();
-            // Filtros
+
+            // Filtrar solo los vehiculos que esten disponibles
+            $query->where('disp', true);
+            // Si hay marca seleccionada, filtra por esa marca
             if ($request->filled('marca')) {
                 $query->where('codmar', $request->marca);
             }
 
+            // Si hay pasajeros seleccionados, filtra por esa cantidad
             if ($request->filled('capacity')) {
                 $query->where('pas', '>=', $request->capacity);
             }
 
+            // Si hay rango de precio seleccionado, filtra por ese rango
             if ($request->filled('price_range')) {
                 $range = $request->price_range;
 
@@ -58,6 +63,8 @@ class BusquedaReservaController extends Controller
                     }
                 }
             }
+
+            //Obtener consulta
             $vehiculos = $query->get();
         }
 
