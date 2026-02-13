@@ -29,6 +29,8 @@
                 @include('modules.SoporteComunicacion.partials.tickets.section')
             </x-settings-tab>
 
+            
+
         </x-settings-layout>
     </div>
 </x-page>
