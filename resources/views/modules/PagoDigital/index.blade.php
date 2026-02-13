@@ -1,9 +1,9 @@
 <x-page>
-    <div class="max-w-7xl mx-20 px-2 py-2">
+    <div class="max-w-7xl mx-auto px-2 py-2">
         <div class="text-center mb-10">
             <h1 class="text-3xl font-bold text-gray-900 mb-2">Métodos de pago</h1>
-            <p class="text-gray-500 text-sm">Complete toda la información para completar el proceso de renta del
-                vehículo.</p>
+            <p class="text-gray-500 text-sm">Confirma los detalles de tu pago y prepárate para la carretera. Selecciona el método que
+                mejor se adapte a ti.</p>
         </div>
 
         <style>
@@ -32,180 +32,13 @@
             }
         </style>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+
+
+
+        <!--------------------------------------------- CUADRO CONTENEDOR DE INFORMACION------------------------------------------------- -->
+
+        <div class="flex justify-center w-full">
             {{-- Left Column: Payment Methods --}}
-            <div id="payment-toggles" class="space-y-4">
-                <x-toggle>
-
-                    {{-- Credit/Debit Card --}}
-                    <x-toggle>
-                        <x-slot:title>
-                            {{-- Marker to detect active state in parent via CSS :has --}}
-                            <div class="is-active-marker hidden" x-show="active === $id('item')"></div>
-
-                            <div class="flex items-center justify-between w-full">
-                                <div class="flex items-center gap-4">
-                                    <div class="flex gap-1">
-                                        <div
-                                            class="h-8 w-10 bg-white border border-gray-200 rounded flex items-center justify-center px-0.5">
-                                            <img src="{{ asset('images/logo_mastercard.svg') }}" alt="Mastercard">
-                                        </div>
-                                        <div
-                                            class="h-8 w-10 bg-white border border-gray-200 rounded flex items-center justify-center px-0.5">
-                                            <img src="{{ asset('images/logo_visa.svg') }}" alt="Visa">
-                                        </div>
-                                    </div>
-                                    <div class="text-left">
-                                        <span class="block font-bold text-gray-800 text-sm">Tarjetas de crédito o
-                                            débito</span>
-                                        <span class="block text-xs text-gray-500 leading-tight">Paga con tarjeta de
-                                            crédito Visa o Mastercard.</span>
-                                    </div>
-                                </div>
-                                {{-- Custom Radio Button --}}
-                                <div class="w-5 h-5 rounded-full border border-gray-300 flex items-center justify-center transition-colors"
-                                    :class="active === $id('item') ? 'border-dl bg-dl' : 'bg-white'">
-                                    <div class="w-2 h-2 bg-white rounded-full opacity-0 transition-opacity"
-                                        :class="active === $id('item') ? 'opacity-100' : ''"></div>
-                                </div>
-                            </div>
-                        </x-slot:title>
-
-                        {{-- Form Content --}}
-                        <div class="mt-2 space-y-4">
-                            <x-input type="text" name="card_number" label="Número de la tarjeta" />
-                            <x-input type="text" name="card_holder" label="Nombre del titular" />
-                            <div class="grid grid-cols-2 gap-4">
-                                <x-input type="text" name="card_expiry" label="Vencimiento" />
-                                <x-input type="text" name="card_cvv" label="Código de seguridad (CVV)" />
-                            </div>
-                            <x-input type="text" name="card_doc" label="Documento del titular" />
-
-                            <div class="flex items-center gap-2 mt-2">
-                                <span class="text-xs text-gray-500">¿Quieres guardar este método de pago para alquileres
-                                    futuros?</span>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="save_card" value="yes" class="text-dl focus:ring-dl">
-                                    <span class="text-xs text-gray-600">Si</span>
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="save_card" value="no" class="text-dl focus:ring-dl"
-                                        checked>
-                                    <span class="text-xs text-gray-600">No</span>
-                                </label>
-                            </div>
-                        </div>
-                    </x-toggle>
-
-                    {{-- Linkeo (PSE) - Text mismatch in mockup vs previous, using "Transferencia Bancaria" as per user
-                    --}}
-                    <x-toggle>
-                        <x-slot:title>
-                            <div class="is-active-marker hidden" x-show="active === $id('item')"></div>
-                            <div class="flex items-center justify-between w-full">
-                                <div class="flex items-center gap-4">
-                                    <div
-                                        class="h-8 w-8 bg-blue-900 rounded-full flex items-center justify-center overflow-hidden">
-                                        <img src="{{ asset('images/logo_pse.png') }}" alt="PSE"
-                                            class="w-full h-full object-cover transform scale-150">
-                                    </div>
-                                    <div class="text-left">
-                                        <span class="block font-bold text-gray-800 text-sm">Transferencia
-                                            Bancaria</span>
-                                        <span class="block text-xs text-gray-500 leading-tight">Paga mediante
-                                            transferencias bancarias locales.</span>
-                                    </div>
-                                </div>
-                                <div class="w-5 h-5 rounded-full border border-gray-300 flex items-center justify-center transition-colors"
-                                    :class="active === $id('item') ? 'border-dl bg-dl' : 'bg-white'">
-                                    <div class="w-2 h-2 bg-white rounded-full opacity-0 transition-opacity"
-                                        :class="active === $id('item') ? 'opacity-100' : ''"></div>
-                                </div>
-                            </div>
-                        </x-slot:title>
-
-                        <div class="mt-2 space-y-4">
-                            <div class="grid grid-cols-2 gap-4">
-                                <x-input type="text" name="pse_name" label="Nombre" />
-                                <x-input type="text" name="pse_lastname" label="Apellido" />
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <x-input type="text" name="pse_doc" label="Documento del titular" />
-                                <x-input type="text" name="pse_phone" label="Número celular" />
-                            </div>
-                            <x-input type="text" name="pse_bank" label="Selecciona el banco" />
-                            <!-- Simulate select with input for now -->
-
-                            <div class="flex items-center gap-2 mt-2">
-                                <span class="text-xs text-gray-500">¿Quieres guardar este método de pago para alquileres
-                                    futuros?</span>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="save_pse" value="yes" class="text-dl focus:ring-dl">
-                                    <span class="text-xs text-gray-600">Si</span>
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="save_pse" value="no" class="text-dl focus:ring-dl"
-                                        checked>
-                                    <span class="text-xs text-gray-600">No</span>
-                                </label>
-                            </div>
-                        </div>
-                    </x-toggle>
-
-                    {{-- Nequi --}}
-                    <x-toggle>
-                        <x-slot:title>
-                            <div class="is-active-marker hidden" x-show="active === $id('item')"></div>
-                            <div class="flex items-center justify-between w-full">
-                                <div class="flex items-center gap-4">
-                                    <div class="h-8 w-12 flex items-center justify-start">
-                                        <img src="{{ asset('images/nequi_logo.svg') }}" alt="Nequi">
-                                    </div>
-                                    <div class="text-left">
-                                        <span class="block font-bold text-gray-800 text-sm">Nequi</span>
-                                        <span class="block text-xs text-gray-500 leading-tight">Pagar con fondos del
-                                            monedero Nequi.</span>
-                                    </div>
-                                </div>
-                                <div class="w-5 h-5 rounded-full border border-gray-300 flex items-center justify-center transition-colors"
-                                    :class="active === $id('item') ? 'border-dl bg-dl' : 'bg-white'">
-                                    <div class="w-2 h-2 bg-white rounded-full opacity-0 transition-opacity"
-                                        :class="active === $id('item') ? 'opacity-100' : ''"></div>
-                                </div>
-                            </div>
-                        </x-slot:title>
-
-                        <div class="mt-2 space-y-4">
-                            <div class="grid grid-cols-2 gap-4">
-                                <x-input type="text" name="nequi_name" label="Nombre" />
-                                <x-input type="text" name="nequi_lastname" label="Apellido" />
-                            </div>
-                            <x-input type="text" name="nequi_phone" label="Numero de telefono" />
-
-                            <div class="flex items-center gap-2 mt-2">
-                                <span class="text-xs text-gray-500">¿Quieres guardar este método de pago para alquileres
-                                    futuros?</span>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="save_nequi" value="yes" class="text-dl focus:ring-dl">
-                                    <span class="text-xs text-gray-600">Si</span>
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="save_nequi" value="no" class="text-dl focus:ring-dl"
-                                        checked>
-                                    <span class="text-xs text-gray-600">No</span>
-                                </label>
-                            </div>
-                        </div>
-                    </x-toggle>
-
-                </x-toggle>
-            </div>
 
             {{-- Right Column: Summary --}}
             <x-card class="text-center p-8 max-w-md">
