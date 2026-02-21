@@ -25,7 +25,7 @@ return new class extends Migration {
             $table->unsignedSmallInteger('codcom')->index();
             $table->unsignedInteger('codciu')->index();
             $table->decimal('prerent', 12, 2);
-            $table->boolean('disp')->default(true);
+            $table->boolean('disp')->default(false);
         });
     }
 
