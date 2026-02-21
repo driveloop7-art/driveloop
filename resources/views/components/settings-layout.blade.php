@@ -1,7 +1,7 @@
 <div x-data="{ tabs: [], activeTab: null }" class="flex flex-col md:flex-row gap-12 align-top">
     <!-- Sidebar -->
-    <div class="w-10 md:w-64 flex-shrink-0">
-        <div class="w-16 md:w-64 flex-shrink-0">
+    <div class="w-full md:w-64 flex-shrink-0">
+        <div class="w-full md:w-64 flex-shrink-0">
             <ul class="space-y-6">
                 <template x-for="tab in tabs" :key="tab.name">
                     <li>

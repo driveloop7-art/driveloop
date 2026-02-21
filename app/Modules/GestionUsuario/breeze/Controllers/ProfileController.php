@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\MER\DocumentoUsuario;
 
 class ProfileController extends Controller
 {
@@ -48,6 +49,9 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+        //Eliminar documentos antes de eliminar usuario para evitar errores de integridad referencial
+        DocumentoUsuario::where('codusu', $user->id)->where('idtipdocusu', 1)->delete();
+        DocumentoUsuario::where('codusu', $user->id)->where('idtipdocusu', 2)->delete();
 
         Auth::logout();
 
