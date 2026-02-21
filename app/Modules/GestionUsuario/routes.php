@@ -5,9 +5,6 @@ use App\Modules\GestionUsuario\Controllers\ValidacionDocumentosController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('gestion-usuario')->group(function () {
-    Route::get('/', function () {
-        return view("modules.GestionUsuario.index");
-    })->name('gestion.usuario');
     // Grupo de rutas que requieren autenticación
     Route::middleware(['auth'])->group(function () {
         // Ruta para ver la gestión de documentos

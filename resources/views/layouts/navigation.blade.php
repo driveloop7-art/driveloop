@@ -17,37 +17,40 @@
                     </x-breeze::nav-link>
                 @endauth
                 <!-- PROVISIONAL -->
-                    <x-breeze::nav-link :href="route('calificacion.resena')" :active="request()->routeIs('calificacion.resena')">
-                        {{ __('Reseñas') }}
-                    </x-breeze::nav-link>
-                    <x-breeze::nav-link :href="route('contrato.garantia')" :active="request()->routeIs('contrato.garantia')">
-                        {{ __('Contratos') }}
-                    </x-breeze::nav-link>
-                    <x-breeze::nav-link :href="route('gestion.usuario')" :active="request()->routeIs('gestion.usuario')">
-                        {{ __('Usuarios') }}
-                    </x-breeze::nav-link>
-                    <x-breeze::nav-link :href="route('pago.digital')" :active="request()->routeIs('pago.digital')">
-                        {{ __('Pagos') }}
-                    </x-breeze::nav-link>
-                    <x-breeze::nav-link :href="auth()->check() ? route('publicacion.vehiculo') : route('login')">
-                        {{ __('Vehiculos') }}
-                    </x-breeze::nav-link>
-                   
+                <x-breeze::nav-link :href="route('calificacion.resena')"
+                    :active="request()->routeIs('calificacion.resena')">
+                    {{ __('Reseñas') }}
+                </x-breeze::nav-link>
+                <x-breeze::nav-link :href="route('contrato.garantia')"
+                    :active="request()->routeIs('contrato.garantia')">
+                    {{ __('Contratos') }}
+                </x-breeze::nav-link>
+                <x-breeze::nav-link :href="route('pago.digital')" :active="request()->routeIs('pago.digital')">
+                    {{ __('Pagos') }}
+                </x-breeze::nav-link>
+                <x-breeze::nav-link :href="auth()->check() ? route('publicacion.vehiculo') : route('login')">
+                    {{ __('Vehiculos') }}
+                </x-breeze::nav-link>
+
                 <!-- ========== -->
                 <x-breeze::nav-link :href="route('soporte.index')" :active="request()->routeIs('soporte.index')">
                     {{ __('Soporte') }}
                 </x-breeze::nav-link>
 
                 @role('Administrador')
-                    <x-breeze::nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
-                        {{ __('Roles') }}
-                    </x-breeze::nav-link>
+                <x-breeze::nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
+                    {{ __('Roles') }}
+                </x-breeze::nav-link>
                 @endrole
 
                 @hasanyrole('Soporte|Administrador')
-                    <x-breeze::nav-link :href="route('soporte.docs.index')" :active="request()->routeIs('soporte.docs.*')">
-                        {{ __('Validación') }}
-                    </x-breeze::nav-link>
+                <x-breeze::nav-link :href="route('soporte.docs.index')" :active="request()->routeIs('soporte.docs.*')">
+                    {{ __('Documentos') }}
+                </x-breeze::nav-link>
+                <x-breeze::nav-link :href="route('soporte.tickets.index')"
+                    :active="request()->routeIs('soporte.tickets.*')">
+                    {{ __('Tickets') }}
+                </x-breeze::nav-link>
                 @endhasanyrole
             </div>
 
@@ -151,11 +154,12 @@
                 :active="request()->routeIs('soporte-comunicacion')">
                 {{ __('Soporte') }}
             </x-breeze::responsive-nav-link>
-            
+
             @hasanyrole('Soporte|Administrador')
-                <x-breeze::responsive-nav-link :href="route('soporte.docs.index')" :active="request()->routeIs('soporte.docs.*')">
-                    {{ __('Validación') }}
-                </x-breeze::responsive-nav-link>
+            <x-breeze::responsive-nav-link :href="route('soporte.docs.index')"
+                :active="request()->routeIs('soporte.docs.*')">
+                {{ __('Validación') }}
+            </x-breeze::responsive-nav-link>
             @endhasanyrole
         </div>
 
