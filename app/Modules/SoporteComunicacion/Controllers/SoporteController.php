@@ -5,11 +5,11 @@ namespace App\Modules\SoporteComunicacion\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Models\MER\Ticket;
 use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Exception;
-
+use Illuminate\Support\Facades\Storage;
+use App\Models\MER\Ticket;
 
 class SoporteController extends Controller
 {
@@ -61,5 +61,22 @@ class SoporteController extends Controller
         return response()->json([
             'message' => "El ticket $cod se ha cerrado correctamente"
         ]);
+    }
+
+    public function GetPDF(string $cod, bool $pdfres)
+    {
+        $ticket = Ticket::findOrFail($cod);
+
+        if (auth()->user()->hasRole('Usuario')) {
+            if (auth()->id() !== $ticket->idusu)
+                return abort(403, 'Permiso denegado.');
+        }
+
+        $url = $pdfres ? $ticket->urlpdfres : $ticket->urlpdf;
+
+        if ($url === null || !Storage::disk('local')->exists($url))
+            return abort(404);
+
+        return response()->file(Storage::disk('local')->path($url));
     }
 }

@@ -38,16 +38,30 @@
                                             'cod' => $ticket->cod,
                                             'asu' => $ticket->asu,
                                             'des' => $ticket->des,
-                                            'feccre' => $ticket->feccre
+                                            'feccre' => $ticket->feccre,
+                                            'nomsop' => $ticket->user_soporte ? "{$ticket->user_soporte->nom} {$ticket->user_soporte->ape}" : 'Pendiente'
                                         ];
+
                                         if ($ticket->urlpdf !== null) {
                                             $ticket_dto['urlpdf'] = $ticket->urlpdf;
                                         }
+                                        if ($ticket->urlpdfres !== null) {
+                                            $ticket_dto['urlpdfres'] = $ticket->urlpdfres;
+                                        }
+                                        if ($ticket->res !== null) {
+                                            $ticket_dto['res'] = $ticket->res;
+                                        }
+
                                         switch ($i) {
+                                            case 0:
+                                                $ticket_dto['estado'] = $i;
+                                                break;
                                             case 1:
+                                                $ticket_dto['estado'] = $i;
                                                 $ticket_dto['fecpro'] = $ticket->fecpro;
                                                 break;
                                             case 2:
+                                                $ticket_dto['estado'] = $i;
                                                 $ticket_dto['fecpro'] = $ticket->fecpro;
                                                 $ticket_dto['feccie'] = $ticket->feccie;
                                                 break;

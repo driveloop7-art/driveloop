@@ -47,8 +47,8 @@
                 <x-breeze::nav-link :href="route('soporte.docs.index')" :active="request()->routeIs('soporte.docs.*')">
                     {{ __('Documentos') }}
                 </x-breeze::nav-link>
-                <x-breeze::nav-link :href="route('soporte.tickets.index')"
-                    :active="request()->routeIs('soporte.tickets.*')">
+                <x-breeze::nav-link :href="route('tickets.soporte.index')"
+                    :active="request()->routeIs('tickets.soporte.*')">
                     {{ __('Tickets') }}
                 </x-breeze::nav-link>
                 @endhasanyrole
