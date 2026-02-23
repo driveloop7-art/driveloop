@@ -2,8 +2,11 @@
 
 use App\Modules\GestionUsuario\breeze\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Modules\GestionUsuario\Controllers\AdminPanelController;
 
-Route::get('/dashboard', fn() => view('dashboard'))->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [AdminPanelController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

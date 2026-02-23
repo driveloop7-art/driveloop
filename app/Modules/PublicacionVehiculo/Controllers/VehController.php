@@ -112,4 +112,17 @@ class VehController extends Controller
         ]);
     }
 
+    /**
+     * Publica el vehículo (lo pone disponible) tras verificar documentos.
+     */
+    public function activar(int $codveh)
+    {
+        $vehiculo = Vehiculo::where('user_id', Auth::id())
+            ->where('cod', $codveh)
+            ->firstOrFail();
+
+        $vehiculo->update(['disp' => true]);
+
+        return back()->with('ok', 'Vehículo publicado correctamente.');
+    }
 }

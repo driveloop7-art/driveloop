@@ -42,7 +42,7 @@ class VehiculoDocumentosController extends Controller
         ]);
 
 
-        $placa = strtoupper(preg_replace('/[^A-Z0-9]/', '', $request->placa));
+        $placa = strtoupper(preg_replace('/[^A-Za-z0-9]/', '', $request->placa));
 
         $codveh = (int) $request->codveh;
 

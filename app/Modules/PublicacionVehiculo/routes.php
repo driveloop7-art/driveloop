@@ -25,4 +25,9 @@ Route::prefix('publi-vehiculo')->group(function () {
         
     Route::get('/departamentos/{coddep}/ciudades', [VehController::class, 'ciudadesPorDepartamento'])
         ->name('departamentos.ciudades');
+
+    // Ruta para publicar el vehículo, protegida por el middleware de verificación
+    Route::post('/vehiculos/{codveh}/publicar', [VehController::class, 'activar'])
+        ->middleware(['auth', 'verified_docs'])
+        ->name('vehiculo.publicar');
 });

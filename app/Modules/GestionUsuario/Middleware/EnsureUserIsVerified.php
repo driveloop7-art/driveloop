@@ -19,6 +19,24 @@ class EnsureUserIsVerified
             return redirect('/')
                 ->with('show_verification_modal', true);
         }
+
+        /**
+         * 2. Reutilización para Vehículos:
+         * Si la ruta tiene un parámetro 'codveh' o similar, verificar documentos del vehículo.
+         */
+        $vehId = $request->route('codveh') ?: $request->route('vehiculo');
+        if ($vehId) {
+            $vehiculo = $vehId instanceof \App\Models\MER\Vehiculo 
+                ? $vehId 
+                : \App\Models\MER\Vehiculo::find($vehId);
+
+            if ($vehiculo && $vehiculo->user_id == Auth::id() && !$vehiculo->isVerified()) {
+                return redirect('/')
+                    ->with('show_vehicle_verification_modal', true)
+                    ->with('unverified_vehiculo_id', $vehiculo->cod);
+            }
+        }
+
         return $next($request);
     }
 }

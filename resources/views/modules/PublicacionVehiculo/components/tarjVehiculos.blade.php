@@ -32,6 +32,21 @@
           VIN: {{ $veh->vin ?? '—' }} 
           Modelo: {{ $veh->mod ?? '—' }}
         </div>
+
+        @if (!$veh->disp)
+          <div class="veh-tile__footer" style="margin-top: 1rem;">
+            <form action="{{ route('vehiculo.publicar', ['codveh' => $veh->cod]) }}" method="POST">
+              @csrf
+              <button type="submit" class="veh-btn" style="width: 100%; padding: 0.5rem; font-size: 0.8rem;">
+                Publicar Vehículo
+              </button>
+            </form>
+          </div>
+        @else
+          <div class="veh-tile__footer" style="margin-top: 1rem; color: #2ecc71; font-weight: bold; font-size: 0.8rem;">
+            ● Vehículo Publicado
+          </div>
+        @endif
       </div>
     </article>
 

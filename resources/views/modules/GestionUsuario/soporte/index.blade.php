@@ -1,5 +1,16 @@
 <x-page>
 
+    <div class="mb-6 flex space-x-4 border-b">
+        <a href="{{ route('soporte.docs.index') }}" 
+           class="pb-2 px-4 {{ Route::is('soporte.docs.index') ? 'border-b-2 border-indigo-500 font-bold' : 'text-gray-500' }}">
+            Validación de Usuarios
+        </a>
+        <a href="{{ route('soporte.vehiculos.index') }}" 
+           class="pb-2 px-4 {{ Route::is('soporte.vehiculos.index') ? 'border-b-2 border-indigo-500 font-bold' : 'text-gray-500' }}">
+            Validación de Vehículos
+        </a>
+    </div>
+
     @if(session('success'))
         <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-lg">
             {{ session('success') }}

@@ -50,7 +50,9 @@ class DocumentoVehiculo extends Model
         'numdoc',
         'empexp',
         'descdoc',
-        'codveh'
+        'codveh',
+        'estado',
+        'mensaje_rechazo'
     ];
 	
 
