@@ -1,3 +1,7 @@
+<div class="flex items-center justify-between mb-6">
+    <h3 class="text-lg font-medium text-left">{{ __('Tickets') }}</h3>
+    <span class="text-sm text-gray-500">Total abiertos: {{ $grpTickets[0]->count() }}</span>
+</div>
 @for ($i = 0; $i < count($grpTickets); $i++)
     @php
         $title = match ($i) {

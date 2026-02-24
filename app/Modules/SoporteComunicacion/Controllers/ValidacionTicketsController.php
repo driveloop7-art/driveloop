@@ -6,15 +6,34 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\MER\Ticket;
+use App\Models\MER\EstadoTicket;
+use App\Models\MER\PrioridadTicket;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 
 class ValidacionTicketsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $allTickets = Ticket::all();
-        return view("modules.SoporteComunicacion.soporte.index", compact('allTickets'));
+        $query = Ticket::query();
+
+        if ($request->filled('estado')) {
+            $query->where('codesttic', $request->estado);
+        }
+
+        if ($request->filled('fecha')) {
+            $query->whereDate('feccre', $request->fecha);
+        }
+
+        if ($request->filled('prioridad')) {
+            $query->where('codpritic', $request->prioridad);
+        }
+
+        $allTickets = $query->get();
+        $estados = EstadoTicket::all();
+        $prioridades = PrioridadTicket::all();
+
+        return view("modules.SoporteComunicacion.soporte.index", compact('allTickets', 'estados', 'prioridades'));
     }
 
     public function store(Request $request): RedirectResponse
