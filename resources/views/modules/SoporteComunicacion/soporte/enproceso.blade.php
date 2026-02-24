@@ -7,26 +7,33 @@
     @enderror
 
     <x-card class="max-w-7xl mx-auto p-8 w-full">
-        <h3 class="pl-2 md:pl-4 mb-4 text-lg font-medium text-left">Detalle Ticket # {{ $ticket->cod }}</h3>
+        <h3 class="pl-2 md:pl-4 mb-4 text-lg font-medium text-left" id="cod" value="{{ $ticket->cod }}">Detalle Ticket #
+            {{ $ticket->cod }}
+        </h3>
 
-        <div class="grid grid-col-1 p-2 gap-8 md:grid-cols-2 md:p-4">
-            <div>
-                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Asunto</h4>
-                <p class="mt-1 text-sm">{{ $ticket->asu }}</p>
-            </div>
+        <div class="grid grid-col-1 p-2 gap-8 md:grid-cols-2 md:p-2 lg:grid-cols-4 lg:p-4">
 
             <div>
-                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Fecha de creación</h4>
-                <p class="mt-1 text-sm">{{ $ticket->feccre }}</p>
-            </div>
-
-            <div>
-                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Usuario</h4>
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider md:mb-3">Usuario</h4>
                 <p class="mt-1 text-sm">{{ $ticket->user->nom . ' ' . $ticket->user->ape }}</p>
             </div>
 
             <div>
-                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Adjunto</h4>
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider md:mb-3">Fecha de creación</h4>
+                <p class="mt-1 text-sm">{{ $ticket->feccre }}</p>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Prioridad</h4>
+                <select name="prioridad" id="prioridad" class="border border-dl xl:rounded-md text-sm">
+                    <option value="1" {{ $ticket->codpritic == 1 ? 'selected' : '' }}>Alta</option>
+                    <option value="2" {{ $ticket->codpritic == 2 ? 'selected' : '' }}>Media</option>
+                    <option value="3" {{ $ticket->codpritic == 3 ? 'selected' : '' }}>Baja</option>
+                </select>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider md:mb-3">Adjunto</h4>
                 @if ($ticket->pdf)
                     <a href="{{ route('tickets.adjuntos', $ticket->cod) }}" target="_blank">
                         <span
@@ -39,8 +46,13 @@
                 @endif
             </div>
 
-            <div class="col-span-2">
-                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Descripción</h4>
+            <div class="md:mt-4 md:col-span-2 lg:col-span-4">
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider md:mb-1">Asunto</h4>
+                <p class="mt-1 text-sm">{{ $ticket->asu }}</p>
+            </div>
+
+            <div class="md:col-span-2 lg:col-span-4">
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider md:mb-1">Descripción</h4>
                 <p class="mt-2 text-sm bg-gray-50 p-2 xl:rounded-md">{{ $ticket->des }}</p>
             </div>
         </div>
@@ -84,10 +96,27 @@
             }
         });
 
-        function preventBack() {
-            window.history.forward();
-        }
-        setTimeout("preventBack()", 0);
-        window.onunload = function () { null };
+        document.getElementById('prioridad').addEventListener('change', function () {
+            const cod = document.getElementById('cod').getAttribute('value');
+            const prioridad = this.value;
+            fetch("{{ route('tickets.soporte.updatePrioridad') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    cod: cod,
+                    prioridad: prioridad
+                })
+            })
+                .then(response => response.json())
+                // .then(data => {
+                //     alert(data.message);
+                // })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
     </script>
 </x-page>

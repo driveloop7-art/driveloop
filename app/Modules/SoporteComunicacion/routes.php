@@ -20,6 +20,7 @@ Route::prefix('soporte-comunicacion')->group(function () {
         Route::post('/', [ValidacionTicketsController::class, 'store'])->name('tickets.soporte.store');
         Route::get('/en-proceso/{cod}', [ValidacionTicketsController::class, 'enproceso'])->name('tickets.soporte.enproceso');
         Route::get('/cerrados/{cod}', [ValidacionTicketsController::class, 'cerrados'])->name('tickets.soporte.cerrados');
+        Route::post('/update-prioridad', [ValidacionTicketsController::class, 'updatePrioridad'])->name('tickets.soporte.updatePrioridad');
     });
 
     Route::fallback(fn() => abort(404));

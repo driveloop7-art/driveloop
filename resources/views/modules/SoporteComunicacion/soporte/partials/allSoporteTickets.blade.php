@@ -29,6 +29,7 @@
                                     break;
                             }                            
                         @endphp
+                        <th class="py-2">Prioridad</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 text-center">
@@ -50,6 +51,7 @@
                                 <td class="px-4 py-2 whitespace-nowrap text-sm">{{ $ticket->user->nom . ' ' . $ticket->user->ape }}
                                 </td>
                                 <td class="px-4 py-2 whitespace-nowrap text-sm">{{ $ticket->feccre }}</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm">{{ $ticket->prioridad_ticket->des }}</td>
                             </tr>
                         @else
                             @if ($ticket->user_soporte->id == Auth::user()->id)
@@ -77,6 +79,7 @@
                                                 break;
                                         }
                                     @endphp
+                                    <td class="px-4 py-2 whitespace-nowrap text-sm">{{ $ticket->prioridad_ticket->des }}</td>
                                 </tr>
                             @endif
                         @endif

@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\MER\Ticket;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 
 class ValidacionTicketsController extends Controller
 {
@@ -66,5 +67,16 @@ class ValidacionTicketsController extends Controller
     {
         $ticket = Ticket::findOrFail($cod);
         return view("modules.SoporteComunicacion.soporte.cerrados", compact('ticket'));
+    }
+
+    public function updatePrioridad(Request $request): JsonResponse
+    {
+        $ticket = Ticket::findOrFail($request->cod);
+        $ticket->update([
+            'codpritic' => $request->prioridad
+        ]);
+        return response()->json([
+            'message' => "El ticket {$ticket->cod} se ha actualizado correctamente"
+        ]);
     }
 }

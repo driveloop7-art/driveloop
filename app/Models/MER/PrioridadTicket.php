@@ -20,7 +20,7 @@ class PrioridadTicket extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'des' => 'string|max:45'
+		'des' => 'string'
 	];
 
 	protected $fillable = [
