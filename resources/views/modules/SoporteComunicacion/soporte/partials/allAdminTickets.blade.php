@@ -25,7 +25,8 @@
                 @endphp
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap flex justify-center">
-                        <a href="{{ route('tickets.soporte.enproceso', $ticket->cod) }}">
+                        <a
+                            href="{{$ticket->codesttic == 3 ? route('tickets.soporte.cerrados', $ticket->cod) : route('tickets.soporte.enproceso', $ticket->cod) }}">
                             <span
                                 class="px-4 py-1 text-xs leading-5 font-semibold rounded-full bg-indigo-100 hover:bg-indigo-200 text-indigo-800">
                                 Ver
