@@ -73,8 +73,12 @@
 </head>
 
 <body>
-    <div class="header">
-        <h1>Detalle de Ticket</h1>
+    <div>
+        <!-- El paquete dompdf requiere instalar/habilitar la extensión gd de php para no generar error al renderizar las imágenes -->
+        <img src="{{ public_path('images/logo.png') }}" alt="Logo" style="width: 120px; float: right;">
+        <div class="header">
+            <h1>Detalle de Ticket</h1>
+        </div>
     </div>
 
     <table class="info-grid">
