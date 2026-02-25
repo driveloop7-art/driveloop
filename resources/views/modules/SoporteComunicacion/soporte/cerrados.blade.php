@@ -20,7 +20,7 @@
 
             <div>
                 <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Adjunto</h4>
-                @if ($ticket->pdf)
+                @if ($ticket->urlpdf)
                     <a href="{{ route('tickets.adjuntos', $ticket->cod) }}" target="_blank">
                         <span
                             class="px-4 py-1 text-xs leading-5 font-semibold rounded-full bg-indigo-100 hover:bg-indigo-200 text-indigo-800">
@@ -54,7 +54,7 @@
                     <a href="{{ route('tickets.adjuntos.respuesta', $ticket->cod) }}" target="_blank">
                         <span
                             class="px-4 py-1 text-xs leading-5 font-semibold rounded-full bg-indigo-100 hover:bg-indigo-200 text-indigo-800">
-                            Ver archivo
+                            Ver
                         </span>
                     </a>
                 @else
@@ -62,7 +62,7 @@
                 @endif
             </div>
             <div>
-                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Inicio gestión</h4>
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Inicio de gestión</h4>
                 <p class="mt-1 text-sm">{{ $ticket->fecpro }}</p>
             </div>
             <div>
@@ -74,6 +74,13 @@
                 <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Respuesta</h4>
                 <p class="mt-2 text-sm bg-gray-50 p-2 xl:rounded-md whitespace-pre-line">{{ $ticket->res }}</p>
             </div>
+        </div>
+        <div class="mt-6 flex justify-end">
+            <a href="{{ route('tickets.export.pdf', '') }}/{{ $ticket->cod }}"
+                class="bg-dl hover:bg-dl-two border border-transparent text-white text-xs inline-flex xl:rounded-md justify-center px-5 py-3 tracking-widest font-semibold uppercase transition ease-in-out duration-150 items-center"
+                target="_blank">
+                Descargar PDF
+            </a>
         </div>
     </x-card>
 </x-page>

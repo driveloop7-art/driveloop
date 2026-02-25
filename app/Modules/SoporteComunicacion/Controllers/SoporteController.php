@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Exception;
 use Illuminate\Support\Facades\Storage;
 use App\Models\MER\Ticket;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SoporteController extends Controller
 {
@@ -67,16 +68,34 @@ class SoporteController extends Controller
     {
         $ticket = Ticket::findOrFail($cod);
 
-        if (auth()->user()->hasRole('Usuario')) {
-            if (auth()->id() !== $ticket->idusu)
-                return abort(403, 'Permiso denegado.');
+        if (!$this->SelfUser($ticket->idusu)) {
+            return abort(403, 'Permiso denegado.');
         }
-
         $url = $pdfres ? $ticket->urlpdfres : $ticket->urlpdf;
 
         if ($url === null || !Storage::disk('local')->exists($url))
             return abort(404);
 
         return response()->file(Storage::disk('local')->path($url));
+    }
+
+    public function ExportPDF(string $cod)
+    {
+        $ticket = Ticket::findOrFail($cod);
+
+        if (!$this->SelfUser($ticket->idusu)) {
+            return abort(403, 'Permiso denegado.');
+        }
+        $pdf = Pdf::loadView('modules.SoporteComunicacion.pdf.ticket', compact('ticket'));
+        return $pdf->stream("ticket_{$ticket->cod}.pdf");
+    }
+
+    private function SelfUser(int $idusu): bool
+    {
+        if (auth()->user()->hasRole('Usuario')) {
+            if (auth()->id() !== $idusu)
+                return false;
+        }
+        return true;
     }
 }

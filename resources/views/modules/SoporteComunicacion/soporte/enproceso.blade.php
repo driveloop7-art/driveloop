@@ -34,7 +34,7 @@
 
             <div>
                 <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider md:mb-3">Adjunto</h4>
-                @if ($ticket->pdf)
+                @if ($ticket->urlpdf)
                     <a href="{{ route('tickets.adjuntos', $ticket->cod) }}" target="_blank">
                         <span
                             class="px-4 py-1 text-xs leading-5 font-semibold rounded-full bg-indigo-100 hover:bg-indigo-200 text-indigo-800">
@@ -70,12 +70,18 @@
                 <x-input id="id_res" name="res" label="Respuesta" type="textarea" />
                 <x-input id="file_pdf" name="pdf" label="Respuesta en PDF (Máx. 5MB)" type="file"
                     accept="application/pdf" />
-                <div class="mt-6 flex justify-end">
+                <div class="mt-6 flex justify-end gap-2">
+                    <a href="{{ route('tickets.export.pdf', '') }}/{{ $ticket->cod }}"
+                        class="bg-white hover:bg-dl hover:text-white border-2 border-dl text-dl text-xs inline-flex xl:rounded-md justify-center px-5 py-3 tracking-widest font-semibold uppercase transition ease-in-out duration-150 items-center"
+                        target="_blank">
+                        Ver PDF
+                    </a>
                     <x-button class="text-xs">{{ __('Submit') }}</x-button>
                 </div>
             </form>
         </div>
     </x-card>
+
     <script>
         const validarRespuesta = () => {
             const res = document.getElementById('id_res');
