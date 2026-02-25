@@ -13,7 +13,7 @@
         $tickets = $grpTickets[$i];
     @endphp
     <x-toggle :title="$title">
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto shadow border-b border-gray-200 xl:rounded-md">
             <table class="min-w-full divide-y text-gray-500">
                 <thead class="bg-gray-200 text-xs font-medium uppercase tracking-wider">
                     <tr>
@@ -51,7 +51,7 @@
                                         </span>
                                     </a>
                                 </td>
-                                <td class="px-4 py-2 whitespace-nowrap text-sm text-left">{{ $ticket->asu }}</td>
+                                <td class="px-4 py-2 text-sm text-left">{{ $ticket->asu }}</td>
                                 <td class="px-4 py-2 whitespace-nowrap text-sm">{{ $ticket->user->nom . ' ' . $ticket->user->ape }}
                                 </td>
                                 <td class="px-4 py-2 whitespace-nowrap text-sm">{{ $ticket->feccre }}</td>
@@ -72,7 +72,7 @@
                                             </span>
                                         </a>
                                     </td>
-                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-left">{{ $ticket->asu }}</td>
+                                    <td class="px-4 py-2 text-sm text-left">{{ $ticket->asu }}</td>
                                     @php
                                         switch ($i) {
                                             case 1:
