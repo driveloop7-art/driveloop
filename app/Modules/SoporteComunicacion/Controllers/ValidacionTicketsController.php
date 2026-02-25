@@ -29,6 +29,10 @@ class ValidacionTicketsController extends Controller
             $query->where('codpritic', $request->prioridad);
         }
 
+        if ($request->filled('codigo')) {
+            $query->where('cod', $request->codigo);
+        }
+
         $allTickets = $query->get();
         $estados = EstadoTicket::all();
         $prioridades = PrioridadTicket::all();

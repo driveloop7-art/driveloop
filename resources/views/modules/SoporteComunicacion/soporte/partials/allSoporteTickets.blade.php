@@ -1,6 +1,13 @@
 <div class="flex items-center justify-between mb-6">
     <h3 class="text-lg font-medium text-left">{{ __('Tickets') }}</h3>
-    <span class="text-sm text-gray-500">Total abiertos: {{ $grpTickets[0]->count() }}</span>
+    <div class="flex gap-4">
+        <span class="text-sm text-gray-500">Total abiertos: <span
+                class="font-semibold">{{ $grpTickets[0]->count() }}</span></span>
+        <span class="text-sm text-gray-500">Total en proceso: <span
+                class="font-semibold">{{ $allTickets->where('codesttic', 2)->where('idususop', Auth::user()->id)->count() }}</span></span>
+        <span class="text-sm text-gray-500">Total cerrados: <span
+                class="font-semibold">{{ $allTickets->where('codesttic', 3)->where('idususop', Auth::user()->id)->count() }}</span></span>
+    </div>
 </div>
 @for ($i = 0; $i < count($grpTickets); $i++)
     @php
@@ -42,8 +49,11 @@
                     @endphp
                     @foreach ($tickets as $ticket)
                         @if ($i === 0)
+                            @php
+                                $control = true;
+                            @endphp
                             <tr>
-                                <td class="px-4 py-2 whitespace-nowrap flex justify-center">
+                                <td class="px-4 py-2 flex justify-center">
                                     <a href="{{ route('tickets.soporte.enproceso', $ticket->cod) }}">
                                         <span
                                             class="px-4 py-1 text-xs leading-5 font-semibold rounded-full bg-indigo-100 hover:bg-indigo-200 text-indigo-800">
@@ -52,10 +62,10 @@
                                     </a>
                                 </td>
                                 <td class="px-4 py-2 text-sm text-left">{{ $ticket->asu }}</td>
-                                <td class="px-4 py-2 whitespace-nowrap text-sm">{{ $ticket->user->nom . ' ' . $ticket->user->ape }}
+                                <td class="px-4 py-2 text-sm">{{ $ticket->user->nom . ' ' . $ticket->user->ape }}
                                 </td>
-                                <td class="px-4 py-2 whitespace-nowrap text-sm">{{ $ticket->feccre }}</td>
-                                <td class="px-4 py-2 whitespace-nowrap text-sm">{{ $ticket->prioridad_ticket->des }}</td>
+                                <td class="px-4 py-2 text-sm">{{ $ticket->feccre }}</td>
+                                <td class="px-4 py-2 text-sm">{{ $ticket->prioridad_ticket->des }}</td>
                             </tr>
                         @else
                             @if ($ticket->user_soporte->id == Auth::user()->id)
@@ -63,7 +73,7 @@
                                     $control = true;
                                 @endphp
                                 <tr>
-                                    <td class="px-4 py-2 whitespace-nowrap flex justify-center">
+                                    <td class="px-4 py-2 flex justify-center">
                                         <a
                                             href="{{ $i === 2 ? route('tickets.soporte.cerrados', $ticket->cod) : route('tickets.soporte.enproceso', $ticket->cod) }}">
                                             <span
@@ -76,21 +86,21 @@
                                     @php
                                         switch ($i) {
                                             case 1:
-                                                echo "<td class='px-4 py-2 whitespace-nowrap text-sm'>{$ticket->fecpro}</td>";
+                                                echo "<td class='px-4 py-2 text-sm'>{$ticket->fecpro}</td>";
                                                 break;
                                             case 2:
-                                                echo "<td class='px-4 py-2 whitespace-nowrap text-sm'> $ticket->feccie </td>";
+                                                echo "<td class='px-4 py-2 text-sm'> $ticket->feccie </td>";
                                                 break;
                                         }
                                     @endphp
-                                    <td class="px-4 py-2 whitespace-nowrap text-sm">{{ $ticket->prioridad_ticket->des }}</td>
+                                    <td class="px-4 py-2 text-sm">{{ $ticket->prioridad_ticket->des }}</td>
                                 </tr>
                             @endif
                         @endif
                     @endforeach
-                    @if ($i > 0 && !$control)
+                    @if (!$control)
                         <tr>
-                            <td colspan="4" class="px-4 py-2 whitespace-nowrap text-sm text-center">
+                            <td colspan="4" class="px-4 py-2 text-sm text-center">
                                 No existen tickets {{ Str::lower($title) }} por este usuario.
                             </td>
                         </tr>

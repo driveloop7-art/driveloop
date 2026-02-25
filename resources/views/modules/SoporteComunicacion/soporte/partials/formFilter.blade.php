@@ -2,6 +2,13 @@
 <form action="{{ route('tickets.soporte.index') }}" method="GET"
     class="mb-8 bg-gray-50 p-6  border border-gray-200 xl:rounded-md">
     <div @class(['grid grid-cols-1 lg:grid-cols-2 gap-4 items-end', Auth::user()->hasRole('Administrador') ? 'xl:grid-cols-4' : 'xl:grid-cols-3'])>
+        <div>
+            <label for="codigo"
+                class="block text-sm font-medium text-gray-700 mb-1">{{ __('Código de Ticket') }}</label>
+            <input type="text" name="codigo" id="codigo" value="{{ request('codigo') }}"
+                placeholder="{{ __('Ej: A1B2C3D4E5') }}"
+                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+        </div>
         @if (Auth::user()->hasRole('Administrador'))
             <div>
                 <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
