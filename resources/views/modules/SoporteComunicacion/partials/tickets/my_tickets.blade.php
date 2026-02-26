@@ -8,7 +8,7 @@
 
         $tickets = $grpTickets[$i];
     @endphp
-    <x-toggle :title="$title">
+    <x-toggle title="{{ $title . ' (' . $tickets->count() . ')' }}">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y text-gray-500">
                 <thead class="bg-gray-200 text-xs font-medium uppercase tracking-wider">

@@ -1,13 +1,5 @@
 <div class="flex items-center justify-between mb-6">
     <h3 class="text-lg font-medium text-left">{{ __('Tickets') }}</h3>
-    <div class="flex gap-4">
-        <span class="text-sm text-gray-500">Total abiertos: <span
-                class="font-semibold">{{ $grpTickets[0]->count() }}</span></span>
-        <span class="text-sm text-gray-500">Total en proceso: <span
-                class="font-semibold">{{ $allTickets->where('codesttic', 2)->where('idususop', Auth::user()->id)->count() }}</span></span>
-        <span class="text-sm text-gray-500">Total cerrados: <span
-                class="font-semibold">{{ $allTickets->where('codesttic', 3)->where('idususop', Auth::user()->id)->count() }}</span></span>
-    </div>
 </div>
 @for ($i = 0; $i < count($grpTickets); $i++)
     @php
@@ -18,8 +10,13 @@
         };
 
         $tickets = $grpTickets[$i];
+        $count = match ($i) {
+            0 => $tickets->count(),
+            1 => $allTickets->where('codesttic', 2)->where('idususop', auth()->id())->count(),
+            2 => $allTickets->where('codesttic', 3)->where('idususop', auth()->id())->count(),
+        };
     @endphp
-    <x-toggle :title="$title">
+    <x-toggle title="{{ $title . ' (' . $count . ')' }}">
         <div class="overflow-x-auto shadow border-b border-gray-200 xl:rounded-md">
             <table class="min-w-full divide-y text-gray-500">
                 <thead class="bg-gray-200 text-xs font-medium uppercase tracking-wider">
@@ -68,7 +65,7 @@
                                 <td class="px-4 py-2 text-sm">{{ $ticket->prioridad_ticket->des }}</td>
                             </tr>
                         @else
-                            @if ($ticket->user_soporte->id == Auth::user()->id)
+                            @if ($ticket->user_soporte->id == auth()->id())
                                 @php
                                     $control = true;
                                 @endphp
