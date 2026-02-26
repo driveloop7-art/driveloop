@@ -10,7 +10,7 @@
         <x-input class="h-72 text-pretty" name="des" label="Descripción" type="textarea" :value="old('description')"
             required />
 
-        <x-select class="w-full" id="codres" name="codres" label="Código de reserva" :options="$reservas->pluck('val', 'cod')->toArray()" required />
+        <x-select class="w-full" id="codres" name="codres" label="Código de reserva" :options="$reservas->pluck('cod', 'cod')->toArray()" required />  <!-- La función pluck recibe ('valor mostrado', 'valor enviado') en el formulario -->
 
         <x-input id="file_pdf" name="pdf" label="PDF con fotos (Máx. 5MB)" type="file" accept="application/pdf" />
         <div class="mt-6 flex justify-end">
