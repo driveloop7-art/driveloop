@@ -91,22 +91,22 @@
             </td>
             <td width="50%">
                 <div class="info-item">
-                    <span class="label">Fecha de creación</span>
-                    <span class="value">{{ $ticket->feccre->format('d/m/Y H:i') }}</span>
+                    <span class="label">Usuario</span>
+                    <span class="value">{{ $ticket->user->nom . ' ' . $ticket->user->ape }}</span>
                 </div>
             </td>
         </tr>
         <tr>
             <td width="50%">
                 <div class="info-item">
-                    <span class="label">Estado</span>
-                    <span class="value">{{ $ticket->estado_ticket->des ?? 'N/A' }}</span>
+                    <span class="label">Fecha de creación</span>
+                    <span class="value">{{ $ticket->feccre->format('d/m/Y H:i') }}</span>
                 </div>
             </td>
             <td width="50%">
                 <div class="info-item">
-                    <span class="label">Usuario</span>
-                    <span class="value">{{ $ticket->user->nom ?? 'N/A' }}</span>
+                    <span class="label">Estado</span>
+                    <span class="value">{{ $ticket->estado_ticket->des ?? 'N/A' }}</span>
                 </div>
             </td>
         </tr>
@@ -119,7 +119,7 @@
             </td>
             <td width="50%">
                 <div class="info-item">
-                    <span class="label">Con PDF adjunto</span>
+                    <span class="label">PDF Adjunto</span>
                     <span class="value">{{ $ticket->urlpdf ? 'Sí' : 'No' }}</span>
                 </div>
             </td>
@@ -156,7 +156,7 @@
                 <td width="50%">
                     <div class="info-item">
                         <span class="label">Personal de soporte</span>
-                        <span class="value">{{ $ticket->user_soporte->nom ?? 'N/A' }}</span>
+                        <span class="value">{{ $ticket->user_soporte->nom . ' ' . $ticket->user_soporte->ape }}</span>
                     </div>
                 </td>
                 <td width="50%">
@@ -169,7 +169,7 @@
             <tr>
                 <td width="50%">
                     <div class="info-item">
-                        <span class="label">Con PDF adjunto</span>
+                        <span class="label">PDF Adjunto</span>
                         <span class="value">{{ $ticket->urlpdfres ? 'Sí' : 'No' }}</span>
                     </div>
                 </td>

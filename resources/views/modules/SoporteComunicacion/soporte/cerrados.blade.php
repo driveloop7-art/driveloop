@@ -75,9 +75,9 @@
                 <p class="mt-2 text-sm bg-gray-50 p-2 xl:rounded-md whitespace-pre-line">{{ $ticket->res }}</p>
             </div>
         </div>
-        <div class="mt-6 flex justify-end">
+        <div class="mt-6 flex justify-end text-xs">
             <a href="{{ route('tickets.export.pdf', '') }}/{{ $ticket->cod }}"
-                class="bg-dl hover:bg-dl-two border border-transparent text-white text-xs inline-flex xl:rounded-md justify-center px-5 py-3 tracking-widest font-semibold uppercase transition ease-in-out duration-150 items-center"
+                class="bg-dl hover:bg-dl-two border border-transparent text-white inline-flex xl:rounded-md justify-center px-8 py-3 tracking-widest font-semibold uppercase transition ease-in-out duration-150 items-center"
                 target="_blank">
                 Descargar PDF
             </a>

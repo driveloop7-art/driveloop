@@ -2,27 +2,29 @@
     <x-card class="mb-4">
         <div class="grid grid-cols-1 gap-6 p-6 md:grid-cols-2">
             <div>
-                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider"
-                    x-text="params.ticket.urlpdf?'Código/Adjunto':'Código'"></h4>
-                <button x-on:click="window.open('{{ route('tickets.adjuntos') }}/' + params.ticket.cod, '_blank')"
-                    :class="params.ticket.urlpdf?'':'hidden'">
-                    <span
-                        class="px-4 py-1 text-xs leading-5 font-semibold rounded-full bg-indigo-100 hover:bg-indigo-200 text-indigo-800"
-                        x-text="params.ticket.cod">
-                    </span>
-                </button>
-                <p class="mt-1 text-sm font-mono font-bold" :class="params.ticket.urlpdf?'hidden':''"
-                    x-text="params.ticket.cod"></p>
-            </div>
-            <div>
-                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Asunto</h4>
-                <p class="mt-1 text-sm font-semibold" x-text="params.ticket.asu"></p>
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Código</h4>
+                <p class="mt-1 text-sm font-mono font-bold" x-text="params.ticket.cod"></p>
             </div>
             <div>
                 <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Fecha de creación</h4>
                 <p class="mt-1 text-sm font-semibold"
                     x-text="new Date(params.ticket.feccre).toUTCString('es-ES', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).replace(' GMT', '')">
                 </p>
+            </div>
+            <div>
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Asunto</h4>
+                <p class="mt-1 text-sm font-semibold" x-text="params.ticket.asu"></p>
+            </div>
+            <div>
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Adjunto</h4>
+                <button x-on:click="window.open('{{ route('tickets.adjuntos') }}/' + params.ticket.cod, '_blank')"
+                    :class="params.ticket.urlpdf?'':'hidden'">
+                    <span
+                        class="px-4 py-1 text-xs leading-5 font-semibold rounded-full bg-indigo-100 hover:bg-indigo-200 text-indigo-800">
+                        Ver archivo
+                    </span>
+                </button>
+                <p class="mt-1 text-sm font-mono font-bold" :class="params.ticket.urlpdf?'hidden':''">No</p>
             </div>
 
             <div class="md:col-span-2">
