@@ -4,6 +4,7 @@ namespace App\Models\MER;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use App\Modules\SoporteComunicacion\Models\Score;
 
 /**
  * Class Ticket
@@ -88,5 +89,10 @@ class Ticket extends Model
 	public function reserva()
 	{
 		return $this->hasOne(Reserva::class, 'cod', 'codres');
+	}
+
+	public function score()
+	{
+		return $this->hasMany(Score::class, 'codtic', 'cod');
 	}
 }

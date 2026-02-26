@@ -23,6 +23,7 @@
                                     break;
                                 case 2:
                                     echo '<th class="py-2">Fecha de cierre</th>';
+                                    echo '<th class="py-2">Satisfacción</th>';
                                     break;
                             }                            
                         @endphp
@@ -32,7 +33,7 @@
                     @if ($tickets->isNotEmpty())
                         @foreach ($tickets as $ticket)
                             <tr>
-                                <td class="px-4 py-2 whitespace-nowrap flex justify-center">
+                                <td class="px-4 py-2 flex justify-center">
                                     @php
                                         $ticket_dto = [
                                             'cod' => $ticket->cod,
@@ -75,23 +76,37 @@
                                         </span>
                                     </button>
                                 </td>
-                                <td class="px-4 py-2 whitespace-nowrap text-sm text-left">{{ $ticket->asu }}</td>
-                                <td class="px-4 py-2 whitespace-nowrap text-sm">{{ $ticket->feccre }}</td>
-                                @php
-                                    switch ($i) {
-                                        case 1:
-                                            echo "<td class='px-4 py-2 whitespace-nowrap text-sm'>$ticket->fecpro</td>";
-                                            break;
-                                        case 2:
-                                            echo "<td class='px-4 py-2 whitespace-nowrap text-sm'> $ticket->feccie </td>";
-                                            break;
-                                    }
-                                @endphp
+                                <td class="px-4 py-2 text-sm text-left">{{ $ticket->asu }}</td>
+                                <td class="px-4 py-2 text-sm">{{ $ticket->feccre }}</td>
+                                @switch($i) 
+                                    @case(1)
+                                        <td class='px-4 py-2 text-sm'>{{ $ticket->fecpro }}</td>
+                                        @break
+                                    @case(2)
+                                        <td class='px-4 py-2 text-sm'>{{ $ticket->feccie }}</td>
+                                        @if ($ticket->score->count() == 0)
+                                            <td class='px-4 py-2 text-sm'>
+                                                <button
+                                                    x-on:click.prevent="$dispatch('open-modal', {name: 'mdl-score-ticket', codtic: '{{ $ticket->cod }}'})">
+                                                <span
+                                                    class="px-4 py-1 text-xs leading-5 font-semibold rounded-full bg-yellow-100 hover:bg-yellow-200 text-yellow-800">
+                                                    Calificar
+                                                </span>
+                                            </button>
+                                        </td>
+                                    @else
+                                        <td class='px-9 py-2'>
+                                            <p class="text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">OK</p>
+                                        </td>
+                                    @endif
+                                    @break
+                                @endswitch
                             </tr>
                         @endforeach
+                        @include('modules.SoporteComunicacion.soporte.partials.modal.score-ticket')
                     @else
                         <tr>
-                            <td colspan="3" class="px-4 py-2 whitespace-nowrap text-sm text-center">
+                            <td colspan="5" class="px-4 py-2 text-sm text-center">
                                 No existen tickets {{ Str::lower($title) }}.
                             </td>
                         </tr>

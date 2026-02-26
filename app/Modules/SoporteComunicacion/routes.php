@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Modules\SoporteComunicacion\Controllers\ScoreController;
 use App\Modules\SoporteComunicacion\Controllers\SoporteController;
 use App\Modules\SoporteComunicacion\Controllers\ValidacionTicketsController;
 
@@ -24,5 +25,6 @@ Route::prefix('soporte-comunicacion')->group(function () {
         Route::post('/update-prioridad', [ValidacionTicketsController::class, 'updatePrioridad'])->name('tickets.soporte.updatePrioridad');
     });
 
+    Route::post('/tickets/score/results', [ScoreController::class, 'store'])->name('tickets.score.results')->middleware('auth');
     Route::fallback(fn() => abort(404));
 });
