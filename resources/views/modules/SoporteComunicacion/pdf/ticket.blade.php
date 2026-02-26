@@ -156,7 +156,8 @@
                 <td width="50%">
                     <div class="info-item">
                         <span class="label">Personal de soporte</span>
-                        <span class="value">{{ $ticket->user_soporte->nom . ' ' . $ticket->user_soporte->ape }}</span>
+                        <span
+                            class="value">{{ $ticket->idusu === $ticket->idususop ? 'Cerrado por usuario' : $ticket->user_soporte->nom . ' ' . $ticket->user_soporte->ape }}</span>
                     </div>
                 </td>
                 <td width="50%">

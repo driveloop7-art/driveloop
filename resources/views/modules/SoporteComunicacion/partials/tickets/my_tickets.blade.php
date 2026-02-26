@@ -40,7 +40,8 @@
                                             'asu' => $ticket->asu,
                                             'des' => $ticket->des,
                                             'feccre' => $ticket->feccre,
-                                            'nomsop' => $ticket->user_soporte ? "{$ticket->user_soporte->nom} {$ticket->user_soporte->ape}" : 'Pendiente'
+                                            'nomsop' => $ticket->user_soporte ? ($ticket->idususop === $ticket->idusu ? 'Cerrado por usuario' : "{$ticket->user_soporte->nom} {$ticket->user_soporte->ape}") : '',
+                                            'estado' => $i
                                         ];
 
                                         if ($ticket->urlpdf !== null) {
@@ -54,15 +55,10 @@
                                         }
 
                                         switch ($i) {
-                                            case 0:
-                                                $ticket_dto['estado'] = $i;
-                                                break;
                                             case 1:
-                                                $ticket_dto['estado'] = $i;
                                                 $ticket_dto['fecpro'] = $ticket->fecpro;
                                                 break;
                                             case 2:
-                                                $ticket_dto['estado'] = $i;
                                                 $ticket_dto['fecpro'] = $ticket->fecpro;
                                                 $ticket_dto['feccie'] = $ticket->feccie;
                                                 break;
@@ -84,21 +80,20 @@
                                         @break
                                     @case(2)
                                         <td class='px-4 py-2 text-sm'>{{ $ticket->feccie }}</td>
-                                        @if ($ticket->score->count() == 0)
-                                            <td class='px-4 py-2 text-sm'>
-                                                <button
-                                                    x-on:click.prevent="$dispatch('open-modal', {name: 'mdl-score-ticket', codtic: '{{ $ticket->cod }}'})">
-                                                <span
-                                                    class="px-4 py-1 text-xs leading-5 font-semibold rounded-full bg-yellow-100 hover:bg-yellow-200 text-yellow-800">
-                                                    Calificar
-                                                </span>
-                                            </button>
+                                        <td class='py-2'>
+                                            @if ($ticket->score->count() == 0)
+                                                @if ($ticket->idusu === $ticket->idususop)
+                                                    <p class="text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Cerrado Usuario</p>
+                                                @else
+                                                    <button class="w-full text-xs leading-5 font-semibold rounded-full bg-yellow-100 hover:bg-yellow-200 text-yellow-800"
+                                                        x-on:click.prevent="$dispatch('open-modal', {name: 'mdl-score-ticket', codtic: '{{ $ticket->cod }}'})">
+                                                        <span>Calificar</span>
+                                                    </button>
+                                                @endif
+                                            @else
+                                                <p class="text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">OK</p>
+                                            @endif
                                         </td>
-                                    @else
-                                        <td class='px-9 py-2'>
-                                            <p class="text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">OK</p>
-                                        </td>
-                                    @endif
                                     @break
                                 @endswitch
                             </tr>

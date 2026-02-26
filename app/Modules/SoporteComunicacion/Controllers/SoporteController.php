@@ -57,6 +57,7 @@ class SoporteController extends Controller
         $ticket->update([
             'res' => 'Ticket cerrado por el usuario',
             'codesttic' => '3',
+            'idususop' => auth()->id(),
             'feccie' => now()
         ]);
         return response()->json([

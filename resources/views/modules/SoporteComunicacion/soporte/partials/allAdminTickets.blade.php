@@ -37,7 +37,7 @@
                     <td class="px-4 py-2 whitespace-nowrap text-sm">{{ $ticket->user->nom . ' ' . $ticket->user->ape }}</td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm">{{ $ticket->feccre }}</td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm">
-                        {{ $ticket->user_soporte ? $ticket->user_soporte->nom . ' ' . $ticket->user_soporte->ape : '' }}
+                        {{$ticket->user_soporte ? ($ticket->idusu === $ticket->idususop ? 'Cerrado por usuario' : $ticket->user_soporte->nom . ' ' . $ticket->user_soporte->ape) : '' }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm">{{ $ticket->prioridad_ticket->des }}</td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm">{{ $ticket->estado_ticket->des }}</td>

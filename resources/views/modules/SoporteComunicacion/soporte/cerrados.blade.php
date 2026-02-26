@@ -46,7 +46,9 @@
         <div class="grid grid-col-1 p-2 gap-8 md:grid-cols-2 md:p-4">
             <div>
                 <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Personal</h4>
-                <p class="mt-1 text-sm">{{ $ticket->user_soporte->nom . ' ' . $ticket->user_soporte->ape }}</p>
+                <p class="mt-1 text-sm">
+                    {{ $ticket->user_soporte ? ($ticket->idusu === $ticket->idususop ? 'Cerrado por usuario' : $ticket->user_soporte->nom . ' ' . $ticket->user_soporte->ape) : '' }}
+                </p>
             </div>
             <div>
                 <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Adjunto</h4>
