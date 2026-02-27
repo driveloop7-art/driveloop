@@ -27,19 +27,6 @@ class UserTableSeeder extends Seeder
                 'updated_at' => now(),
                 'email_verified_at' => now(),
                 'remember_token' => Str::random(10)
-            ],
-
-            [
-                'id' => 2,
-                'nom' => 'Soporte',
-                'ape' => 'Soporte',
-                'email' => 'soporte@driveloop.com',
-                'password' => Hash::make('password'),
-                'fecreg' => now(),
-                'created_at' => now(),
-                'updated_at' => now(),
-                'email_verified_at' => now(),
-                'remember_token' => Str::random(10)
             ]
         ]);
     }
