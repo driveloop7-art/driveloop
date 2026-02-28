@@ -37,7 +37,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property Collection|DocumentoUsuario[] $documentos_usuarios
  * @property Collection|Reserva[] $reservas
  * @property Collection|Ticket[] $tickets
- *
+ * @property bool $is_active
+ * 
  * @package App\Models\MER
  */
 class User extends Authenticatable implements MustVerifyEmail
@@ -61,6 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
 		'lic',
 		'numcue',
 		'password',
+		'is_active',
 	];
 
 	/**
@@ -83,7 +85,8 @@ class User extends Authenticatable implements MustVerifyEmail
 		return [
 			'email_verified_at' => 'datetime',
 			'password' => 'hashed',
-			'fecnac' => 'date' //Tratar la fecha de nacimiento como un tipo date
+			'fecnac' => 'date', //Tratar la fecha de nacimiento como un tipo date
+			'is_active' => 'boolean',
 		];
 	}
 
@@ -138,4 +141,11 @@ class User extends Authenticatable implements MustVerifyEmail
 		$hasLicense = $docs->where('idtipdocusu', 2)->where('estado', 'APROBADO')->isNotEmpty();
 		return $hasIdentity && $hasLicense;
 	}
+
+	/*Comprueba si la cuenta del usuario esta activa */
+	public function isActive(): bool
+	{
+		return $this->is_active;
+	}
+
 }
