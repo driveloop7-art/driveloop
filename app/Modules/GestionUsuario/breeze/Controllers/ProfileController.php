@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-use App\Models\MER\DocumentoUsuario;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
@@ -48,14 +49,28 @@ class ProfileController extends Controller
             'password' => ['required', 'current_password'],
         ]);
 
+        //Obtener usuario
         $user = $request->user();
-        //Eliminar documentos antes de eliminar usuario para evitar errores de integridad referencial
-        DocumentoUsuario::where('codusu', $user->id)->where('idtipdocusu', 1)->delete();
-        DocumentoUsuario::where('codusu', $user->id)->where('idtipdocusu', 2)->delete();
 
-        Auth::logout();
-
-        $user->delete();
+        //Generar nombre, apellido y correo falsos para generar anonimización de datos
+        $fakeNom = 'Usuario eliminado ' . $user->id;
+        $fakeApe = 'Usuario eliminado ' . $user->id;
+        $fakeEmail = 'deleted_user' . $user->id . '@deleted.com';
+        $fakePassword = Hash::make(Str::random(20));
+        //Actualizar registro (ahora active es false)
+        $user->update([
+            'is_active' => false,
+            'nom' => $fakeNom,
+            'ape' => $fakeApe,
+            'email' => $fakeEmail,
+            'password' => $fakePassword,
+            'tel' => null,
+            'fecnac' => null,
+            'lic' => null,
+            'numcue' => null,
+            'numdir' => null,
+            'codciu' => null,
+        ]);
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
