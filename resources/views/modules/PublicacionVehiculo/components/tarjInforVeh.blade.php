@@ -1,110 +1,173 @@
-<div class="body">
+<div class="flex gap-2 items-center" x-data="vehiculoModal()">
+    {{-- VER --}}
+    @php
+        // Foto principal + miniaturas usando tu MISMA lógica
+        $fotos = $vehiculo->fotos_vehiculos ?? collect();
 
-    <div class="container">
-            
-        <div class="retro-inf">
-            <img class="icon-back" src="ICONO-RETROCESO-16.png" alt="">
-            <h2 class="text-veh">Toyota RAV4 Híbrida 2022</h2>
-        </div>
+        $makeUrl = function ($ruta) {
+            if (!$ruta) {
+                return asset('img/no-image.jpg');
+            }
+            if (str_starts_with($ruta, 'http')) {
+                return $ruta;
+            }
 
+            $ruta = ltrim($ruta, '/');
+            if (!str_starts_with($ruta, 'vehiculos/')) {
+                $ruta = 'vehiculos/' . $ruta;
+            }
 
-        <div class="div-princ">
-                <div class="img-princ">
-                    <div class="princ-car">
-                        <img class="" src="" alt="">
+            return \Illuminate\Support\Facades\Storage::disk('public')->url($ruta);
+        };
+
+        $fotoPrincipal = $makeUrl($fotos->first()?->ruta);
+
+        $miniaturas = $fotos->take(3)->map(fn($f) => $makeUrl($f->ruta))->values();
+
+        $precio = number_format((float) ($vehiculo->prerent ?? 0), 0, ',', '.');
+    @endphp
+
+    <button type="button"
+        @click="openModal(@js($fotoPrincipal), @js($miniaturas), @js([
+    'id' => $vehiculo->cod,
+    'marca' => $vehiculo->marca?->des ?? '---',
+    'linea' => $vehiculo->linea?->des ?? '---',
+    'modelo' => $vehiculo->mod ?? '---',
+    'clase' => $vehiculo->clase?->des ?? '---',
+    'color' => $vehiculo->col ?? '---',
+    'precio' => $precio,
+]))"
+        class="px-3 py-1 text-xs bg-gray-800 text-white rounded hover:bg-gray-900 transition">
+        Ver
+    </button>
+
+    {{-- EDITAR --}}
+    <a href="{{ route('vehiculos.edit', $vehiculo->cod) }}"
+        class="px-3 py-1 text-xs bg-red-700 text-white rounded hover:bg-red-800 transition">
+        Editar
+    </a>
+
+    {{-- MODAL (UNO SOLO, controlado por Alpine) --}}
+    <div x-show="open" x-cloak class="fixed inset-0 z-50 flex items-center justify-center">
+        {{-- overlay --}}
+        <div class="absolute inset-0 bg-black/60" @click="close()"></div>
+
+        {{-- caja --}}
+        <div class="relative bg-white w-[95%] max-w-5xl rounded-2xl shadow-xl overflow-hidden">
+            {{-- header --}}
+            <div class="flex items-center justify-between px-5 py-4 border-b">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900">
+                        <span x-text="data.marca"></span>
+                        <span x-text="data.linea"></span>
+                        <span class="text-gray-500 font-medium" x-text="'· ' + data.modelo"></span>
+                    </h3>
+                    <p class="text-sm text-gray-500">
+                        ID: <span x-text="data.id"></span>
+                    </p>
+                </div>
+
+                <button type="button" @click="close()" class="px-3 py-1 text-sm rounded bg-gray-100 hover:bg-gray-200">
+                    Cerrar
+                </button>
+            </div>
+
+            {{-- body --}}
+            <div class="p-5 grid grid-cols-1 lg:grid-cols-2 gap-6 max-h-[75vh] overflow-auto">
+
+                {{-- IMAGENES --}}
+                <div>
+                    <div class="bg-gray-100 rounded-xl overflow-hidden h-64">
+                        <img :src="mainPhoto" alt="Foto vehículo" class="h-full w-full object-cover block"
+                            loading="lazy">
                     </div>
-                    <div class="img-secund">
-                        <img class="secund-car" src="" alt="">
-                        <img class="secund-car" src="" alt="">
-                        <img class="secund-car" src="" alt="">
+
+                    <div class="grid grid-cols-3 gap-3 mt-3">
+                        <template x-for="(src, i) in thumbs" :key="i">
+                            <button type="button"
+                                class="bg-gray-100 rounded-xl overflow-hidden h-20 ring-2 ring-transparent hover:ring-gray-300 transition"
+                                @click="mainPhoto = src">
+                                <img :src="src" alt="Miniatura" class="h-full w-full object-cover block"
+                                    loading="lazy">
+                            </button>
+                        </template>
+
+                        {{-- Si no hay miniaturas, relleno visual --}}
+                        <template x-if="thumbs.length === 0">
+                            <div class="text-sm text-gray-400 mt-2">Sin más fotos.</div>
+                        </template>
                     </div>
                 </div>
 
-            <div class="div-secund">
+                {{-- INFO RELEVANTE --}}
+                <div class="space-y-4">
+                    <div class="border rounded-xl p-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">Información del
+                            vehículo</h4>
 
-                <div class="div-sec-1">
-
-                    <div class="info-veh">
-                        <div class="info-tec">
-                            <h3>Información Técnica</h3>
-                            <p><strong>Tipo:</strong> SUV</p>
-                            <p><strong>Motor:</strong> Híbrido (gasolina + eléctrico)</p>
-                            <p><strong>Tracción:</strong> 4x4</p>
-                            <p><strong>Dirección:</strong> Asistida eléctrica</p>
-                        </div>
-                        
-                        <div class="acces-vehi">
-                            
-                            <h3>Accesorios del Vehículo</h3>
-                            <div class="text-or">
-                                <div class="text-acc">
-                                    <p>Airbag</p>
-                                    <p>Aire acondicionado</p>
-                                    <p>Bluetooth</p>
-                                    <p>Cargador USB</p>
-                                </div>
-                                <div class="text-acc">
-                                    <p>GPS</p>
-                                    <p>Cámara de reversa</p>
-                                    <p>Sensor de parqueo</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            
-
-                    <div class="tarj-vehi">
-                        <div class="tarj-vehi-inf">
-                            <img src="ICONO-LIKE-16.png" alt="">
-                            <h1 class="text1">Toyota</h1>
-                            <h2 class="text2">RAV4 Híbrida 2022</h2>
-                            <h2 class="text3">$150.000 COP/día</h2>
-                            <h4>Incluye impuestos, seguro y asistencia en carretera.</h4>
-                            
-                            <div class="icon-info">
-                                
-                            </div>
-                            
-                        </div>
-                            <a class="rent-b" href="#">RENTAR</a>
-                    </div>
-
-                </div>   
-
-                <div class="div-inf-2">
-                    <div class="observa">
-                        <h3 class="inf-div-2">Observaciones</h3>
-                        <div class="seccion-border">
-                            <h4 class="config-info margin-bottom">Datos importantes a tener en cuenta:</h4>
-                            <ul class="observaciones config-info">
-                                <li>El vehículo se entrega limpio y con tanque lleno, se debe devolver igual.</li>
-                                <li>No está permitido fumar ni transportar mascotas sin aviso previo.</li>
-                                <li>Sin límite de kilometraje dentro del departamento de Antioquia.</li>
-                                <li>Se recomienda respetar los límites de velocidad establecidos.</li>
-                            </ul>
+                        <div class="grid grid-cols-2 gap-3 text-sm">
+                            <p><span class="font-bold text-gray-900">Marca:</span> <span x-text="data.marca"></span></p>
+                            <p><span class="font-bold text-gray-900">Línea:</span> <span x-text="data.linea"></span></p>
+                            <p><span class="font-bold text-gray-900">Modelo:</span> <span x-text="data.modelo"></span>
+                            </p>
+                            <p><span class="font-bold text-gray-900">Clase:</span> <span x-text="data.clase"></span></p>
+                            <p><span class="font-bold text-gray-900">Color:</span> <span x-text="data.color"></span></p>
                         </div>
                     </div>
 
-                    <div class="secc-info2">
-                        <div class="importante">
-                            <h3 class="inf-div-2">Importante</h3>
-                            <div class="seccion-border">
-                                <h4 class="config-info">Verifica las restricciones de pico y placa para los días que necesites el vehículo.</h4>
-                            </div>
+                    <div class="border rounded-xl p-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">Tarifa</h4>
+                        <div class="text-2xl font-extrabold text-gray-900">
+                            $<span x-text="data.precio"></span> COP / DÍA
                         </div>
-                        <div class="segur-cober">
-                            <h3 class="inf-div-2">Seguridad y cobertura</h3>
-                            <div class="seccion-border">
-                                <h4 class="config-info">El vehículo cuenta con SOAT vigente, seguro todo riesgo y asistencia 24/7.</h4>
-                                <h4 class="config-info">Incluye servicio de reemplazo en caso de avería durante el alquiler.</h4>
-                            </div>
+                        <p class="text-sm text-gray-600 mt-1">
+                            Incluye impuestos, seguro y asistencia en carretera.
+                        </p>
+
+                        <div class="mt-4 flex gap-2">
+                            <a href="#"
+                                class="px-4 py-2 text-sm font-bold bg-[#C91843] text-white rounded-xl hover:bg-[#B0174B] transition">
+                                RENTAR
+                            </a>
+
+                            <button type="button" @click="close()"
+                                class="px-4 py-2 text-sm font-bold bg-gray-200 rounded-xl hover:bg-gray-300 transition">
+                                Cerrar
+                            </button>
                         </div>
-                        
                     </div>
 
+                    {{-- Si quieres, aquí agregas observaciones / cobertura, pero ya con datos reales si existen --}}
                 </div>
             </div>
         </div>
     </div>
-
 </div>
+
+<script>
+    function vehiculoModal() {
+        return {
+            open: false,
+            mainPhoto: '',
+            thumbs: [],
+            data: {
+                id: '',
+                marca: '',
+                linea: '',
+                modelo: '',
+                clase: '',
+                color: '',
+                precio: '0',
+            },
+            openModal(main, thumbs, data) {
+                this.mainPhoto = main || '';
+                this.thumbs = Array.isArray(thumbs) ? thumbs : [];
+                this.data = data || this.data;
+                this.open = true;
+            },
+            close() {
+                this.open = false;
+            }
+        }
+    }
+</script>

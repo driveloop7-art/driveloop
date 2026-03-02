@@ -153,23 +153,12 @@ class Vehiculo extends Model
 	}
 
 	// Filtra únicamente los vehículos que tienen los tres documentos obligatorios aprobados (tipos 1, 2 y 3).
+	
 	public function scopeVerified($query)
-	{
-		return $query
-			->whereHas(
-				'documentos_vehiculos',
-				fn($q) =>
-				$q->where('idtipdocveh', 1)->where('estado', 'APROBADO')
-			)
-			->whereHas(
-				'documentos_vehiculos',
-				fn($q) =>
-				$q->where('idtipdocveh', 2)->where('estado', 'APROBADO')
-			)
-			->whereHas(
-				'documentos_vehiculos',
-				fn($q) =>
-				$q->where('idtipdocveh', 3)->where('estado', 'APROBADO')
-			);
-	}
+{
+    return $query->whereHas('documentos_vehiculos', function ($q) {
+        $q->whereIn('idtipdocveh', [1, 2, 3])
+          ->whereRaw("TRIM(UPPER(estado)) = 'APROBADO'");
+    }, '>=', 3);
+}
 }

@@ -51,7 +51,9 @@ class VehController extends Controller
         return response()->json($ciudades);
     }
 
-    public function create() {}
+    public function create() {
+        
+    }
 
     public function store(Request $request)
     {
@@ -125,12 +127,14 @@ class VehController extends Controller
     }
 
     // Se actualiza el método autosDestacados para utilizar el scope verified, asegurando que solo se muestren en el home vehículos con documentación aprobada
+
     public function autosDestacados()
     {
-        $vehiculos = Vehiculo::verified()
+        $vehiculos = Vehiculo::query()
+            ->where('disp', 1)
             ->with(['marca', 'linea', 'ciudad', 'fotos_vehiculos'])
             ->latest('cod')
-            ->limit(12)
+            // ->limit(12)
             ->get();
 
         return view('home', compact('vehiculos'));

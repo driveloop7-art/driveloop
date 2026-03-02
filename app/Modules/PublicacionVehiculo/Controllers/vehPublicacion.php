@@ -10,7 +10,6 @@ use App\Modules\PublicacionVehiculo\Models\Accesorio;
 use App\Models\MER\Departamento;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Auth;
 use App\Models\MER\Vehiculo;
 
@@ -39,11 +38,8 @@ class vehPublicacion extends Controller
     {
         $vehiculo = Vehiculo::with(['marca', 'linea', 'clase', 'ciudad'])
             ->where('cod', $cod)
-            ->where('user_id', Auth::id()) // seguridad: solo el dueño
+            ->where('user_id', Auth::id()) 
             ->firstOrFail();
-
-        // Si necesitas combos (marcas, clases, etc) cárgalos aquí
-        // $marcas = Marca::orderBy('des')->get();
 
 
         return view('modules.PublicacionVehiculo.editVeh', [

@@ -1,10 +1,32 @@
+{{-- La consulta muestra solo los vehiculos que tienen los 3 documentos aprobados, 
+los vehiculos que se crean a partir de factory o seeders no se van a mostrar porque no se realiza 
+correspondiente el proceso de creacion de vehiculo. --}}
 @php
-    $vehiculos = \App\Models\MER\Vehiculo::query()
-        ->where('user_id', auth('web')->id())
-        ->with(['marca', 'linea', 'clase'])
-        ->orderByDesc('cod')
-        ->get();
+$vehiculos = \App\Models\MER\Vehiculo::query()
+    ->where('user_id', auth()->id())
+    ->whereHas('documentos_vehiculos', function ($q) {
+        $q->where('idtipdocveh', 1)
+          ->where('estado', 'APROBADO');
+    })
+    ->whereHas('documentos_vehiculos', function ($q) {
+        $q->where('idtipdocveh', 2)
+          ->where('estado', 'APROBADO');
+    })
+    ->whereHas('documentos_vehiculos', function ($q) {
+        $q->where('idtipdocveh', 3)
+          ->where('estado', 'APROBADO');
+    })
+    ->with(['marca', 'linea', 'clase', 'fotos_vehiculos'])
+    ->orderByDesc('cod')
+    ->get();
 @endphp
+
+{{-- No alyerar este linea la cual se implementa para evitar el parpadeo --}}
+<style>
+    [x-cloak] {
+        display: none !important;
+    }
+</style>
 
 <x-card class="w-full p-8">
     {{-- Encabezado --}}
@@ -21,8 +43,6 @@
                     <th class="px-4 py-2 text-left">ID</th>
                     <th class="px-4 py-2 text-left">Marca</th>
                     <th class="px-4 py-2 text-left">Linea</th>
-                    <th class="px-4 py-2 text-left">Modelo</th>
-                    <th class="px-4 py-2 text-left">Clase</th>
                     <th class="px-4 py-2 text-left">Color</th>
                     <th class="px-4 py-2 text-left">Acciones</th>
                 </tr>
@@ -34,22 +54,16 @@
                         <td class="px-4 py-2 whitespace-nowrap">{{ $vehiculo->cod }}</td>
                         <td class="px-4 py-2 whitespace-nowrap">{{ $vehiculo->marca->des ?? '-' }}</td>
                         <td class="px-4 py-2 whitespace-nowrap">{{ $vehiculo->linea->des ?? '-' }}</td>
-                        <td class="px-4 py-2 whitespace-nowrap">{{ $vehiculo->mod }}</td>
-                        <td class="px-4 py-2 whitespace-nowrap">{{ $vehiculo->clase->des ?? '-' }}</td>
-                        <td class="px-4 py-2 whitespace-nowrap">{{ $vehiculo->col }}</td>
+                        <td class="px-4 py-2 whitespace-nowrap">{{ $vehiculo->col ?? '-' }}</td>
 
                         <td class="px-4 py-2 whitespace-nowrap">
-                            <div class="flex gap-2">
-                                <a href="{{ route('vehiculos.edit', $vehiculo->cod) }}"
-                                   class="px-3 py-1 text-xs bg-red-700 text-white rounded hover:bg-red-800 transition">
-                                    Editar
-                                </a>
-                            </div>
+                            {{-- modal --}}
+                            @include('modules.PublicacionVehiculo.components.tarjInforVeh') 
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="px-4 py-4 text-center text-gray-400">
+                        <td colspan="6" class="px-4 py-4 text-center text-gray-400">
                             No hay vehículos registrados.
                         </td>
                     </tr>
