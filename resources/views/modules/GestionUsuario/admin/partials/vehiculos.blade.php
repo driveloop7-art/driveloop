@@ -6,11 +6,7 @@
     use App\Models\MER\Clase;
     //Traer todos los usuarios con roles ordenados por orden de creacion descendente
     $vehiculos = Vehiculo::query()
-        ->with(['marca', 'linea', 'clase'])
-        ->whereHas('documentos_vehiculos', fn($q) => $q->where('idtipdocveh', 1)->where('estado', 'APROBADO'))
-        ->whereHas('documentos_vehiculos', fn($q) => $q->where('idtipdocveh', 2)->where('estado', 'APROBADO'))
-        ->whereHas('documentos_vehiculos', fn($q) => $q->where('idtipdocveh', 3)->where('estado', 'APROBADO'))
-        ->orderBy('codmar', 'asc')
+        ->with(['marca', 'linea', 'clase'])->where('disp', 1)
         ->get();
 @endphp
 

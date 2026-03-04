@@ -11,58 +11,6 @@ use App\Models\MER\Vehiculo;
 class BusquedaReservaController extends Controller
 {
 
-
-    // public function index(Request $request)
-    // {
-    //     $vehiculos = [];
-
-
-    //     if ($request->isMethod('post')) {
-
-    //         $validator = Validator::make($request->all(), [
-    //             'pickup_date' => 'required|date|after_or_equal:today',
-    //             'return_date' => 'required|date|after_or_equal:pickup_date',
-    //         ], [
-    //             'pickup_date.after_or_equal' => 'La fecha de recogida no puede ser en el pasado.'
-    //         ]);
-
-    //         if ($validator->fails()) {
-    //             return redirect('/')
-    //                 ->withErrors($validator)
-    //                 ->withInput();
-    //         }
-
-    //         $query = Vehiculo::with(['marca', 'linea', 'ciudad', 'fotos'])
-    //             ->where('disp', 1);
-
-
-    //         if ($request->filled('marca')) {
-    //             $query->where('codmar', $request->marca);
-    //         }
-
-    //         // Si hay pasajeros seleccionados, filtra por esa cantidad
-    //         if ($request->filled('capacity')) {
-    //             $query->where('pas', '>=', (int)$request->capacity);
-    //         }
-
-
-    //         if ($request->filled('price_range')) {
-    //             $range = $request->price_range;
-
-    //             if (str_ends_with($range, '+')) {
-    //                 $min = (int) rtrim($range, '+');
-    //                 $query->where('prerent', '>=', $min);
-    //             } else {
-    //                 [$min, $max] = array_map('intval', explode('-', $range));
-    //                 $query->whereBetween('prerent', [$min, $max]);
-    //             }
-    //         }
-
-    //         $vehiculos = $query->orderByDesc('cod')->get();
-    //     }
-
-    //     return view("modules.busquedareserva.index", compact('vehiculos'));
-    // }
     public function index(Request $request)
 {
     $vehiculos = [];
