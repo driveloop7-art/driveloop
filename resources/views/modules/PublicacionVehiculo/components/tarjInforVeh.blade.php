@@ -59,12 +59,10 @@
                 <div>
                     <h3 class="text-lg font-bold text-gray-900">
                         <span x-text="data.marca"></span>
-                        <span x-text="data.linea"></span>
-                        <span class="text-gray-500 font-medium" x-text="'· ' + data.modelo"></span>
+                        {{-- <span x-text="data.linea"></span>
+                        <span class="text-gray-500 font-medium" x-text="'· ' + data.modelo"></span> --}}
                     </h3>
-                    <p class="text-sm text-gray-500">
-                        ID: <span x-text="data.id"></span>
-                    </p>
+                    
                 </div>
 
                 <button type="button" @click="close()" class="px-3 py-1 text-sm rounded bg-gray-100 hover:bg-gray-200">
@@ -125,10 +123,10 @@
                         </p>
 
                         <div class="mt-4 flex gap-2">
-                            <a href="#"
+                            {{-- <a href="#"
                                 class="px-4 py-2 text-sm font-bold bg-[#C91843] text-white rounded-xl hover:bg-[#B0174B] transition">
                                 RENTAR
-                            </a>
+                            </a> --}}
 
                             <button type="button" @click="close()"
                                 class="px-4 py-2 text-sm font-bold bg-gray-200 rounded-xl hover:bg-gray-300 transition">
