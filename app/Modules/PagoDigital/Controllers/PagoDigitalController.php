@@ -12,10 +12,15 @@ class PagoDigitalController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index(): View
     {
-        return view("modules.PagoDigital.index");
+        $monto = 1350000;
+        return view("modules.PagoDigital.index", compact("monto"));
     }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -36,32 +41,32 @@ class PagoDigitalController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PagoDigital $pagodigital)
+    /* public function show(PagoDigital $pagodigital)
     {
         //
-    }
+    } */
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PagoDigital $pagodigital)
+    /* public function edit(PagoDigital $pagodigital)
     {
         //
-    }
+    } */
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PagoDigital $pagodigital)
+   /*  public function update(Request $request, PagoDigital $pagodigital)
     {
         //
-    }
+    } */
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PagoDigital $pagodigital)
+    /* public function destroy(PagoDigital $pagodigital)
     {
         //
-    }
+    } */
 }

@@ -85,14 +85,20 @@
                 </div>
 
                 <div class="text-2xl font-bold text-gray-900 mb-8">
-                    $150.000 COP/día
+                    {{ $monto }} COP/día
                 </div>
 
                 <div class="w-full">
-                    <x-button type="tertiary"
+                   {{--  <x-button href="{{ route('checkout') }}" type="tertiary"
                         class="w-full !border-dl !text-dl hover:!bg-dl hover:!text-white uppercase font-bold py-3">
                         CONTINUAR
-                    </x-button>
+                    </x-button> --}}
+                <a href="{{ route('checkout', ['monto' => $monto]) }}"
+                    class="w-full border border-dl text-dl hover:bg-dl hover:text-white uppercase font-bold py-3 block text-center">
+                    CONTINUAR
+                </a>
+
+
                 </div>
 
             </x-card>
