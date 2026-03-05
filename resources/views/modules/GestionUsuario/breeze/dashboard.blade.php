@@ -31,13 +31,12 @@
             </x-settings-tab>
 
 
-            
             <!-- Mis contratos -->
-             <x-settings-tab name="contracts" label="Mis contratos">
-                @include('modules.GestionUsuario.breeze.partials.contracts.section')
+            <x-settings-tab name="contractos" label="Mis Contratos y Garantías">
+                @include('modules.ContratoGarantia.index', ['reservas' => $reservas]) 
             </x-settings-tab>
-            
 
+            
         </x-settings-layout>
     </div>
 </x-page>

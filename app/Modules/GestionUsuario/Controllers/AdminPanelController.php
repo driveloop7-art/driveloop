@@ -4,6 +4,7 @@ namespace App\Modules\GestionUsuario\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\MER\User;
+use App\Models\MER\Reserva;
 use Illuminate\Http\Request;
 
 class AdminPanelController extends Controller
@@ -18,7 +19,13 @@ class AdminPanelController extends Controller
         if ($user->hasRole('Administrador') || $user->hasRole('Soporte')) {
             return view('modules.GestionUsuario.admin.index');
         } else {
-            return view('modules.GestionUsuario.breeze.dashboard');
+            // recopilamos únicamente las reservas del usuario autenticado
+            $reservas = $user->reservas()
+                ->with(['user', 'vehiculo.marca', 'vehiculo.linea', 'contrato'])
+                ->orderBy('fecrea', 'desc')
+                ->get();
+
+            return view('modules.GestionUsuario.breeze.dashboard', compact('reservas'));
         }
     }
 

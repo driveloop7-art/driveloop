@@ -1,83 +1,55 @@
-<x-page>
     <div class="container py-4">
         <h1 class="mb-4">Módulo de Contratos y Garantías</h1>
 
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Listado de Reservas y Contratos</h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover table-bordered align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th># Reserva</th>
-                                <th>Cliente</th>
-                                <th>Vehículo</th>
-                                <th>Fechas</th>
-                                <th>Estado Contrato</th>
-                                <th>Referencia</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($reservas as $reserva)
-                            <tr>
-                                <td><strong>#{{ $reserva->cod }}</strong></td>
-                                <td>{{ $reserva->user->nom ?? 'N/A' }} {{ $reserva->user->ape ?? '' }}</td>
-                                <td>
-                                    {{ $reserva->vehiculo->marca->des ?? 'N/A' }} {{ $reserva->vehiculo->linea->des ?? '' }}
-                                </td>
-                                <td>
-                                    <small class="d-block text-muted">Inicio: {{ $reserva->fecini }}</small>
-                                    <small class="d-block text-muted">Fin: {{ $reserva->fecfin }}</small>
-                                </td>
-                                <td>
-                                    @if ($reserva->contrato)
-                                    <span class="badge bg-success">Generado</span>
-                                    <br>
-                                    <small class="text-muted">Cod: {{ $reserva->contrato->codigo_verificacion }}</small>
-                                    @else
-                                    <span class="badge bg-warning text-dark">Pendiente</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($reserva->contrato)
-                                    {{ $reserva->contrato->codigo_verificacion }}
-                                    @else
-                                    -
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($reserva->contrato)
-                                    <a href="{{ route('contrato.descargar', $reserva->cod) }}" target="_blank" class="btn btn-sm btn-outline-primary">
-                                        Ver PDF
-                                    </a>
-                                    <form action="{{ route('contrato.enviar', $reserva->cod) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                            Enviar por Email
-                                        </button>
-                                    </form>
-                                    @else
-                                    <form action="{{ route('contrato.enviar', $reserva->cod) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        <button type="submit" class="btn btn-sm btn-primary">
-                                            Generar y Enviar
-                                        </button>
-                                    </form>
-                                    @endif
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="7" class="text-center text-muted py-4">No hay reservas registradas.</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+        @if($reservas->isNotEmpty())
+        <div class="max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
+            @foreach ($reservas as $reserva)
+            @php
+            $vehiculo = \App\Models\MER\Vehiculo::find($reserva->codveh);
+            $fotoObj = \App\Models\MER\FotoVehiculo::where('codveh', $vehiculo->cod)->first();
+            $foto = $fotoObj ? $fotoObj->ruta : 'https://placehold.co/600x400';
+            $marcaObj = \App\Models\MER\Marca::find($vehiculo->codmar);
+            $lineaObj = \App\Models\MER\Linea::find($vehiculo->codlin);
+            $marca = $marcaObj ? $marcaObj->des : '';
+            $linea = $lineaObj ? $lineaObj->des : '';
+            @endphp
+
+            <div class="bg-white border border-gray-300 rounded-md p-4 mb-4 flex flex-col md:flex-row items-center justify-between shadow-sm">
+                <div class="flex items-center space-x-6 w-full md:w-auto">
+                    <div class="w-32 h-20 flex-shrink-0">
+                        <img src="{{ asset($foto) }}" alt="{{ $marca }} {{ $linea }}" class="w-full h-full object-contain">
+                    </div>
+
+                    <div class="flex flex-col">
+                        <h4 class="text-xl font-bold text-gray-900">{{ $marca }} {{ $linea }}</h4>
+                        <p class="text-gray-500 text-sm">Reserva #{{ $reserva->cod }}</p>
+                        <p class="text-gray-500 text-sm">Finaliza: {{ $reserva->fecfin }}</p>
+                        @if($reserva->contrato)
+                        <span class="badge bg-success mt-1">Contrato generado</span>
+                        @else
+                        <span class="badge bg-warning text-dark mt-1">Pendiente de contrato</span>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-end mt-4 md:mt-0 space-y-2 w-full md:w-auto">
+                    {{-- Botón Ver PDF / Generar PDF --}}
+                    <a href="{{ route('contrato.descargar', $reserva->cod) }}" target="_blank"
+                        class="btn btn-sm {{ $reserva->contrato ? 'btn-outline-primary' : 'btn-primary' }}">
+                        {{ $reserva->contrato ? '📄 Ver PDF' : '📄 Generar PDF' }}
+                    </a>
+                    {{-- Botón Enviar por Email --}}
+                    <form action="{{ route('contrato.enviar', $reserva->cod) }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                            ✉️ {{ $reserva->contrato ? 'Reenviar Email' : 'Generar y Enviar' }}
+                        </button>
+                    </form>
                 </div>
             </div>
+            @endforeach
         </div>
+        @else
+        <div class="p-4 text-center text-gray-500">No hay reservas registradas.</div>
+        @endif
     </div>
-</x-page>
