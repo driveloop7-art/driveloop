@@ -25,7 +25,16 @@ class Contrato extends Model
     protected $fillable = [
         'reserva_id',
         'codigo_verificacion',
-        'ruta_pdf'
+        'ruta_pdf',
+        'aceptado_arrendatario',
+        'fecha_aceptacion_arrendatario',
+        'ip_arrendatario',
+        'user_agent_arrendatario'
+    ];
+
+    protected $casts = [
+        'aceptado_arrendatario' => 'boolean',
+        'fecha_aceptacion_arrendatario' => 'datetime',
     ];
 
     public function reserva()

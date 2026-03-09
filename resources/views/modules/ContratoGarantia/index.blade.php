@@ -45,6 +45,22 @@
                             📝 Acta de Entrega
                         </a>
                     </div>
+                    {{-- Botón Aceptar Contrato Electrónicamente --}}
+                    @if($reserva->contrato)
+                    @if(!$reserva->contrato->aceptado_arrendatario && auth()->id() == $reserva->user_id)
+                    <form action="{{ route('contrato.aceptar', $reserva->cod) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Declaras bajo la gravedad de juramento que aceptas en su totalidad las cláusulas y condiciones de este contrato?');">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-success">
+                            ✅ Aceptar Contrato
+                        </button>
+                    </form>
+                    @elseif($reserva->contrato->aceptado_arrendatario)
+                    <span class="badge bg-info text-dark mt-1">
+                        Aceptado: {{ $reserva->contrato->fecha_aceptacion_arrendatario->format('d/m/Y') }}
+                    </span>
+                    @endif
+                    @endif
+
                     {{-- Botón Enviar por Email --}}
                     <form action="{{ route('contrato.enviar', $reserva->cod) }}" method="POST" class="d-inline">
                         @csrf

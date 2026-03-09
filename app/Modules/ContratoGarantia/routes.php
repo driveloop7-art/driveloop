@@ -8,4 +8,5 @@ Route::prefix('contrato-garantia')->group(function () {
     Route::get('/descargar/{codReserva}', [ContratoGarantiaController::class, 'generarContrato'])->name('contrato.descargar');
     Route::get('/acta-entrega/{codReserva}', [ContratoGarantiaController::class, 'descargarActaEntrega'])->name('acta.entrega.descargar');
     Route::post('/enviar/{codReserva}', [ContratoGarantiaController::class, 'enviarContrato'])->name('contrato.enviar');
+    Route::post('/aceptar/{codReserva}', [ContratoGarantiaController::class, 'aceptarContrato'])->name('contrato.aceptar');
 });

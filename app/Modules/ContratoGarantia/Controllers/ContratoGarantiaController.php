@@ -104,4 +104,27 @@ class ContratoGarantiaController extends Controller
 
         return back()->with('message', 'Contrato enviado exitosamente al correo del cliente.');
     }
+
+    public function aceptarContrato(\Illuminate\Http\Request $request, $codReserva)
+    {
+        $reserva = Reserva::with(['user', 'contrato'])->findOrFail($codReserva);
+
+        // Validar que la reserva pertenezca al usuario autenticado (si aplica seguridad extra)
+        if ($reserva->user_id !== auth()->id()) {
+            return back()->with('message', 'No tienes permiso para aceptar este contrato.');
+        }
+
+        if (!$reserva->contrato) {
+            return back()->with('message', 'El contrato aún no ha sido generado.');
+        }
+
+        $reserva->contrato->update([
+            'aceptado_arrendatario' => true,
+            'fecha_aceptacion_arrendatario' => now(),
+            'ip_arrendatario' => $request->ip(),
+            'user_agent_arrendatario' => $request->userAgent()
+        ]);
+
+        return back()->with('message', '¡Contrato aceptado y firmado electrónicamente con éxito!');
+    }
 }

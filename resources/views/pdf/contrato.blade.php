@@ -254,10 +254,21 @@
                         NIT: _______________________
                     </td>
                     <td>
+                        @if(isset($reserva->contrato) && $reserva->contrato->aceptado_arrendatario)
+                        <div style="border: 2px solid #D32F2F; border-radius: 5px; padding: 10px; color: #D32F2F; font-size: 11px; text-align: center; margin-bottom: 5px;">
+                            <strong style="font-size: 13px;">FIRMADO Y ACEPTADO ELECTRÓNICAMENTE</strong><br>
+                            Por: {{ $nombreUsuario }}<br>
+                            Fecha: {{ $reserva->contrato->fecha_aceptacion_arrendatario->format('d/m/Y H:i:s') }}<br>
+                            IP: {{ $reserva->contrato->ip_arrendatario }}<br>
+                            Cód. Verificación: {{ $codigo ?? $reserva->contrato->codigo_verificacion }}
+                        </div>
+                        <span class="bold" style="color: #333">EL ARRENDATARIO</span>
+                        @else
                         <div class="line"></div>
                         <span class="bold" style="color: #333">EL ARRENDATARIO</span><br>
                         Nombre: {{ $nombreUsuario }}<br>
                         ID/Cédula: _______________________
+                        @endif
                     </td>
                 </tr>
             </table>
