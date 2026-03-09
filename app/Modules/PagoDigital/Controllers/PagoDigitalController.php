@@ -1,72 +1,76 @@
 <?php
 
-namespace App\Modules\PagoDigital\Controllers;
+    namespace App\Modules\PagoDigital\Controllers;
 
-use App\Modules\PagoDigital\Models\PagoDigital;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
+    use App\Modules\PagoDigital\Models\PagoDigital;
+    use App\Http\Controllers\Controller;
+    use Illuminate\Http\Request;
+    use Illuminate\View\View;
 
-class PagoDigitalController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-
-    public function index(): View
+    class PagoDigitalController extends Controller
     {
-        $monto = 1350000;
-        return view("modules.PagoDigital.index", compact("monto"));
-    }
+        /**
+         * Display a listing of the resource.
+         */
+
+        public function index(): View
+        {
+            $monto = 1350000;
+            // Obtenemos la última reserva para fines de demostración
+            $reserva = \App\Models\MER\Reserva::latest('cod')->first();
+            $reserva_id = $reserva ? $reserva->cod : 1;
+
+            return view("modules.PagoDigital.index", compact("monto", "reserva_id"));
+        }
 
 
 
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        /**
+         * Show the form for creating a new resource.
+         */
+        public function create()
+        {
+            //
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        /**
+         * Store a newly created resource in storage.
+         */
+        public function store(Request $request)
+        {
+            //
+        }
 
-    /**
-     * Display the specified resource.
-     */
+        /**
+         * Display the specified resource.
+         */
     /* public function show(PagoDigital $pagodigital)
     {
         //
     } */
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+        /**
+         * Show the form for editing the specified resource.
+         */
     /* public function edit(PagoDigital $pagodigital)
     {
         //
     } */
 
-    /**
-     * Update the specified resource in storage.
-     */
+        /**
+         * Update the specified resource in storage.
+         */
    /*  public function update(Request $request, PagoDigital $pagodigital)
     {
         //
     } */
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    /* public function destroy(PagoDigital $pagodigital)
+        /**
+         * Remove the specified resource from storage.
+         */
+        /* public function destroy(PagoDigital $pagodigital)
     {
         //
     } */
-}
+    }

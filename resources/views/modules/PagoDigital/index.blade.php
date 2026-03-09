@@ -89,14 +89,14 @@
                 </div>
 
                 <div class="w-full">
-                   {{--  <x-button href="{{ route('checkout') }}" type="tertiary"
-                        class="w-full !border-dl !text-dl hover:!bg-dl hover:!text-white uppercase font-bold py-3">
-                        CONTINUAR
-                    </x-button> --}}
-                <a href="{{ route('checkout', ['monto' => $monto]) }}"
-                    class="w-full border border-dl text-dl hover:bg-dl hover:text-white uppercase font-bold py-3 block text-center">
+                    {{-- <x-button href="{{ route('checkout') }}" type="tertiary"
+                    class="w-full !border-dl !text-dl hover:!bg-dl hover:!text-white uppercase font-bold py-3">
                     CONTINUAR
-                </a>
+                    </x-button> --}}
+                    <a href="{{ route('checkout', ['monto' => $monto, 'reserva_id' => $reserva_id]) }}"
+                        class="w-full border border-dl text-dl hover:bg-dl hover:text-white uppercase font-bold py-3 block text-center">
+                        CONTINUAR
+                    </a>
 
 
                 </div>
