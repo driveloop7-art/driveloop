@@ -7,6 +7,8 @@ use App\Modules\Api\Controllers\Auth\LogoutUserController;
 use App\Modules\Api\Controllers\Auth\PasswordResetController;
 use App\Modules\Api\Controllers\Auth\VerifyEmailController;
 use App\Modules\Api\Controllers\Admin\UserController;
+use App\Modules\Api\Controllers\Admin\VehiculosController;
+use App\Modules\Api\Controllers\Admin\ReservasController;
 
 Route::middleware('throttle:5,1')->group(function () {
     Route::post('/register', [RegisteredUserController::class, 'register']);
@@ -21,4 +23,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/email/verification-notification', [VerifyEmailController::class, 'sendNotification']);
     Route::post('/email/verify', [VerifyEmailController::class, 'verifyNotification']);
     Route::get('/users', [UserController::class, 'index']);
+    Route::get('/vehicles', [VehiculosController::class, 'index']);
+    Route::get('/reservas', [ReservasController::class, 'index']);
 });
