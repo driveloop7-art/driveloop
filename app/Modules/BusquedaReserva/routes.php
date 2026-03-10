@@ -7,4 +7,5 @@ Route::prefix('busqueda-reserva')
     ->middleware(['web', 'auth']) //Middleware implementado
     ->group(function () {
         Route::match(['get', 'post'], '/', [BusquedaReservaController::class, 'index'])->name('busqueda.reserva');
+        Route::post('/reservar', [BusquedaReservaController::class, 'store'])->name('reserva.store');
     });

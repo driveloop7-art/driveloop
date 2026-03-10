@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use App\Models\MER\Vehiculo;
+use App\Models\MER\Reserva;
 
 class BusquedaReservaController extends Controller
 {
@@ -68,6 +72,70 @@ class BusquedaReservaController extends Controller
 }
 
 
+
+
+
+
+  /**
+     * Guarda un nuevo registro de reserva en la base de datos.
+     * 
+     * Este método valida las fechas de recogida y devolución, asegura que el vehículo existe,
+     * calcula el costo total basado en los días de alquiler y crea el registro con
+     * estado "Pendiente" antes de redirigir al usuario.
+     */
+    public function store(Request $request)
+    {
+        // 1. Validar los datos de entrada del formulario
+        $request->validate([
+            'codveh' => 'required|exists:vehiculos,cod',
+            'pickup_date' => 'required|date|after_or_equal:today',
+            'return_date' => 'required|date|after_or_equal:pickup_date',
+        ]);
+
+        try {
+            // Iniciar transacción de base de datos para asegurar integridad
+            DB::beginTransaction();
+
+            // 2. Obtener la información del vehículo (para el precio por día)
+            $vehiculo = Vehiculo::findOrFail($request->codveh);
+
+            // 3. Calcular la duración de la reserva en días
+            $fecini = Carbon::parse($request->pickup_date);
+            $fecfin = Carbon::parse($request->return_date);
+            
+            // Si las fechas son iguales, se cuenta como 1 día mínimo
+            $dias = $fecini->diffInDays($fecfin) ?: 1; 
+
+            // 4. Calcular el valor total (Días * Precio de Renta del vehículo)
+            $valorTotal = $dias * $vehiculo->prerent;
+
+            // 5. Crear el registro de la reserva
+            $reserva = Reserva::create([
+                'fecrea' => Carbon::now(),       // Fecha de creación (ahora)
+                'fecini' => $fecini,             // Fecha de inicio de reserva
+                'fecfin' => $fecfin,             // Fecha de fin de reserva
+                'val' => $valorTotal,            // Valor calculado total
+                'codusu' => Auth::id(),          // ID del usuario autenticado
+                'codveh' => $request->codveh,    // ID del vehículo reservado
+                'codestres' => 1,                // Estado ID 1: "Pendiente"
+            ]);
+
+            // Confirmar los cambios en la base de datos
+            DB::commit();
+
+            // Redirigir con mensaje de éxito mostrando el valor estimado
+            return redirect()->route('busqueda.reserva')
+                ->with('success', 'Reserva iniciada correctamente. Valor estimado: $' . number_format($valorTotal, 2));
+
+        } catch (\Exception $e) {
+            // En caso de error, revertir cualquier cambio en la BD
+            DB::rollBack();
+            return redirect()->back()
+                ->with('error', 'Ocurrió un error al procesar la reserva: ' . $e->getMessage())
+                ->withInput();
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -79,10 +147,6 @@ class BusquedaReservaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
