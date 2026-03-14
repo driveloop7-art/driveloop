@@ -23,14 +23,20 @@
              <x-settings-tab name="trips" label="Mis viajes">
                 @include('modules.GestionUsuario.breeze.partials.trips.section')
             </x-settings-tab>
+            
 
             <!-- Tickets -->
              <x-settings-tab name="tickets" label="Tickets">
                 @include('modules.SoporteComunicacion.partials.tickets.section')
             </x-settings-tab>
 
-            
 
+            <!-- Mis contratos -->
+            <x-settings-tab name="contractos" label="Mis Contratos y Garantías">
+                @include('modules.ContratoGarantia.index', ['reservas' => $reservas]) 
+            </x-settings-tab>
+
+            
         </x-settings-layout>
     </div>
 </x-page>

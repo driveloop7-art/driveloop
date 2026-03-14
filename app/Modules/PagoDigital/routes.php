@@ -33,11 +33,4 @@ Route::get('/pago-pendiente', function () {
     return view('modules.PagoDigital.pending');
 })->name('pago.pendiente');
 
-
-
-
-
-
-
-
-
+Route::post('/webhook/mercadopago', [PagoDigitalController::class, 'handleWebhook'])->name('webhook.mercadopago');
