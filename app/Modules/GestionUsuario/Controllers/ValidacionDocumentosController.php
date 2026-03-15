@@ -25,10 +25,12 @@ class ValidacionDocumentosController extends Controller
 
         // 2. Traer los usuarios con sus documentos
         $users = User::whereIn('id', $userIds)
-            ->with(['documentos_usuarios' => function ($query) {
-                // Solo nos interesa traer los documentos de identidad y licencia
-                $query->whereIn('idtipdocusu', [1, 2, 3]);
-            }])
+            ->with([
+                'documentos_usuarios' => function ($query) {
+                    // Solo nos interesa traer los documentos de identidad y licencia
+                    $query->whereIn('idtipdocusu', [1, 2, 3]);
+                }
+            ])
             ->paginate(10);
 
         return view('modules.GestionUsuario.soporte.index', compact('users'));
@@ -43,11 +45,11 @@ class ValidacionDocumentosController extends Controller
 
         // Separar documentos para facilitar la vista
         $docIdentidad = $user->documentos_usuarios->whereIn('idtipdocusu', [1, 3])->first();
-        $docLicencia  = $user->documentos_usuarios->where('idtipdocusu', 2)->first();
+        $docLicencia = $user->documentos_usuarios->where('idtipdocusu', 2)->first();
 
         // Verificar si hay algo pendiente
         $pendienteIdentidad = $docIdentidad && $docIdentidad->estado === 'PENDIENTE';
-        $pendienteLicencia  = $docLicencia && $docLicencia->estado === 'PENDIENTE';
+        $pendienteLicencia = $docLicencia && $docLicencia->estado === 'PENDIENTE';
 
         return view('modules.GestionUsuario.soporte.show', compact('user', 'docIdentidad', 'docLicencia', 'pendienteIdentidad', 'pendienteLicencia'));
     }
@@ -67,8 +69,14 @@ class ValidacionDocumentosController extends Controller
         $documento->mensaje_rechazo = null; // Limpiar mensaje si existía
         $documento->save();
 
-        // Enviar notificación al usuario
+        // Actualizar el número de documento en el usuario si es documento de identidad
         $user = User::find($documento->codusu);
+        if ($documento->idtipdocusu == 1 || $documento->idtipdocusu == 3) {
+            $user->cod = $documento->num;
+            $user->save();
+        }
+
+        // Enviar notificación al usuario
         if ($user) {
             $user->notify(new DocumentoRevisado($documento));
         }

@@ -16,6 +16,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int|null $cod
  * @property string $nom
  * @property string $ape
+ * @property string $cod
  * @property string $email
  * @property string|null $tel
  * @property Carbon|null $fecnac
@@ -56,6 +57,7 @@ class User extends Authenticatable implements MustVerifyEmail
 	protected $fillable = [
 		'nom',
 		'ape',
+		'cod',
 		'email',
 		'tel',
 		'fecnac',

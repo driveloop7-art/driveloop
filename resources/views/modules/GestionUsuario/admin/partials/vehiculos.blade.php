@@ -4,10 +4,34 @@
     use App\Models\MER\Linea;
     use App\Models\MER\User;
     use App\Models\MER\Clase;
-    //Traer todos los usuarios con roles ordenados por orden de creacion descendente
-    $vehiculos = Vehiculo::query()
-        ->with(['marca', 'linea', 'clase'])->where('disp', 1)
-        ->get();
+
+    
+    // Obtener parámetros de filtro
+    $fMarca = request('marca');
+    $fClase = request('clase');
+    $fColor = request('color');
+
+    // Cargar opciones para los selects (Necesario para el formulario de filtro)
+    $opcionesMarcas = Marca::orderBy('des')->get();
+    $opcionesClases = Clase::orderBy('des')->get();
+
+    // Query de vehículos con filtros
+    $query = Vehiculo::query()
+        ->where('disp', 1);
+
+    if ($fMarca) {
+        $query->where('codmar', $fMarca);
+    }
+
+    if ($fClase) {
+        $query->where('codcla', $fClase);
+    }
+
+    if ($fColor) {
+        $query->where('col', 'like', '%' . $fColor . '%');
+    }
+
+    $vehiculos = $query->get();
 @endphp
 
 <x-card class="w-full p-8">
@@ -17,6 +41,60 @@
         <h3 class="text-lg font-medium text-left">{{ __('Vehículos Registrados') }}</h3>
         <span class="text-sm text-gray-500">Total: {{ $vehiculos->count() }}</span>
     </div>
+
+    
+    {{-- Filtro --}}
+    <div class="mb-8 p-6 bg-gray-50 rounded-xl border border-gray-100 flex justify-center">
+        <form action="{{ url()->current() }}" method="GET" class="flex flex-col md:flex-row items-end justify-center gap-6 w-full max-w-6xl">
+            {{-- Campo oculto para mantener la pestaña activa --}}
+            <input type="hidden" name="tab" value="vehiculos">
+
+            <div class="w-full md:w-48">
+                <label for="marca" class="block text-xs font-medium text-gray-500 uppercase mb-2">Marca</label>
+                <select name="marca" id="marca" class="w-full rounded-lg border-gray-300 text-sm focus:ring-red-500 focus:border-red-500">
+                    <option value="">Todas</option>
+                    @foreach($opcionesMarcas as $opcMarca)
+                        <option value="{{ $opcMarca->cod }}" {{ $fMarca == $opcMarca->cod ? 'selected' : '' }}>
+                            {{ $opcMarca->des }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="w-full md:w-48">
+                <label for="clase" class="block text-xs font-medium text-gray-500 uppercase mb-2">Clase</label>
+                <select name="clase" id="clase" class="w-full rounded-lg border-gray-300 text-sm focus:ring-red-500 focus:border-red-500">
+                    <option value="">Todas</option>
+                    @foreach($opcionesClases as $opcClase)
+                        <option value="{{ $opcClase->cod }}" {{ $fClase == $opcClase->cod ? 'selected' : '' }}>
+                            {{ $opcClase->des }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="w-full md:w-48">
+                <label for="color" class="block text-xs font-semibold text-gray-500 uppercase mb-2">Color</label>
+                <input type="text" name="color" id="color" value="{{ $fColor }}" placeholder="Ej: Rojo, Gris..." 
+                    class="w-full rounded-lg border-gray-300 text-sm focus:ring-red-500 focus:border-red-500">
+            </div>
+
+            {{-- botones de filtrar y limpiar --}}
+            <div class="flex gap-3 items-center">
+                <x-button type="primary" class="!py-3 !px-10 text-base h-[38px]">
+                    FILTRAR
+                </x-button>
+                <a href="{{ url()->current() }}?tab=vehiculos" 
+                   class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium xl:rounded-md text-gray-700 bg-white hover:bg-gray-50 w-full mt-2 sm:mt-0">
+                    Limpiar
+                </a>
+            </div>
+        </form>
+    </div>
+ {{-- Filtro --}}
+
+
+
 
     {{-- Tabla --}}
     <div class="overflow-x-auto">
