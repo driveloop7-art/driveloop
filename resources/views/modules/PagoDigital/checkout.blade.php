@@ -19,8 +19,8 @@
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     
     <script>
-        // Inicializamos con tu TEST Public Key
-        const mp = new MercadoPago("APP_USR-4a5bd65d-8ae1-44b8-9ecb-fc8748998bf5", {
+
+const mp = new MercadoPago("APP_USR-4a5bd65d-8ae1-44b8-9ecb-fc8748998bf5", {
         locale: 'es-CO'
        
     });
@@ -28,7 +28,7 @@
         const bricksBuilder = mp.bricks();
 
         const renderComponent = async (bricksBuilder) => {
-            // Esto evita que el botón se duplique
+
             if (window.walletBrickController) window.walletBrickController.unmount();
             
             window.walletBrickController = await bricksBuilder.create("wallet", "wallet_container", {

@@ -2,55 +2,54 @@
 
 namespace App\Modules\PagoDigital\Controllers;
 
-use App\Http\Controllers\Controller; // Importa el controlador base de Laravel
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use MercadoPago\Client\Preference\PreferenceClient;
 use MercadoPago\MercadoPagoConfig;
 use MercadoPago\Exceptions\MPApiException;
+use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
     public function checkout(Request $request, $monto): View
     {
-        // Configuramos el token desde el ENV
         MercadoPagoConfig::setAccessToken(env('MERCADO_PAGO_ACCESS_TOKEN'));
-        
         $client = new PreferenceClient();
-
+        $base = config('app.url');
         try {
-            $preference = $client->create([
+            $preferenceData = [
                 "items" => [
                     [
-                        "title"       => "Mi producto",
+                        "title"       => "Reserva de vehículo",
                         "quantity"    => 1,
-                        "unit_price"  => (float) $monto, //2500.00, 
+                        "unit_price"  => (float) $monto,
                         "currency_id" => "COP",
-                        "category_id" => "others", 
                     ]
                 ],
+
                 "back_urls" => [
-                    "success" => route('pago.exitoso'),
-                    "failure" => route('pago.fallido'),
-                    "pending" => route('pago.pendiente'),                    
+                    "success" => $base . "/pago-exitoso",
+                    "failure" => $base . "/pago-fallido",
+                    "pending" => $base . "/pago-pendiente"
                 ],
-                "auto_return" => null, 
+                "auto_return" => "approved",
                 "binary_mode" => true,
-            ]);
+            ];
+
+            $preference = $client->create($preferenceData);
 
             return view('modules.PagoDigital.checkout', ['preference' => $preference, 'monto' => $monto]);
-
         } catch (MPApiException $e) {
-            dd($e->getApiResponse()->getContent()); 
-        } catch (\Exception $e) {
-            dd($e->getMessage());
+
+            dd($e->getApiResponse()->getContent());
         }
     }
 
     public function success(Request $request)
     {
         $payment_id = $request->get('payment_id');
-        return view('modules.PagoDigital.success', compact('payment_id'));
+        return redirect()->route('home');
     }
 
     public function failure(Request $request)
