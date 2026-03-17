@@ -300,7 +300,7 @@
             render();
 
             // =========================
-            // ✅ MODAL (Tailwind)
+            // MODAL (Tailwind)
             // =========================
             const modal = document.getElementById('docsSavedModal');
             const closeBtn = document.getElementById('closeDocsSavedModal');

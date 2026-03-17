@@ -127,6 +127,7 @@
                                 class="px-4 py-2 text-sm font-bold bg-[#C91843] text-white rounded-xl hover:bg-[#B0174B] transition">
                                 RENTAR
                             </a> --}}
+                            
 
                             <button type="button" @click="close()"
                                 class="px-4 py-2 text-sm font-bold bg-gray-200 rounded-xl hover:bg-gray-300 transition">
@@ -135,7 +136,6 @@
                         </div>
                     </div>
 
-                    {{-- Si quieres, aquí agregas observaciones / cobertura, pero ya con datos reales si existen --}}
                 </div>
             </div>
         </div>
