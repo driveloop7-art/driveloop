@@ -141,7 +141,7 @@
 
     $marcaVehiculo = $reserva->vehiculo->marca->des ?? '_______________';
     $lineaVehiculo = $reserva->vehiculo->linea->des ?? '_______________';
-    $modeloVehiculo = $reserva->vehiculo->modelo ?? '________';
+    $modeloVehiculo = $reserva->vehiculo->mod ?? '________';
     $placaVehiculo = $reserva->vehiculo->placa ?? '________';
     @endphp
 

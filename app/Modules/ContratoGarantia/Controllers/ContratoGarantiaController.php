@@ -9,13 +9,14 @@ use App\Mail\ContratoAlquilerMail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ContratoGarantiaController extends Controller
 {
     public function index()
     {
         // mostrar todas las reservas para administradores/soporte, y solo las propias para usuarios normales
-        $user = auth()->user();
+        $user = auth()->id();
         $query = Reserva::with(['user', 'vehiculo.marca', 'vehiculo.linea', 'contrato']);
 
         if (! ($user->hasRole('Administrador') || $user->hasRole('Soporte'))) {
@@ -110,10 +111,9 @@ class ContratoGarantiaController extends Controller
         $reserva = Reserva::with(['user', 'contrato'])->findOrFail($codReserva);
 
         // Validar que la reserva pertenezca al usuario autenticado (si aplica seguridad extra)
-        if ($reserva->user_id !== auth()->id()) {
-            return back()->with('message', 'No tienes permiso para aceptar este contrato.');
-        }
-
+       if ($reserva->user_id !== Auth::id()) {
+    return back()->with('message', 'No tienes permiso para aceptar este contrato.');
+}
         if (!$reserva->contrato) {
             return back()->with('message', 'El contrato aún no ha sido generado.');
         }

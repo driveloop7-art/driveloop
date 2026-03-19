@@ -93,4 +93,9 @@ class Reserva extends Model
 	{
 		return $this->hasOne(Contrato::class, 'reserva_id', 'cod');
 	}
+
+	public function pagos()
+	{
+		return $this->hasMany(Pago::class, 'reserva_id', 'cod');
+	}
 }
