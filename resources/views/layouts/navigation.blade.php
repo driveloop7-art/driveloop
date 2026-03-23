@@ -21,10 +21,6 @@
                     :active="request()->routeIs('calificacion.resena')">
                     {{ __('Reseñas') }}
                 </x-breeze::nav-link>
-                <x-breeze::nav-link :href="route('contrato.garantia')"
-                    :active="request()->routeIs('contrato.garantia')">
-                    {{ __('Contratos') }}
-                </x-breeze::nav-link>
                 <x-breeze::nav-link :href="route('pago.digital')" :active="request()->routeIs('pago.digital')">
                     {{ __('Pagos') }}
                 </x-breeze::nav-link>

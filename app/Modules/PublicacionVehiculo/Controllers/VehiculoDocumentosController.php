@@ -56,7 +56,7 @@ class VehiculoDocumentosController extends Controller
 
         DB::transaction(function () use ($request, $placa, $codveh, $docsDir, $fotosDir) {
 
-            
+
             foreach ($request->documentos as $doc) {
 
                 $idtipdoc = (int) $doc['idtipdoc'];
@@ -120,6 +120,5 @@ class VehiculoDocumentosController extends Controller
         });
 
         return back()->with('docs_saved', true);
-        
     }
 }
