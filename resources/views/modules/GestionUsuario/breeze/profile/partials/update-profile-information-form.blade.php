@@ -52,6 +52,11 @@
                 </div>
             @endif
         </div>
+        <div>
+            <x-input name="tel" label="{{ __('Phone Number') }}" type="text" :value="old('tel', $user->tel)"
+                minlength="10" maxlength="10" />
+            <x-breeze::input-error class="mt-2" :messages="$errors->get('tel')" />
+        </div>
 
         <div class="flex items-center gap-4">
             <x-button class="text-xs w-full lg:w-60" x-data="">{{ __('Save') }}</x-button>

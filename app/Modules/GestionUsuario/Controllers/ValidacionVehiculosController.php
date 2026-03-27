@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MER\DocumentoVehiculo;
 use App\Models\MER\Vehiculo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ValidacionVehiculosController extends Controller
 {
@@ -43,50 +44,79 @@ class ValidacionVehiculosController extends Controller
         $docTecno   = $vehiculo->documentos_vehiculos->where('idtipdocveh', 3)->first();
 
         return view('modules.GestionUsuario.soporte.show_vehiculo', compact(
-            'vehiculo', 
-            'docTarjeta', 
-            'docSoat', 
+            'vehiculo',
+            'docTarjeta',
+            'docSoat',
             'docTecno'
         ));
     }
 
-    /**
-     * Aprueba un documento de vehículo.
-     */
     public function approve($id)
     {
-        $documento = DocumentoVehiculo::findOrFail($id);
+        return DB::transaction(function () use ($id) {
 
-        if ($documento->estado !== 'PENDIENTE') {
-            return back()->with('error', 'El documento no está en estado pendiente.');
-        }
+            $documento = DocumentoVehiculo::findOrFail($id);
 
-        $documento->estado = 'APROBADO';
-        $documento->mensaje_rechazo = null;
-        $documento->save();
+            if ($documento->estado !== 'PENDIENTE') {
+                return back()->with('error', 'El documento no está en estado pendiente.');
+            }
 
-        return back()->with('success', 'Documento del vehículo aprobado correctamente.');
+            // 1) Aprobar documento
+            $documento->update([
+                'estado' => 'APROBADO',
+                'mensaje_rechazo' => null,
+            ]);
+
+            $codveh = $documento->codveh;
+
+            $aprobadosPorTipo = DocumentoVehiculo::where('codveh', $codveh)
+                ->whereIn('idtipdocveh', [1, 2, 3])
+                ->where('estado', 'APROBADO')
+                ->distinct('idtipdocveh')
+                ->count('idtipdocveh');
+
+            $vehiculo = Vehiculo::where('cod', $codveh)->firstOrFail();
+
+            if ($aprobadosPorTipo === 3) {
+
+                $vehiculo->update(['disp' => 1]);
+
+                return redirect()
+                    ->route('soporte.vehiculos.index')
+                    ->with('success', 'Vehículo completamente aprobado. Ahora está disponible.');
+            }
+
+            $vehiculo->update(['disp' => 0]);
+
+            return redirect()
+                ->route('soporte.vehiculos.show', $codveh)
+                ->with('success', 'Documento aprobado. Aún faltan documentos por aprobar.');
+        });
     }
 
-    /**
-     * Rechaza un documento de vehículo.
-     */
     public function reject(Request $request, $id)
     {
         $request->validate([
             'mensaje_rechazo' => 'required|string|max:255',
         ]);
 
-        $documento = DocumentoVehiculo::findOrFail($id);
+        return DB::transaction(function () use ($request, $id) {
 
-        if ($documento->estado !== 'PENDIENTE') {
-            return back()->with('error', 'El documento no está en estado pendiente.');
-        }
+            $documento = DocumentoVehiculo::findOrFail($id);
 
-        $documento->estado = 'RECHAZADO';
-        $documento->mensaje_rechazo = $request->mensaje_rechazo;
-        $documento->save();
+            if ($documento->estado !== 'PENDIENTE') {
+                return back()->with('error', 'El documento no está en estado pendiente.');
+            }
 
-        return back()->with('success', 'Documento del vehículo rechazado correctamente.');
+            // 1) Rechazar documento
+            $documento->update([
+                'estado' => 'RECHAZADO',
+                'mensaje_rechazo' => $request->mensaje_rechazo,
+            ]);
+
+            Vehiculo::where('cod', $documento->codveh)->update(['disp' => 0]);
+
+            return back()->with('success', 'Documento rechazado.');
+        });
     }
 }

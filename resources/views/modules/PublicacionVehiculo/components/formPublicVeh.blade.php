@@ -12,9 +12,11 @@
             <!-- Columna izquierda -->
             <div class="veh-col">
                 <div class="grid__form__reg">
+
                     <div class="veh-field">
                         <input type="hidden" name="vin" value="pendiente">
                     </div>
+
                     <div class="veh-field veh-field_1"> <label class="veh-label" for="clase">Clase de
                             vehículo</label>
                         <div class="veh-select"> <select id="clase" name="codcla" required>
@@ -25,26 +27,29 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="veh-field veh-field_2"> <label class="veh-label" for="marca">Marca</label>
                         <div class="veh-select"> <select id="marca" name="codmar" required>
                                 <option value="" selected disabled hidden>Seleccione una marca</option>
                                 @foreach ($vehiculoMarca as $itemMarca)
                                     <option value="{{ $itemMarca->cod }}">{{ $itemMarca->des }}</option>
                                 @endforeach
-                            </select> </div>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="veh-field veh-field_3"> <label class="veh-label" for="linea">Linea</label>
-                        <div class="veh-select"> <select id="linea" name="codlin" required disabled>
+                        <div class="veh-select">
+                            <select id="linea" name="codlin" required disabled>
                                 <option value="" selected disabled>Seleccione una marca primero</option>
                             </select>
                         </div>
                     </div>
 
-
-                    <div class="veh-field veh-field_4"> <label class="veh-label" for="modelo_anio">Modelo
-                            (año)</label> <input id="modelo_anio" name="mod" type="number" inputmode="numeric"
-                            min="1900" max="2026" step="1" placeholder="Ej: 2026" required />
+                    <div class="veh-field veh-field_4">
+                        <label class="veh-label" for="modelo_anio">Modelo (año)</label>
+                        <input id="modelo_anio" name="mod" type="number" inputmode="numeric" min="1900"
+                            max="2026" step="1" placeholder="Ej: 2026" required />
                     </div>
 
                     <div class="veh-field veh-field_5">
@@ -52,17 +57,21 @@
                         <input id="pasajeros" name="pas" type="number" inputmode="numeric" min="1"
                             max="4" step="1" placeholder="" required />
                     </div>
+
                     <div class="veh-field veh-field_6"> <label class="veh-label" for="color">Color</label>
                         <input id="color" name="col" type="text" required />
                     </div>
+
                     <div class="veh-field veh-field_7">
                         <label class="veh-label" for="Cilindraje">Cilindraje</label>
                         <input id="Cilindraje" name="cil" type="number" inputmode="numeric" min="1000"
                             max="2500" step="1" placeholder="Ej: 2000" required />
                     </div>
+
                     <div class="veh-field">
                         <input type="hidden" name="codpol" value="1">
                     </div>
+
                     <div class="veh-field veh-field_8"> <label class="veh-label" for="combustible">Tipo de
                             combustible</label>
                         <div class="veh-select"> <select id="combustible" name="codcom" required>
@@ -74,7 +83,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="veh-field veh-field_9">
                         <label class="veh-label" for="prerent">Precio por día (24h)</label>
                         <input id="prerent" name="prerent" type="number" inputmode="decimal" step="0.01"
@@ -85,6 +94,7 @@
             </div> <!-- Columna derecha -->
             <div class="veh-col">
                 <div class="veh-block">
+
                     <div class="veh-block">
                         <h3>Por favor seleccione los accesorios del vehículo.</h3>
                         <div class="veh-accessories">
@@ -96,6 +106,7 @@
                             @endforeach
                         </div>
                     </div>
+                    
                     <div class="veh-block">
                         <h3>Por favor seleccione la ubicación donde se encuentra el vehículo.</h3>
                         <div class="veh-row2">

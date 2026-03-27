@@ -97,7 +97,7 @@ class Vehiculo extends Model
 
 	public function documentos_vehiculos()
 	{
-		return $this->hasMany(DocumentoVehiculo::class, 'codveh');
+		return $this->hasMany(\App\Models\MER\DocumentoVehiculo::class, 'codveh', 'cod');
 	}
 
 	public function fotos_vehiculos()
@@ -127,8 +127,7 @@ class Vehiculo extends Model
 
 	public function ciudad()
 	{
-		return $this->belongsTo(Ciudad::class, 'cod', 'cod');
-
+		return $this->belongsTo(Ciudad::class, 'codciu', 'cod');
 	}
 
 	public function fotos()
@@ -145,11 +144,21 @@ class Vehiculo extends Model
 	public function isVerified(): bool
 	{
 		$docs = $this->documentos_vehiculos;
-		
+
 		$hasTarjeta = $docs->where('idtipdocveh', 1)->where('estado', 'APROBADO')->isNotEmpty();
 		$hasSoat    = $docs->where('idtipdocveh', 2)->where('estado', 'APROBADO')->isNotEmpty();
 		$hasTecno   = $docs->where('idtipdocveh', 3)->where('estado', 'APROBADO')->isNotEmpty();
 
 		return $hasTarjeta && $hasSoat && $hasTecno;
 	}
+
+	// Filtra únicamente los vehículos que tienen los tres documentos obligatorios aprobados (tipos 1, 2 y 3).
+	
+	public function scopeVerified($query)
+{
+    return $query->whereHas('documentos_vehiculos', function ($q) {
+        $q->whereIn('idtipdocveh', [1, 2, 3])
+          ->whereRaw("TRIM(UPPER(estado)) = 'APROBADO'");
+    }, '>=', 3);
+}
 }

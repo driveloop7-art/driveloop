@@ -28,4 +28,11 @@
             </div>
         </div>
     </section>
+    
 </x-app-layout>
+
+    <!-- Seccion de autos recomendados agregada independiente de layout porque el 
+        primer <section> no tiene altura ni min-h-screen, entonces el siguiente 
+            contenido se pierde detras, quien sea el editor que lo revise y si puede lo juste. -->
+        @include('modules.PublicacionVehiculo.components.tarjVehiculosPrinc') 
+    <!-- Seccion de autos recomendados -->

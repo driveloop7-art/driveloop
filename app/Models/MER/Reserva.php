@@ -61,7 +61,7 @@ class Reserva extends Model
 
 	public function user()
 	{
-		return $this->belongsTo(User::class, 'codusu', 'cod');
+		return $this->belongsTo(User::class, 'idusu', 'id');
 	}
 
 	public function vehiculo()

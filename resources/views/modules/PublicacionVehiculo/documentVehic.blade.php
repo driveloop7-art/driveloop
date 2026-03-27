@@ -1,4 +1,13 @@
 <x-app-layout>
+    @if (session('docs_saved'))
+        <script>
+            window.dispatchEvent(new CustomEvent('open-modal', {
+                detail: 'docs-uploaded'
+            }))
+        </script>
+    @endif
+
+    
     <section class="docs-card">
         <h3 class="docs-title">Documentos del vehículo</h3>
 
@@ -9,6 +18,7 @@
                 <div class="docs-left">
 
                     <input type="hidden" name="codveh" value="{{ $vehiculo->cod }}">
+
                     {{-- Placa --}}
                     <div class="docs-row">
                         <label class="docs-label" for="placa">Placa del vehículo</label>
@@ -67,12 +77,12 @@
                             <span class="docs-status" id="status_tecno">Ningún archivo seleccionado</span>
                         </div>
 
-                        {{-- OJO: este id debe ser el real en tu tabla tipo_documento --}}
                         <input type="hidden" name="documentos[2][idtipdoc]" value="3">
                         <small class="help">Sube la tecnomecánica vigente. PDF o imagen (máx. 10MB).</small>
                     </div>
 
                 </div>
+
                 {{-- Fotos --}}
                 <div class="grid-fotos">
                     <div class="docs-row">
@@ -95,8 +105,7 @@
                         {{-- Panel preview --}}
                         <div class="photo-preview" id="photoPreview">
                             <p class="photo-empty" id="photoEmpty">Aquí se mostrarán las fotos seleccionadas (máximo
-                                10).
-                            </p>
+                                10).</p>
                         </div>
 
                         <button id="btnContinuar" type="submit" class="btn-submit">Continuar</button>
@@ -105,6 +114,54 @@
             </div>
         </form>
     </section>
+
+    {{-- MODAL: Documentos guardados --}}
+    <div id="docsSavedModal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4" aria-hidden="true">
+        {{-- overlay --}}
+        <div class="absolute inset-0 bg-black/60"></div>
+
+        {{-- card --}}
+        <div class="relative w-full max-w-lg rounded-2xl bg-white shadow-2xl ring-1 ring-black/10">
+            <div class="p-6">
+                <div class="flex items-start gap-4">
+                    {{-- icon --}}
+                    <div class="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-100">
+                        <svg class="h-6 w-6 text-emerald-600" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <path d="M20 6 9 17l-5-5" />
+                        </svg>
+                    </div>
+
+                    <div class="flex-1">
+                        <h3 id="docsSavedTitle" class="text-lg font-bold text-gray-900">
+                            Documentos guardados
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-600">
+                            Tus documentos fueron guardados correctamente y quedan <span class="font-semibold">en
+                                proceso de aprobación</span>.
+                            Te notificaremos cuando sean validados.
+                        </p>
+                    </div>
+
+                    <button type="button" id="closeDocsSavedModalX"
+                        class="rounded-lg p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100"
+                        aria-label="Cerrar">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M18 6 6 18M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="mt-6 flex justify-end gap-2">
+                    <a href="{{ route('dashboard') }}"
+                        class="inline-flex items-center justify-center rounded-xl bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900/30">
+                        Entendido
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         (function() {
@@ -236,12 +293,52 @@
                 updateButtonState();
             });
 
-
             updateFileStatus(doc0, st0);
             updateFileStatus(doc1, st1);
             updateFileStatus(doc2, st2);
             updateButtonState();
             render();
+
+            // =========================
+            // ✅ MODAL (Tailwind)
+            // =========================
+            const modal = document.getElementById('docsSavedModal');
+            const closeBtn = document.getElementById('closeDocsSavedModal');
+            const closeBtnX = document.getElementById('closeDocsSavedModalX');
+
+            function openModal() {
+                if (!modal) return;
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                if (!modal) return;
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            }
+
+            closeBtn?.addEventListener('click', closeModal);
+            closeBtnX?.addEventListener('click', closeModal);
+
+            // Click fuera del card (overlay)
+            modal?.addEventListener('click', (e) => {
+                if (e.target === modal || e.target.classList.contains('bg-black/60')) closeModal();
+            });
+
+            // ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeModal();
+            });
+
+            // Abrir SOLO si el backend mandó el flag
+            const shouldOpen = @json(session('docs_saved', false));
+            if (shouldOpen) openModal();
+
         })();
     </script>
 </x-app-layout>

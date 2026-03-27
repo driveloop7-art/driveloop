@@ -1,4 +1,5 @@
 <?php
+
 use App\Modules\GestionUsuario\Controllers\DocumentoUsuarioController;
 use App\Modules\GestionUsuario\Controllers\AdminRolesController;
 use App\Modules\GestionUsuario\Controllers\ValidacionDocumentosController;
@@ -38,4 +39,3 @@ Route::prefix('gestion-usuario')->group(function () {
         });
     });
 });
-

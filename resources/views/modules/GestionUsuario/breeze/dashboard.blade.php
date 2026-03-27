@@ -14,8 +14,8 @@
         <x-settings-layout>
             <!-- Mis vehículos -->
             <x-settings-tab name="vehicles" label="Mis vehículos">
-                <div class="bg-white p-6 md:p-8 border border-gray-400 rounded-lg shadow-sm">
-                    <p class="text-gray-500">Gestión de vehículos próximamente.</p>
+                <div class="bg-white  md:p-8 ">
+                    @include('modules.GestionUsuario.breeze.partials.vehUsuarios')
                 </div>
             </x-settings-tab>
 

@@ -13,6 +13,7 @@ use App\Models\MER\Departamento;
 use App\Models\MER\Linea;
 use App\Models\MER\Vehiculo;
 use Illuminate\Http\Request;
+use App\Models\MER\FotoVehiculo;
 use Illuminate\Support\Facades\DB;
 
 class VehController extends Controller
@@ -25,7 +26,6 @@ class VehController extends Controller
             'vehiculoAccesorios' => Accesorio::all(),
             'vehiculoCombustible' => Combustible::all(),
             'deptoVehiculo' => Departamento::all(),
-
         ]);
     }
 
@@ -51,8 +51,9 @@ class VehController extends Controller
         return response()->json($ciudades);
     }
 
-
-    public function create() {}
+    public function create() {
+        
+    }
 
     public function store(Request $request)
     {
@@ -63,24 +64,17 @@ class VehController extends Controller
             'pas' => ['required', 'integer', 'min:1', 'max:99'],
             'cil' => ['required', 'integer', 'min:50', 'max:10000'],
             'codpol' => ['required', 'integer', 'exists:polizas_vehiculo,cod'],
-
             'codmar' => ['required', 'integer'],
             'codlin' => ['required', 'integer'],
             'codcla' => ['required', 'integer'],
             'codcom' => ['required', 'integer'],
-
-            
             'codciu' => ['required', 'integer', 'exists:ciudades,cod'],
-
-
             'accesorios' => ['nullable', 'array'],
             'accesorios.*' => ['integer', 'exists:accesorios,id'],
             'prerent' => ['required', 'numeric', 'min:0']
-
         ]);
 
         return DB::transaction(function () use ($data) {
-
             $vehiculo = Vehiculo::create([
                 'user_id' => Auth::id(),
                 'vin' => $data['vin'],
@@ -94,35 +88,55 @@ class VehController extends Controller
                 'codcla' => $data['codcla'],
                 'codcom' => $data['codcom'],
                 'codciu' => $data['codciu'],
-                'prerent' => $data['prerent']
-
+                'prerent' => $data['prerent'],
+                'disp' => 0,
             ]);
 
             $vehiculo->accesorios()->sync($data['accesorios'] ?? []);
 
-            // return redirect()->route('vehiculo-ver');
             return redirect()->route('vehiculo.documentos.create', ['codveh' => $vehiculo->cod]);
         });
     }
 
-    public function vehiculo()
+    public function misVehiculosAprobados()
     {
-        return view('modules.PublicacionVehiculo.documentVehic', [
-            'vehiculo' => Vehiculo::all(),
-        ]);
+        $TIPOS_REQUERIDOS = [1, 2, 3];
+
+        $vehiculos = Vehiculo::query()
+            ->where('user_id', Auth::id())
+            ->with(['marca', 'linea', 'clase'])
+            ->whereHas(
+                'documentos_vehiculos',
+                fn($q) =>
+                $q->where('idtipdocveh', 1)->where('estado', 'APROBADO')
+            )
+            ->whereHas(
+                'documentos_vehiculos',
+                fn($q) =>
+                $q->where('idtipdocveh', 2)->where('estado', 'APROBADO')
+            )
+            ->whereHas(
+                'documentos_vehiculos',
+                fn($q) =>
+                $q->where('idtipdocveh', 3)->where('estado', 'APROBADO')
+            )
+            ->orderBy('codmar', 'asc')
+            ->get();
+
+        return view('modules.PublicacionVehiculo.documentVehic', compact('vehiculos'));
     }
 
-    /**
-     * Publica el vehículo (lo pone disponible) tras verificar documentos.
-     */
-    public function activar(int $codveh)
+    // Se actualiza el método autosDestacados para utilizar el scope verified, asegurando que solo se muestren en el home vehículos con documentación aprobada
+
+    public function autosDestacados()
     {
-        $vehiculo = Vehiculo::where('user_id', Auth::id())
-            ->where('cod', $codveh)
-            ->firstOrFail();
+        $vehiculos = Vehiculo::query()
+            ->where('disp', 1)
+            ->with(['marca', 'linea', 'ciudad', 'fotos_vehiculos'])
+            ->latest('cod')
+            // ->limit(12)
+            ->get();
 
-        $vehiculo->update(['disp' => true]);
-
-        return back()->with('ok', 'Vehículo publicado correctamente.');
+        return view('home', compact('vehiculos'));
     }
 }

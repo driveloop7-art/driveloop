@@ -119,6 +119,7 @@ class VehiculoDocumentosController extends Controller
             }
         });
 
-        return redirect()->route('dashboard')->with('ok', 'Guardado OK');
+        return back()->with('docs_saved', true);
+        
     }
 }

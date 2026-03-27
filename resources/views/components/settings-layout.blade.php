@@ -1,4 +1,7 @@
-<div x-data="{ tabs: [], activeTab: null }" class="flex flex-col md:flex-row gap-12 align-top">
+<div x-data="{ 
+tabs: [], 
+    activeTab: new URLSearchParams(window.location.search).get('tab') || null
+}" class="flex flex-col md:flex-row gap-12 align-top">
     <!-- Sidebar -->
     <div class="w-full md:w-64 flex-shrink-0">
         <div class="w-full md:w-64 flex-shrink-0">

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Modules\Api\Response\ApiResponser;
 use App\Modules\Api\Response\UserDTO;
 
+
 class AuthenticatedSessionController extends Controller
 {
     use ApiResponser;
@@ -23,8 +24,19 @@ class AuthenticatedSessionController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return $this->error('Credenciales incorrectas', 422);
+        switch ($request['device_name']) {
+            case 'Desktop':
+                if (!$user || !Hash::check($request->password, $user->password) || !$user->hasRole('Administrador')) {
+                    return $this->error('Credenciales incorrectas', 422);
+                }
+                break;
+            case 'Mobile':
+                if (!$user || !Hash::check($request->password, $user->password) || !$user->hasRole('Usuario')) {
+                    return $this->error('Credenciales incorrectas', 422);
+                }
+                break;
+            default:
+                return $this->error('Credenciales incorrectas', 422);
         }
 
         $token = $user->createToken($request->device_name, expiresAt: now()->addDay())->plainTextToken;

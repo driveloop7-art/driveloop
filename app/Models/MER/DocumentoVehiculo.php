@@ -21,40 +21,21 @@ use Illuminate\Database\Eloquent\Model;
  */
 class DocumentoVehiculo extends Model
 {
-	// protected $table = 'documentos_vehiculo';
-	// public $incrementing = false;
-	// public $timestamps = false;
-
-	// protected $casts = [
-	// 	'id' => 'int',
-	// 	'idtipdocveh' => 'int',
-	// 	'codveh' => 'int'
-	// ];
-
-	// protected $fillable = [
-	// 	'idtipdocveh',
-	// 	'numdoc',
-	// 	'empexp',
-	// 	'descdoc',
-	// 	'codveh'
-	// ];
-
 	protected $table = 'documentos_vehiculo';
-    protected $primaryKey = 'id';
-    public $incrementing = true; 
-    protected $keyType = 'int';
-    public $timestamps = false;
+	protected $primaryKey = 'id';
+	public $incrementing = true;
+	protected $keyType = 'int';
+	public $timestamps = false;
 
-    protected $fillable = [
-        'idtipdocveh',
-        'numdoc',
-        'empexp',
-        'descdoc',
-        'codveh',
-        'estado',
-        'mensaje_rechazo'
-    ];
-	
+	protected $fillable = [
+		'idtipdocveh',
+		'numdoc',
+		'empexp',
+		'descdoc',
+		'codveh',
+		'estado',
+		'mensaje_rechazo'
+	];
 
 	public function tipo_doc_vehiculo()
 	{
@@ -63,6 +44,6 @@ class DocumentoVehiculo extends Model
 
 	public function vehiculo()
 	{
-		return $this->belongsTo(Vehiculo::class, 'codveh');
+		return $this->belongsTo(\App\Models\MER\Vehiculo::class, 'codveh', 'cod');
 	}
 }
