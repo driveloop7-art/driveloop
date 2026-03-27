@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/reservas', [ReservasController::class, 'index']);
 
     // Rutas de Documentos del Usuario
+    Route::get('/user/documents/types', [DocumentController::class, 'getDocumentTypes']);
     Route::get('/user/documents', [DocumentController::class, 'index']);
     Route::post('/user/documents/upload', [DocumentController::class, 'upload']);
     Route::get('/info-user', [GetUserController::class, 'index']);

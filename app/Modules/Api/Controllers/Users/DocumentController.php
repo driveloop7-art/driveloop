@@ -81,4 +81,16 @@ class DocumentController extends Controller
             'data'    => $documentos
         ], 200);
     }
+
+    /**
+     * Retorna los tipos de documentos disponibles (Cédula, Pasaporte, etc)
+     */
+    public function getDocumentTypes()
+    {
+        $tipos = \App\Models\MER\TipoDocUsuario::all();
+        return response()->json([
+            'status' => 'Success',
+            'data'   => $tipos
+        ], 200);
+    }
 }
