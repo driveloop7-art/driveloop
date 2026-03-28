@@ -11,7 +11,7 @@ use App\Modules\Api\Controllers\Admin\VehiculosController;
 use App\Modules\Api\Controllers\Admin\ReservasController;
 use App\Modules\Api\Controllers\Users\DocumentController;
 use App\Modules\Api\Controllers\Users\GetUserController;
-
+use App\Modules\Api\Controllers\Users\UpdateEmailController;
 Route::middleware('throttle:5,1')->group(function () {
     Route::post('/register', [RegisteredUserController::class, 'register']);
     Route::post('/login', [AuthenticatedSessionController::class, 'login']);
@@ -32,5 +32,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/documents/types', [DocumentController::class, 'getDocumentTypes']);
     Route::get('/user/documents', [DocumentController::class, 'index']);
     Route::post('/user/documents/upload', [DocumentController::class, 'upload']);
-    Route::get('/info-user', [GetUserController::class, 'index']);
+    Route::get('/info-user', GetUserController::class);
+    Route::put('/user/email', UpdateEmailController::class);
 });
