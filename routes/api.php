@@ -12,8 +12,10 @@ use App\Modules\Api\Controllers\Admin\ReservasController;
 use App\Modules\Api\Controllers\Users\DocumentController;
 use App\Modules\Api\Controllers\Users\GetUserController;
 use App\Modules\Api\Controllers\Auth\PasswordUpdateController;
-
 use App\Modules\Api\Controllers\Users\UpdateEmailController;
+use App\Modules\Api\Controllers\Users\ResendEmailVerificationController;
+use App\Modules\Api\Controllers\Users\UpdatePhoneNumberController;
+
 Route::middleware('throttle:5,1')->group(function () {
     Route::post('/register', [RegisteredUserController::class, 'register']);
     Route::post('/login', [AuthenticatedSessionController::class, 'login']);
@@ -38,4 +40,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/update-password', [PasswordUpdateController::class, 'update']);
     Route::get('/info-user', GetUserController::class);
     Route::put('/user/email', UpdateEmailController::class);
+    Route::post('/user/email/resend', ResendEmailVerificationController::class);
+    Route::put('user/phone', UpdatePhoneNumberController::class);
 });
