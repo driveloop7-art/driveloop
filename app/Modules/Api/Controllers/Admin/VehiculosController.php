@@ -15,6 +15,23 @@ class VehiculosController extends Controller
         $vehiculos = Vehiculo::all();
         $vehiculosHechos = [];
         foreach ($vehiculos as $vehiculo) {
+            
+            // Replicando la lógica de la imagen de la vista web:
+            $ruta = $vehiculo->fotos_vehiculos->first()?->ruta;
+            $fotoUrl = asset('img/no-image.jpg'); // Fallback por defecto
+            
+            if ($ruta) {
+                if (str_starts_with($ruta, 'http')) {
+                    $fotoUrl = $ruta;
+                } else {
+                    $ruta = ltrim($ruta, '/');
+                    if (!str_starts_with($ruta, 'vehiculos/')) {
+                        $ruta = 'vehiculos/' . $ruta;
+                    }
+                    $fotoUrl = \Illuminate\Support\Facades\Storage::disk('public')->url($ruta);
+                }
+            }
+
             $vehiculosHechos[] = [
                 'cod' => $vehiculo->cod,
                 'vin' => $vehiculo->vin,
@@ -27,8 +44,10 @@ class VehiculosController extends Controller
                 'poliza' => $vehiculo->codpol,
                 'combustible' => $vehiculo->codcom,
                 'ciudad' => $vehiculo->codciu,
-                'precio_renta' => $vehiculo->prerent,
+                'precio_renta' => number_format((float) ($vehiculo->prerent ?? 0), 0, ',', '.'),
+                'precio_renta_crudo' => $vehiculo->prerent,
                 'disponibilidad' => $vehiculo->disp,
+                'imagen' => $fotoUrl,
             ];
         }
 
