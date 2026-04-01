@@ -3,40 +3,46 @@
 namespace App\Models\MER;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
-/**
- * Class FotoVehiculo
- * 
- * @property int $cod
- * @property string $nom
- * @property string $ruta
- * @property string $dim
- * @property string $mim
- * @property int $pes
- * @property int|null $codveh
- * 
- * @property Vehiculo|null $vehiculo
- *
- * @package App\Models\MER
- */
+
 class FotoVehiculo extends Model
 {
-	
-	protected $table = 'fotos_vehiculo';
-	protected $primaryKey = 'cod';
-	public $timestamps = false;
+    protected $table = 'fotos_vehiculo';
+    protected $primaryKey = 'cod';
+    public $timestamps = false;
 
-	protected $fillable = [
-		'nom',
-		'ruta',
-		'dim',
-		'mim',
-		'pes',
-		'codveh',
-	];
+    protected $fillable = [
+        'nom',
+        'ruta',
+        'dim',
+        'mim',
+        'pes',
+        'codveh',
+    ];
 
-	public function vehiculo()
-	{
-		return $this->belongsTo(Vehiculo::class, 'codveh');
-	}
+    public function vehiculo()
+    {
+        return $this->belongsTo(Vehiculo::class, 'codveh');
+    }
+
+
+	// Se realiza cambio en este modelo con el fin de optimizar la presentacion de las imagenes y permitir 
+	// que se pueda usar en cualquier vista con blade usando sintaxis simple como {{ $foto->url }}
+
+
+    public function getUrlAttribute(): string
+    {
+        if (!$this->ruta) {
+            return asset('img/no-image.jpg');
+        }
+
+        if (str_starts_with($this->ruta, 'http://') || str_starts_with($this->ruta, 'https://')) {
+            return $this->ruta;
+        }
+
+        $ruta = ltrim($this->ruta, '/');
+
+        return Storage::disk('public')->url($ruta);
+    }
 }

@@ -3,7 +3,7 @@
         background-image: url('{{ asset('img/fondo-carrusel.jpg.jpeg') }}');
         background-size: 100%;">
 
-    
+
     <div class="absolute inset-0 bg-black/70"></div>
 
     <!-- Contenido encima del overlay -->
@@ -21,20 +21,12 @@
             <div class="swiper-wrapper">
 
                 @foreach ($vehiculos as $vehiculo)
-                    @php
-                        $ruta = $vehiculo->fotos_vehiculos->first()?->ruta;
 
-                        if (!$ruta) {
-                            $fotoUrl = asset('img/no-image.jpg');
-                        } elseif (str_starts_with($ruta, 'http')) {
-                            $fotoUrl = $ruta;
-                        } else {
-                            $ruta = ltrim($ruta, '/');
-                            if (!str_starts_with($ruta, 'vehiculos/')) {
-                                $ruta = 'vehiculos/' . $ruta;
-                            }
-                            $fotoUrl = \Illuminate\Support\Facades\Storage::disk('public')->url($ruta);
-                        }
+                {{-- Se reemplaza codigo anterior por logica mas limpia con el fi de optimizar la presentacion de las imagenes --}}
+
+                    @php
+                        $foto = $vehiculo->fotos_vehiculos->first();
+                        $fotoUrl = $foto ? $foto->url : asset('img/no-image.jpg');
 
                         $precio = number_format((float) ($vehiculo->prerent ?? 0), 0, ',', '.');
                     @endphp
@@ -52,7 +44,8 @@
                                 <div class="grid grid-cols-2 gap-x-10 gap-y-2 text-sm">
                                     <div class="flex items-baseline gap-2">
                                         <span class="font-bold text-gray-900">Marca:</span>
-                                        <span class="text-gray-700 uppercase">{{ $vehiculo->marca?->des ?? '---' }}</span>
+                                        <span
+                                            class="text-gray-700 uppercase">{{ $vehiculo->marca?->des ?? '---' }}</span>
                                     </div>
 
                                     <div class="flex items-baseline justify-end gap-2 text-right">
@@ -73,7 +66,8 @@
                             </div>
 
                             <div class="grid grid-cols-2">
-                                <div class="rounded-bl-2xl bg-slate-900 px-4 py-3 text-center text-sm font-extrabold text-white">
+                                <div
+                                    class="rounded-bl-2xl bg-slate-900 px-4 py-3 text-center text-sm font-extrabold text-white">
                                     ${{ $precio }} / DÍA
                                 </div>
 

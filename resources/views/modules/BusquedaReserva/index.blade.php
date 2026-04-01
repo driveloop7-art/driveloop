@@ -79,9 +79,12 @@
                     $fotos = $itemVeh->fotos ?? collect();
 
                     $foto = $fotos->first();
-                    $img = $foto ? asset('storage/' . $foto->ruta) : asset('AUTO.jpg');
 
-                    $miniaturas = $fotos->take(3)->map(fn($f) => asset('storage/' . $f->ruta))->values()->toArray();
+                    // se optimiza el ternario con el fin de realizar una presentancion mas limpia
+                    //  y mostrar un fallback mas elegante en caso de no encontrar la ruta
+
+                    $img = $foto ? $foto->url : asset('img/no-image.jpg');
+                    $miniaturas = $fotos->take(3)->map(fn($f) => $f->url)->values()->toArray();
 
                     $payload = [
                         'mainPhoto' => $img,
