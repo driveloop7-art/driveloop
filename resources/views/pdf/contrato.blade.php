@@ -142,7 +142,38 @@
     $marcaVehiculo = $reserva->vehiculo->marca->des ?? '_______________';
     $lineaVehiculo = $reserva->vehiculo->linea->des ?? '_______________';
     $modeloVehiculo = $reserva->vehiculo->mod ?? '________';
-    $placaVehiculo = $reserva->vehiculo->placa ?? '________';
+    
+    $placaDoc = $reserva->vehiculo?->documentos_vehiculos?->firstWhere('idtipdocveh', 1)?->numdoc ?? null;
+    if (!$placaDoc && optional($reserva->vehiculo?->documentos_vehiculos)->isNotEmpty()) {
+        $placaDoc = $reserva->vehiculo->documentos_vehiculos->first()?->numdoc;
+    }
+    $placaVehiculo = $placaDoc ?? '________';
+
+    $colorVehiculo = $reserva->vehiculo?->col ?? '________';
+    $motorVehiculo = $reserva->vehiculo?->vin ?? '________';
+
+    // Propietario (Arrendador)
+    $propietario = $reserva->vehiculo?->user;
+    $nombrePropietario = trim(($propietario?->nom ?? '') . ' ' . ($propietario?->ape ?? ''));
+    if (empty($nombrePropietario)) $nombrePropietario = '____________________';
+
+    $dniPropietario = '_________________';
+    if ($propietario && optional($propietario->documentos_usuarios)->isNotEmpty()) {
+        $docProp = $propietario->documentos_usuarios->whereIn('idtipdocusu', [1, 3])->first();
+        if ($docProp) $dniPropietario = $docProp->num;
+    }
+
+    $ciudadPropietario = $propietario?->ciudad?->des ?? '_________________';
+
+    // Usuario (Arrendatario)
+    $dniUsuario = '_________________';
+    $usuario = $reserva->user;
+    if ($usuario && optional($usuario->documentos_usuarios)->isNotEmpty()) {
+        $docUsr = $usuario->documentos_usuarios->whereIn('idtipdocusu', [1, 3])->first();
+        if ($docUsr) $dniUsuario = $docUsr->num;
+    }
+
+    $ciudadUsuario = $usuario?->ciudad?->des ?? '_________________';
     @endphp
 
     <table class="header-table">
@@ -199,8 +230,8 @@
             <p style="margin-top: 0;">En la ciudad de <strong>Pasto</strong>, a los <strong>{{ date('d') }}</strong> días del mes de <strong>{{ \Carbon\Carbon::now()->locale('es')->monthName }}</strong> de <strong>{{ date('Y') }}</strong>, comparecen:</p>
 
             <ul>
-                <li><span class="bold">EL ARRENDADOR:</span> DriveLoop SAS, identificado con NIT No. _________________, domiciliado en la ciudad de Pasto.</li>
-                <li><span class="bold">EL ARRENDATARIO:</span> {{ $nombreUsuario }}, identificado con DNI/Cédula No. _________________, domiciliado en __________________________.</li>
+                <li><span class="bold">EL ARRENDADOR:</span> {{ $nombrePropietario }}, identificado con DNI/Cédula No. {{ $dniPropietario }}, domiciliado en la ciudad de {{ $ciudadPropietario }}.</li>
+                <li><span class="bold">EL ARRENDATARIO:</span> {{ $nombreUsuario }}, identificado con DNI/Cédula No. {{ $dniUsuario }}, domiciliado en {{ $ciudadUsuario }}.</li>
             </ul>
 
             <p>Ambas partes, en pleno uso de sus facultades legales, acuerdan celebrar el presente contrato bajo las siguientes cláusulas:</p>
@@ -211,8 +242,8 @@
                 <li><span class="bold">Marca:</span> {{ $marcaVehiculo }}</li>
                 <li><span class="bold">Modelo/Línea:</span> {{ $modeloVehiculo }} - {{ $lineaVehiculo }}</li>
                 <li><span class="bold">Placa:</span> {{ $placaVehiculo }}</li>
-                <li><span class="bold">Color:</span> _________________</li>
-                <li><span class="bold">Número de Motor:</span> _________________</li>
+                <li><span class="bold">Color:</span> {{ $colorVehiculo }}</li>
+                <li><span class="bold">Número de Motor:</span> {{ $motorVehiculo }}</li>
             </ul>
 
             <span class="bold">2. Duración</span><br>
@@ -249,9 +280,9 @@
                 <tr>
                     <td>
                         <div class="line"></div>
-                        <span class="bold" style="color: #333">EL ARRENDADOR (DriveLoop SAS)</span><br>
-                        Nombre: ____________________<br>
-                        NIT: _______________________
+                        <span class="bold" style="color: #333">EL ARRENDADOR</span><br>
+                        Nombre: {{ $nombrePropietario }}<br>
+                        ID/Cédula: {{ $dniPropietario }}
                     </td>
                     <td>
                         @if(isset($reserva->contrato) && $reserva->contrato->aceptado_arrendatario)
@@ -267,7 +298,7 @@
                         <div class="line"></div>
                         <span class="bold" style="color: #333">EL ARRENDATARIO</span><br>
                         Nombre: {{ $nombreUsuario }}<br>
-                        ID/Cédula: _______________________
+                        ID/Cédula: {{ $dniUsuario }}
                         @endif
                     </td>
                 </tr>
