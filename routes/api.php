@@ -9,6 +9,13 @@ use App\Modules\Api\Controllers\Auth\VerifyEmailController;
 use App\Modules\Api\Controllers\Admin\UserController;
 use App\Modules\Api\Controllers\Admin\VehiculosController;
 use App\Modules\Api\Controllers\Admin\ReservasController;
+use App\Modules\Api\Controllers\Users\DocumentController;
+use App\Modules\Api\Controllers\Users\GetUserController;
+use App\Modules\Api\Controllers\Auth\PasswordUpdateController;
+use App\Modules\Api\Controllers\Users\UpdateEmailController;
+use App\Modules\Api\Controllers\Users\ResendEmailVerificationController;
+use App\Modules\Api\Controllers\Users\UpdatePhoneNumberController;
+use App\Modules\Api\Controllers\Users\DeleteAccountController;
 
 Route::middleware('throttle:5,1')->group(function () {
     Route::post('/register', [RegisteredUserController::class, 'register']);
@@ -25,4 +32,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/vehicles', [VehiculosController::class, 'index']);
     Route::get('/reservas', [ReservasController::class, 'index']);
+
+    // Rutas de Documentos del Usuario
+    Route::get('/user/documents/types', [DocumentController::class, 'getDocumentTypes']);
+    Route::get('/user/documents', [DocumentController::class, 'index']);
+    Route::post('/user/documents/upload', [DocumentController::class, 'upload']);
+    Route::get('/info-user', [GetUserController::class, 'index']);
+    Route::put('/update-password', [PasswordUpdateController::class, 'update']);
+    Route::get('/info-user', GetUserController::class);
+    Route::put('/user/email', UpdateEmailController::class);
+    Route::post('/user/email/resend', ResendEmailVerificationController::class);
+    Route::put('user/phone', UpdatePhoneNumberController::class);
+    Route::post('/user/delete', DeleteAccountController::class);
 });
