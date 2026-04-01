@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
 
-        // Ya no hay excepciones CSRF para MercadoPago
+        // Middleware CSRF normal
         $middleware->validateCsrfTokens();
 
         $middleware->alias([

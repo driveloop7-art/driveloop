@@ -8,26 +8,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail; // IMPORTANTE: Para enviar correos
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB; // IMPORTANTE: Para enviar correos
 use App\Mail\PagoRecibido;           // IMPORTANTE: Tu clase Mailable
 
 class PagoDigitalController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request, $reserva_id = null): View
     {
-        // Si no viene ID en la URL, intentar obtenerlo del query parameter o usar el último para pruebas
         $id = $reserva_id ?? $request->query('reserva_id');
-        
-        $query = \App\Models\MER\Reserva::with([
-            'user', 
-            'vehiculo.marca', 
-            'vehiculo.linea', 
-            'vehiculo.ciudad', 
-            'vehiculo.fotos'
-        ]);
+
+        $query = \App\Models\MER\Reserva::with(['user', 'vehiculo']);
 
         if ($id) {
             $reserva = $query->find($id);
@@ -39,10 +30,32 @@ class PagoDigitalController extends Controller
             abort(404, 'Reserva no encontrada');
         }
 
+        // ... dentro de la función index ...
+
         $monto = $reserva->val ?? 150000;
         $reserva_id = $reserva->cod;
 
-        return view("modules.PagoDigital.index", compact("reserva", "monto", "reserva_id"));
+        // Buscamos los nombres reales usando la columna 'des'
+        $marcaNombre = DB::table('marcas')
+            ->where('cod', $reserva->vehiculo->codmar)
+            ->value('des') ?? 'Sin marca';
+
+        $ciudadNombre = DB::table('ciudades')
+            ->where('cod', $reserva->vehiculo->codciu)
+            ->value('des') ?? 'Sin ubicación';
+
+        $lineaNombre = DB::table('lineas')
+            ->where('cod', $reserva->vehiculo->codlin)
+            ->value('des') ?? '';
+
+        return view("modules.PagoDigital.index", compact(
+            "reserva",
+            "monto",
+            "reserva_id",
+            "marcaNombre",
+            "ciudadNombre",
+            "lineaNombre"
+        ));
     }
 
     /**
@@ -58,9 +71,24 @@ class PagoDigitalController extends Controller
                 'detalles' => 'required|array'
             ]);
 
+            $reserva = \App\Models\MER\Reserva::find($request->reserva_id);
+            $user = $request->user();
+            $userId = $user?->id;
+
+            if (!$userId && $reserva) {
+                $userId = $reserva->codusu;
+            }
+
+            if (!$userId) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No se encontró usuario asociado a la reserva y no hay sesión activa'
+                ], 422);
+            }
+
             $pago = Pago::create([
                 'reserva_id' => $request->reserva_id,
-                'user_id' => auth()->id() ?? \App\Models\MER\Reserva::find($request->reserva_id)->codusu,
+                'user_id' => $userId,
                 'monto' => $request->monto,
                 'metodo_pago' => $request->metodo_pago,
                 'estado_pago' => 'pendiente',
@@ -80,36 +108,27 @@ class PagoDigitalController extends Controller
             ], 500);
         }
     }
-/**
-     * RF-007: Notificación de estado de pago (Webhook)
-     */
+
     public function handleWebhook(Request $request)
     {
         try {
-            // Log para ver todo lo que llega
             Log::info("Webhook recibido de Mercado Pago: ", $request->all());
 
-            // Verificamos si existe el ID y el tipo
             $type = $request->input('type');
-            
+
             if ($type === 'payment') {
                 $paymentId = $request->input('data.id');
                 Log::info("Procesando pago con ID: " . $paymentId);
 
-                // --- INTEGRACIÓN SOLICITADA ---
-                // Enviamos el correo usando la clase Mailable que ya tienes
                 Mail::to('tu-correo@ejemplo.com')->send(new PagoRecibido($paymentId));
                 Log::info("RF-007: Correo enviado para el pago: " . $paymentId);
                 // ------------------------------
             }
 
             return response()->json(['message' => 'OK'], 200);
-
         } catch (\Exception $e) {
-            // Si algo falla, lo registramos en el log pero respondemos 200 para que MP no reintente
             Log::error("Error en Webhook: " . $e->getMessage());
             return response()->json(['message' => 'Error capturado'], 200);
         }
     }
 }
-

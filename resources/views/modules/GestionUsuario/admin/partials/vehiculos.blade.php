@@ -45,7 +45,7 @@
     
     {{-- Filtro --}}
     <div class="mb-8 p-6 bg-gray-50 rounded-xl border border-gray-100 flex justify-center">
-        <form action="{{ url()->current() }}" method="GET" class="flex flex-col md:flex-row items-end justify-center gap-6 w-full max-w-6xl">
+        <form action="{{ url()->current() }}" method="GET" class="flex flex-col md:flex-row md:items-end justify-center gap-4 md:gap-6 w-full max-w-6xl">
             {{-- Campo oculto para mantener la pestaña activa --}}
             <input type="hidden" name="tab" value="vehiculos">
 
@@ -80,12 +80,12 @@
             </div>
 
             {{-- botones de filtrar y limpiar --}}
-            <div class="flex gap-3 items-center">
-                <x-button type="primary" class="!py-3 !px-10 text-base h-[38px]">
+            <div class="flex flex-col xl:flex-row gap-3 items-center w-full md:w-auto mt-2 md:mt-0">
+                <x-button type="primary" class="w-full sm:w-auto !py-3 !px-10 text-base h-[38px] flex justify-center items-center">
                     FILTRAR
                 </x-button>
                 <a href="{{ url()->current() }}?tab=vehiculos" 
-                   class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium xl:rounded-md text-gray-700 bg-white hover:bg-gray-50 w-full mt-2 sm:mt-0">
+                   class="inline-flex justify-center items-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 w-full sm:w-auto h-[38px]">
                     Limpiar
                 </a>
             </div>
