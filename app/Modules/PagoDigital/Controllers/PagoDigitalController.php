@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB; // IMPORTANTE: Para enviar correos
 use App\Mail\PagoRecibido;           // IMPORTANTE: Tu clase Mailable
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PagoDigitalController extends Controller
 {
@@ -48,13 +49,19 @@ class PagoDigitalController extends Controller
             ->where('cod', $reserva->vehiculo->codlin)
             ->value('des') ?? '';
 
+        $pago = null;
+        if ($request->query('success')) {
+            $pago = Pago::where('reserva_id', $reserva->cod)->latest()->first();
+        }
+
         return view("modules.PagoDigital.index", compact(
             "reserva",
             "monto",
             "reserva_id",
             "marcaNombre",
             "ciudadNombre",
-            "lineaNombre"
+            "lineaNombre",
+            "pago"
         ));
     }
 
@@ -130,5 +137,26 @@ class PagoDigitalController extends Controller
             Log::error("Error en Webhook: " . $e->getMessage());
             return response()->json(['message' => 'Error capturado'], 200);
         }
+    }
+
+    /**
+     * Generar factura en PDF.
+     */
+    public function downloadInvoice($id)
+    {
+        $pago = Pago::with(['reserva.vehiculo', 'reserva.user'])->findOrFail($id);
+        $reserva = $pago->reserva;
+        $vehiculo = $reserva->vehiculo;
+
+        // Recuperar nombres literales (marcas, ciudades, lineas)
+        $marcaNombre = DB::table('marcas')->where('cod', $vehiculo->codmar)->value('des') ?? 'Sin marca';
+        $ciudadNombre = DB::table('ciudades')->where('cod', $vehiculo->codciu)->value('des') ?? 'Sin ubicación';
+        $lineaNombre = DB::table('lineas')->where('cod', $vehiculo->codlin)->value('des') ?? '';
+
+        $data = compact('pago', 'reserva', 'vehiculo', 'marcaNombre', 'ciudadNombre', 'lineaNombre');
+
+        $pdf = Pdf::loadView('modules.PagoDigital.pdf.invoice', $data);
+
+        return $pdf->stream("Factura_DriveLoop_{$pago->id}.pdf");
     }
 }
