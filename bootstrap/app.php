@@ -13,17 +13,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //-------------------------------------------------------------------------------------------------------------------
-        // --- PASO B: EXCEPCIÓN DE MERCADO PAGO ---
-        $middleware->validateCsrfTokens(except: [
-            'api/webhook', // Si tu ruta está en api.php
-            'webhook',     // Si tu ruta está en web.php
-        ]);
 
-        // Registrar alias del middleware para verificar documentos aprobados
+        // Middleware CSRF normal
+        $middleware->validateCsrfTokens();
+
         $middleware->alias([
             'verified_docs' => \App\Modules\GestionUsuario\Middleware\EnsureUserIsVerified::class,
-            // Spatie Laravel Permission Middleware
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,

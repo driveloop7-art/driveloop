@@ -88,4 +88,14 @@ class Reserva extends Model
 	{
 		return $this->hasMany(Resena::class, 'codres');
 	}
+
+	public function contrato()
+	{
+		return $this->hasOne(Contrato::class, 'reserva_id', 'cod');
+	}
+
+	public function pagos()
+	{
+		return $this->hasMany(Pago::class, 'reserva_id', 'cod');
+	}
 }

@@ -1,0 +1,5 @@
+d1b771a5dc57d04a147abf998d571e589e8f4a70 Merge branch 'main' of https://github.com/evanny1997/driveloop
+9c473062ec502680f1ebf8cc13caa95b718727ed se hacen los cambios del modulo de contratos y garantias los cuales son la generacion automatica de pdf  los estilos del fronten en el dasboar donde sale mis contratos y garantias
+9eb91933edf430f1521040cff217b76c520c6b35 Merge branch 'driveloop7-art:main' into main
+e5b9651b0b8831ff663ea2ef7aafcf5180a0f910 Modificacion en modulo publicion por resolucion de conflitos y cambios agregados al modulo (#65)
+43931dc36eed8b090416a00eba029065e747bf27 Merge branch 'main' of https://github.com/evanny1997/driveloop
