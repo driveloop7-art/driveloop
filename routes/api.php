@@ -16,6 +16,7 @@ use App\Modules\Api\Controllers\Users\UpdateEmailController;
 use App\Modules\Api\Controllers\Users\ResendEmailVerificationController;
 use App\Modules\Api\Controllers\Users\UpdatePhoneNumberController;
 use App\Modules\Api\Controllers\Users\DeleteAccountController;
+use App\Modules\Api\Controllers\Users\GetReservationsController;
 
 Route::middleware('throttle:5,1')->group(function () {
     Route::post('/register', [RegisteredUserController::class, 'register']);
@@ -44,4 +45,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/email/resend', ResendEmailVerificationController::class);
     Route::put('user/phone', UpdatePhoneNumberController::class);
     Route::post('/user/delete', DeleteAccountController::class);
+    Route::get('/user/reservations', GetReservationsController::class);
 });
