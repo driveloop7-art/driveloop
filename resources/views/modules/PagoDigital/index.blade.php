@@ -270,7 +270,7 @@
                                     ? asset($foto->ruta)
                                     : 'https://placehold.co/600x280/ef4444/ffffff?text=' .
                                         urlencode(
-                                            $reserva->vehiculo->marca->nom . ' ' . $reserva->vehiculo->linea->nom,
+                                            ($reserva->vehiculo->marca->des ?? '') . ' ' . ($reserva->vehiculo->linea->des ?? ''),
                                         );
                             @endphp
                             <img src="{{ $rutaImagen }}" class="w-full rounded-xl object-cover aspect-[2.14/1]"
@@ -284,12 +284,12 @@
 
                                 <p class="text-sm text-gray-700">
                                     <span class="font-semibold">Marca:</span>
-                                    {{ $reserva->vehiculo->marca->nom ?? 'Sin marca' }}
+                                    {{ $reserva->vehiculo->marca->des ?? 'Sin marca' }}
                                 </p>
 
                                 <p class="text-sm text-gray-700">
                                     <span class="font-semibold">Línea:</span>
-                                    {{ $reserva->vehiculo->linea->nom ?? 'Sin línea' }}
+                                    {{ $reserva->vehiculo->linea->des ?? 'Sin línea' }}
                                 </p>
 
                                 <p class="text-sm text-gray-700">
@@ -299,7 +299,7 @@
 
                                 <p class="text-sm text-gray-700">
                                     <span class="font-semibold">Ubicación:</span>
-                                    {{ $reserva->vehiculo->ciudad->nom ?? 'Sin ubicación' }}
+                                    {{ $reserva->vehiculo->ciudad->des ?? 'Sin ubicación' }}
                                 </p>
 
                             </div>
@@ -366,7 +366,137 @@
                 opacity: 0.5;
                 cursor: not-allowed;
             }
+
+            /* Overlays */
+            .overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.4);
+                backdrop-filter: blur(4px);
+                z-index: 1000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 1.5rem;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.3s ease;
+            }
+            .overlay.active {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            /* Spinner Animation */
+            @keyframes spin-fast {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            .animate-spin-custom {
+                animation: spin-fast 1s linear infinite;
+            }
+
+            /* Circular Progress */
+            .progress-ring__circle {
+                transition: stroke-dashoffset 0.35s;
+                transform: rotate(-90deg);
+                transform-origin: 50% 50%;
+            }
         </style>
+
+        {{-- ── OVERLAY: VERIFICACIÓN ── --}}
+        <div id="overlay-verification" class="overlay">
+            <div class="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl transform transition-all">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Verificación de pago</h2>
+                
+                <div class="relative w-32 h-32 mx-auto mb-6">
+                    <svg class="w-full h-full">
+                        <circle class="text-gray-100" stroke-width="8" stroke="currentColor" fill="transparent" r="58" cx="64" cy="64"/>
+                        <circle id="progress-bar" class="text-red-500 progress-ring__circle" stroke-width="8" stroke-dasharray="364.4" stroke-dashoffset="364.4" stroke-linecap="round" stroke="currentColor" fill="transparent" r="58" cx="64" cy="64"/>
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <span id="progress-text" class="text-xl font-bold text-gray-700">0%</span>
+                    </div>
+                </div>
+
+                <p class="text-gray-500 font-medium">Su pago se verificará dentro de poco</p>
+            </div>
+        </div>
+
+        {{-- ── OVERLAY: ÉXITO ── --}}
+        <div id="overlay-success" class="overlay {{ $pago ? 'active' : '' }}">
+            <div class="bg-white rounded-3xl max-w-2xl w-full shadow-2xl relative overflow-hidden border border-gray-100">
+                
+                {{-- HEADER ROJO (ESTILO TICKET) --}}
+                <div class="bg-[#c2183e] px-8 py-5 flex items-center justify-between relative overflow-hidden">
+                    <h2 class="text-3xl font-black text-white tracking-widest uppercase">Detalle de Pago</h2>
+                    <span class="text-white/50 font-bold hidden sm:block">DriveLoop</span>
+                    {{-- Decoración --}}
+                    <div class="absolute -right-6 top-1/2 -translate-y-1/2 w-12 h-24 bg-white/10 rotate-12"></div>
+                </div>
+
+                <div class="p-8">
+                    {{-- CUADRO DE DATOS (ESTILO TICKET) --}}
+                    <div class="border border-[#f0c2cc] rounded-3xl p-8 mb-8 bg-white">
+                        <div class="grid grid-cols-2 gap-x-12 gap-y-8">
+                            
+                            {{-- CÓDIGO --}}
+                            <div>
+                                <label class="block text-[11px] font-bold text-[#b0b3b8] uppercase tracking-wider mb-1.5">Código de pago</label>
+                                <span class="block text-lg font-black text-gray-900">#{{ str_pad($pago->id ?? 0, 7, '0', STR_PAD_LEFT) }}</span>
+                            </div>
+
+                            {{-- FECHA --}}
+                            <div>
+                                <label class="block text-[11px] font-bold text-[#b0b3b8] uppercase tracking-wider mb-1.5">Fecha de pago</label>
+                                <span class="block text-lg font-bold text-gray-800">{{ $pago ? $pago->created_at->format('D, d M Y H:i:s') : now()->format('D, d M Y H:i:s') }}</span>
+                            </div>
+
+                            {{-- MÉTODO --}}
+                            <div>
+                                <label class="block text-[11px] font-bold text-[#b0b3b8] uppercase tracking-wider mb-1.5">Método de pago</label>
+                                <span class="block text-lg font-bold text-gray-800 capitalize">{{ $pago->metodo_pago ?? 'N/A' }}</span>
+                            </div>
+
+                            {{-- ESTADO --}}
+                            <div>
+                                <label class="block text-[11px] font-bold text-[#b0b3b8] uppercase tracking-wider mb-1.5">Estado</label>
+                                <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-black uppercase tracking-tight inline-block">Aceptado</span>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-10">
+                            <label class="block text-[11px] font-bold text-[#b0b3b8] uppercase tracking-wider mb-3">Descripción / Vehículo</label>
+                            <div class="bg-[#f8f9fa] rounded-2xl p-6 border border-gray-100">
+                                <div class="flex items-start gap-5">
+                                    <img src="{{ $rutaImagen }}" class="w-24 h-16 rounded-xl object-cover shadow-sm border border-white" alt="Auto">
+                                    <div>
+                                        <p class="text-base font-black text-gray-900 leading-tight mb-1">{{ $marcaNombre }} {{ $lineaNombre }}</p>
+                                        <p class="text-sm text-gray-500 font-medium">Modelo {{ $reserva->vehiculo->mod ?? '' }} • Ubicación: {{ $ciudadNombre }}</p>
+                                        <p class="text-[11px] text-red-500 font-bold mt-2 uppercase tracking-wide">Pago Total: ${{ number_format($pago->monto ?? 0, 0, ',', '.') }} COP</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- BOTONES ACCIÓN --}}
+                    <div class="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                        <a id="btn-ver-pdf" href="{{ $pago ? route('pago.digital.invoice', ['id' => $pago->id]) : '#' }}" target="_blank"
+                            class="w-full sm:w-1/2 py-4 bg-[#c2183e] hover:bg-[#a01433] text-white font-black rounded-2xl transition-all shadow-lg shadow-red-100 tracking-widest uppercase text-sm flex items-center justify-center gap-2 group">
+                            <svg class="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            Ver PDF
+                        </a>
+
+                        <button onclick="window.location.href='/'" 
+                            class="w-full sm:w-1/2 py-4 border-2 border-[#c2183e] text-[#c2183e] hover:bg-gray-50 font-black rounded-2xl transition-all tracking-widest uppercase text-sm">
+                            Finalizar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script>
             let selectedKey = null;
@@ -442,6 +572,11 @@
                 btn.classList.add('btn-loading');
                 btn.innerText = 'PROCESANDO...';
 
+                // Calcular monto final basado en los días ingresados
+                const dias = parseInt(document.getElementById('dias-alquiler').value) || 0;
+                const precioUnitario = {{ $precio_unitario }};
+                const montoFinal = dias * precioUnitario;
+
                 try {
                     const response = await fetch("{{ route('pago.digital.store') }}", {
                         method: "POST",
@@ -452,7 +587,7 @@
                         body: JSON.stringify({
                             reserva_id: "{{ $reserva_id }}",
                             metodo_pago: selectedKey,
-                            monto: "{{ $monto }}",
+                            monto: montoFinal,
                             detalles: detalles
                         })
                     });
@@ -460,8 +595,32 @@
                     const result = await response.json();
 
                     if (result.success) {
-                        alert('¡Excelente! Información guardada. Procediendo al siguiente paso...');
-                        window.location.href = "{{ route('pago.digital', ['reserva_id' => $reserva_id]) }}?success=1";
+                        // Mostrar overlay de verificación
+                        document.getElementById('overlay-verification').classList.add('active');
+                        
+                        // Animación simulada de progreso
+                        const progressBar = document.getElementById('progress-bar');
+                        const progressText = document.getElementById('progress-text');
+                        const total = 364.4; // Circunferencia del círculo
+                        let p = 0;
+
+                        const interval = setInterval(() => {
+                            p += Math.floor(Math.random() * 15) + 5;
+                            if (p > 100) p = 100;
+                            
+                            const offset = total - (p / 100) * total;
+                            progressBar.style.strokeDashoffset = offset;
+                            progressText.innerText = p + '%';
+
+                            if (p === 100) {
+                                clearInterval(interval);
+                                setTimeout(() => {
+                                    // Guardar el enlace de PDF antes de recargar
+                                    window.location.href = "{{ route('pago.digital', ['reserva_id' => $reserva_id]) }}?success=1";
+                                }, 500);
+                            }
+                        }, 200);
+
                     } else {
                         alert('Error al guardar: ' + result.message);
                         btn.disabled = false;
