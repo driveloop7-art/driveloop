@@ -126,12 +126,12 @@ class User extends Authenticatable implements MustVerifyEmail
 		return $this->hasMany(Ticket::class, 'idusu', 'id');
 	}
 
-	
 
-    public function contracts()
-    {
-        return $this->hasMany(\App\Models\Contract::class);
-    }
+
+	public function contracts()
+	{
+		return $this->hasManyThrough(Contrato::class, Reserva::class, 'idusu', 'reserva_id', 'id', 'cod');
+	}
 	/**
 	 * Verifica si el usuario tiene aprobados sus documentos de identidad y licencia.
 	 * Nota:
@@ -156,5 +156,4 @@ class User extends Authenticatable implements MustVerifyEmail
 	{
 		return $this->is_active;
 	}
-
 }

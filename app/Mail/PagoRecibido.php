@@ -31,7 +31,7 @@ class PagoRecibido extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.pago', 
+            view: 'modules.PagoDigital.emails.pago_recibido', 
         );
     }
 
