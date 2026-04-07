@@ -49,16 +49,15 @@ Route::prefix('publi-vehiculo')->group(function () {
         )->name('vehiculos.aprobados');
     });
 
-    // Mis vehículos (CRUD básico)
-    Route::get('/mis-vehiculos', [VehPublicacion::class, 'index'])->name('vehiculos.index');
-    Route::get('/vehiculos/{cod}/editar', [VehPublicacion::class, 'edit'])->name('vehiculos.edit');
-    Route::put('/vehiculos/{cod}', [VehPublicacion::class, 'update'])->name('vehiculos.update');
 
-    // Documentos del vehículo
-    // Route::get('/vehiculos/{codveh}/documentos', [VehiculoDocumentosController::class, 'create'])
-    //     ->name('vehiculos.documentos.create');
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/mis-vehiculos', [VehPublicacion::class, 'index'])->name('vehiculos.index');
+        Route::get('/vehiculos/{cod}/editar', [VehPublicacion::class, 'edit'])->name('vehiculos.edit');
+        Route::put('/vehiculos/{cod}', [VehPublicacion::class, 'update'])->name('vehiculos.update');
+        Route::delete('/vehiculos/{cod}', [VehPublicacion::class, 'destroy'])->name('vehiculos.destroy');
+    });
+
 
     Route::post('/vehiculos/{codveh}/documentos', [VehiculoDocumentosController::class, 'store'])
         ->name('vehiculos.doc.store');
-        
 });

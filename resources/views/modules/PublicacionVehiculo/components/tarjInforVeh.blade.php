@@ -4,25 +4,12 @@
         // Foto principal + miniaturas usando tu MISMA lógica
         $fotos = $vehiculo->fotos_vehiculos ?? collect();
 
-        $makeUrl = function ($ruta) {
-            if (!$ruta) {
-                return asset('img/no-image.jpg');
-            }
-            if (str_starts_with($ruta, 'http')) {
-                return $ruta;
-            }
+        // Se reemplaza el codigo anterior por un codigo mas limpio
+        // con el fin de usar la lógica del modelo y no implementarla en la vista.
 
-            $ruta = ltrim($ruta, '/');
-            if (!str_starts_with($ruta, 'vehiculos/')) {
-                $ruta = 'vehiculos/' . $ruta;
-            }
+        $fotoPrincipal = $fotos->first()?->url ?? asset('img/no-image.jpg');
 
-            return \Illuminate\Support\Facades\Storage::disk('public')->url($ruta);
-        };
-
-        $fotoPrincipal = $makeUrl($fotos->first()?->ruta);
-
-        $miniaturas = $fotos->take(3)->map(fn($f) => $makeUrl($f->ruta))->values();
+        $miniaturas = $fotos->take(3)->map(fn($f) => $f->url)->values();
 
         $precio = number_format((float) ($vehiculo->prerent ?? 0), 0, ',', '.');
     @endphp
@@ -42,8 +29,9 @@
     </button>
 
     {{-- EDITAR --}}
+    
     <a href="{{ route('vehiculos.edit', $vehiculo->cod) }}"
-        class="px-3 py-1 text-xs bg-red-700 text-white rounded hover:bg-red-800 transition">
+        class="px-2 py-1 text-xs bg-orange-500 text-white rounded hover:bg-orange-600 transition inline-block">
         Editar
     </a>
 
@@ -62,7 +50,7 @@
                         {{-- <span x-text="data.linea"></span>
                         <span class="text-gray-500 font-medium" x-text="'· ' + data.modelo"></span> --}}
                     </h3>
-                    
+
                 </div>
 
                 <button type="button" @click="close()" class="px-3 py-1 text-sm rounded bg-gray-100 hover:bg-gray-200">
@@ -128,6 +116,7 @@
                                 RENTAR
                             </a> --}}
 
+
                             <button type="button" @click="close()"
                                 class="px-4 py-2 text-sm font-bold bg-gray-200 rounded-xl hover:bg-gray-300 transition">
                                 Cerrar
@@ -135,7 +124,6 @@
                         </div>
                     </div>
 
-                    {{-- Si quieres, aquí agregas observaciones / cobertura, pero ya con datos reales si existen --}}
                 </div>
             </div>
         </div>

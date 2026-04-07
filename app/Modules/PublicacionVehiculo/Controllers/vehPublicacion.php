@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\MER\Vehiculo;
+use Illuminate\Support\Facades\Storage;
 
 
 class vehPublicacion extends Controller
@@ -122,5 +123,44 @@ class vehPublicacion extends Controller
         ]);
 
         return redirect()->route('vehiculo-ver')->with('success', 'Documentos actualizados.');
+    }
+
+    // Se agrega la funcion destroy para habilitar la elimnacion de los vehiculos desde el panel de usuario
+    public function destroy(int $cod)
+    {
+        $vehiculo = Vehiculo::with(['fotos_vehiculos', 'documentos_vehiculos'])
+            ->where('cod', $cod)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        DB::transaction(function () use ($vehiculo) {
+            // Eliminar archivos físicos de fotos
+            foreach ($vehiculo->fotos_vehiculos as $foto) {
+                if (!empty($foto->ruta) && !str_starts_with($foto->ruta, 'http://') && !str_starts_with($foto->ruta, 'https://')) {
+                    Storage::disk('public')->delete(ltrim($foto->ruta, '/'));
+                }
+            }
+
+            // Eliminar archivos físicos de documentos
+            foreach ($vehiculo->documentos_vehiculos as $documento) {
+                if (!empty($documento->descdoc) && !str_starts_with($documento->descdoc, 'http://') && !str_starts_with($documento->descdoc, 'https://')) {
+                    Storage::disk('public')->delete(ltrim($documento->descdoc, '/'));
+                }
+            }
+
+            // Eliminar relaciones de la tabla pivote
+            $vehiculo->accesorios()->detach();
+
+            // Eliminar registros hijos
+            $vehiculo->fotos_vehiculos()->delete();
+            $vehiculo->documentos_vehiculos()->delete();
+
+            // Eliminar vehículo
+            $vehiculo->delete();
+        });
+
+        return redirect()
+            ->route('dashboard')
+            ->with('success', 'Vehículo eliminado correctamente.');
     }
 }

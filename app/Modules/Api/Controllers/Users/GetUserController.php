@@ -30,18 +30,10 @@ class GetUserController extends Controller
             return $this->error('Usuario no autenticado o no encontrado', 401);
         }
 
-        // Construimos el DTO para mantener tu estándar de respuesta
-        $userDTO = new UserDTO(
-            $user->nom,
-            $user->email,
-            $user->currentAccessToken() ? $user->currentAccessToken()->token : '',
-            $user->email_verified_at,
-        );
-
         // 'success' de tu ApiResponser retorna: { status: 'Success', message: '...', data: [...] }
         // Esto permite que tu frontend capture directamente response.data.data
         return $this->success(
-            $userDTO->toArray(),
+            $user,
             'Información del usuario obtenida exitosamente'
         );
     }
