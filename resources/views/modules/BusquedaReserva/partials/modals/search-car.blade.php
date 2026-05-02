@@ -190,12 +190,3 @@
         </div>
     </form>
 </x-modal>
-<!-- Warning Modal -->
-@include('modules.BusquedaReserva.partials.modals.verification-warning')
-<!-- Si existe la variable de sesión enviada por el middleware -->
-@if (session('show_verification-warning'))
-    <!-- Usamos Alpine para despachar el evento apenas cargue el DOM -->
-    <div x-data
-        x-init="$nextTick(() => { window.dispatchEvent(new CustomEvent('open-modal', { detail: 'verification-warning' })) })">
-    </div>
-@endif
