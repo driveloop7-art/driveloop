@@ -8,6 +8,9 @@ use App\Modules\Api\Controllers\Auth\PasswordResetController;
 use App\Modules\Api\Controllers\Auth\VerifyEmailController;
 use App\Modules\Api\Controllers\Admin\UserController;
 use App\Modules\Api\Controllers\Admin\VehiculosController;
+use App\Modules\Api\Controllers\Admin\TicketsController;
+use App\Modules\Api\Controllers\Admin\UsuariosController;
+use App\Modules\Api\Controllers\Admin\MetricasController;
 use App\Modules\Api\Controllers\Admin\ReservasController;
 use App\Modules\Api\Controllers\Users\DocumentController;
 use App\Modules\Api\Controllers\Users\GetUserController;
@@ -46,4 +49,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('user/phone', UpdatePhoneNumberController::class);
     Route::post('/user/delete', DeleteAccountController::class);
     Route::get('/user/reservations', GetReservationsController::class);
+
+    // Rutas Desktop
+    Route::get('/vehiculos', [VehiculosController::class, 'index_desktop']);
+    Route::post('/vehiculos/{id}/reservas', [VehiculosController::class, 'veh_reservas_desktop']);
+    Route::put('/vehiculos/{id}', [VehiculosController::class, 'veh_update_desktop']);
+    Route::delete('/vehiculos/{id}', [VehiculosController::class, 'veh_delete_desktop']);
+    Route::get('/tickets', [TicketsController::class, 'index_desktop']);
+    Route::get('/usuarios', [UsuariosController::class, 'index_desktop']);
+    Route::get('/metricas', [MetricasController::class, 'index_desktop']);
 });
