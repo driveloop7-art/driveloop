@@ -16,8 +16,7 @@ class EnsureUserIsVerified
         if ($user && !$user->isVerified()) {
 
             // Si intenta entrar a una ruta protegida sin documentos, redirigir al home y mostrar modal.
-            return redirect('/')
-                ->with('show_verification_modal', true);
+            return redirect('/')->with('show_verification-warning', true);
         }
 
         /**
@@ -26,8 +25,8 @@ class EnsureUserIsVerified
          */
         $vehId = $request->route('codveh') ?: $request->route('vehiculo');
         if ($vehId) {
-            $vehiculo = $vehId instanceof \App\Models\MER\Vehiculo 
-                ? $vehId 
+            $vehiculo = $vehId instanceof \App\Models\MER\Vehiculo
+                ? $vehId
                 : \App\Models\MER\Vehiculo::find($vehId);
 
             if ($vehiculo && $vehiculo->user_id == Auth::id() && !$vehiculo->isVerified()) {

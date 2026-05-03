@@ -7,7 +7,9 @@ use App\Modules\PagoDigital\Controllers\PaymentController;
 
 
 Route::prefix('pago-digital')->group(function () {
-    Route::get('/', [PagoDigitalController::class, 'index'])->name('pago.digital');
+    Route::middleware(['verified_docs'])->group(function () {
+        Route::get('/', [PagoDigitalController::class, 'index'])->name('pago.digital');
+    });
 });
 
 
