@@ -15,37 +15,39 @@
 
         <!-- Name -->
         <div>
-            <x-input class="h-14" name="nom" label="{{ __('Name') }}" type="text" :value="old('nom')" required />
+            <x-input class="h-14" name="nom" label="{{ __('Name') }}" type="text" :value="old('nom')" required
+                x-model="nombre" />
 
             <x-input-error :messages="$errors->get('nom')" class="mt-2" />
         </div>
 
         <!-- Last Name -->
         <div class="mt-4">
-            <x-input class="h-14" name="ape" label="{{ __('Last Name') }}" type="text" :value="old('ape')" required />
+            <x-input class="h-14" name="ape" label="{{ __('Last Name') }}" type="text" :value="old('ape')" required
+                x-model="apellido" />
 
             <x-input-error :messages="$errors->get('ape')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
         <div class="mt-4">
-            <x-input class="h-14" name="email" label="{{ __('Email') }}" type="email" :value="old('email')" required />
+            <x-input class="h-14" name="email" label="{{ __('Email') }}" type="email" :value="old('email')" required
+                x-model="email" />
 
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
-            <x-password_show class="h-14" name="password" label="{{ __('Password') }}" type="password" :value="old('password')"
-                required x-model="password" @input="checkPassword" />
+            <x-password_show class="h-14" name="password" label="{{ __('Password') }}" type="password"
+                :value="old('password')" required x-model="password" @input="checkPassword" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
 
             <!-- Medidor de seguridad de contraseña -->
             <div class="mt-2" x-show="password.length > 0" x-cloak style="display: none;">
                 <div class="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden flex">
-                    <div class="h-full transition-all duration-300"
-                         :class="{
+                    <div class="h-full transition-all duration-300" :class="{
                              'w-1/3 bg-red-500': strength === 'low',
                              'w-2/3 bg-orange-500': strength === 'medium',
                              'w-full bg-green-500': strength === 'high'
@@ -57,14 +59,16 @@
                         <li class="flex items-center" :class="conditions.length ? 'text-green-600' : 'text-gray-500'">
                             <span class="mr-1" x-text="conditions.length ? '✓' : '○'"></span> Mínimo 8 caracteres
                         </li>
-                        <li class="flex items-center" :class="conditions.uppercase ? 'text-green-600' : 'text-gray-500'">
+                        <li class="flex items-center"
+                            :class="conditions.uppercase ? 'text-green-600' : 'text-gray-500'">
                             <span class="mr-1" x-text="conditions.uppercase ? '✓' : '○'"></span> Al menos una mayúscula
                         </li>
                         <li class="flex items-center" :class="conditions.number ? 'text-green-600' : 'text-gray-500'">
                             <span class="mr-1" x-text="conditions.number ? '✓' : '○'"></span> Al menos un número
                         </li>
                         <li class="flex items-center" :class="conditions.special ? 'text-green-600' : 'text-gray-500'">
-                            <span class="mr-1" x-text="conditions.special ? '✓' : '○'"></span> Al menos 1 carácter especial
+                            <span class="mr-1" x-text="conditions.special ? '✓' : '○'"></span> Al menos 1 carácter
+                            especial
                         </li>
                     </ul>
                 </div>
@@ -73,8 +77,8 @@
 
         <!-- Confirm Password -->
         <div class="mt-4">
-            <x-password_show class="h-14" name="password_confirmation" label="{{ __('Confirm Password') }}" type="password"
-                :value="old('password_confirmation')" required />
+            <x-password_show class="h-14" name="password_confirmation" label="{{ __('Confirm Password') }}"
+                type="password" :value="old('password_confirmation')" required x-model="password_confirmation" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
@@ -96,7 +100,8 @@
         </div>
 
         <div class="flex items-center justify-end mt-6">
-            <x-button class="text-xs w-full" x-bind:disabled="!allConditionsMet" x-bind:class="!allConditionsMet ? 'opacity-50 cursor-not-allowed' : ''">{{ __('Join us') }}</x-button>
+            <x-button class="text-xs w-full" x-bind:disabled="!allConditionsMet"
+                x-bind:class="!allConditionsMet ? 'opacity-50 cursor-not-allowed' : ''">{{ __('Join us') }}</x-button>
         </div>
         <div class="mt-4">
             <a class="underline text-sm text-black-600 hover:text-black-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -105,5 +110,7 @@
             </a>
         </div>
     </form>
+
+    @include('modules.GestionUsuario.breeze.auth.partials.validation-modals')
 
 </x-split-layout>
