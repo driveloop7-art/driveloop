@@ -4,6 +4,8 @@ use App\Modules\GestionUsuario\Controllers\DocumentoUsuarioController;
 use App\Modules\GestionUsuario\Controllers\AdminRolesController;
 use App\Modules\GestionUsuario\Controllers\ValidacionDocumentosController;
 use Illuminate\Support\Facades\Route;
+use App\Models\MER\User;
+use Illuminate\Http\Request;
 
 Route::prefix('gestion-usuario')->group(function () {
     // Grupo de rutas que requieren autenticación
@@ -39,3 +41,10 @@ Route::prefix('gestion-usuario')->group(function () {
         });
     });
 });
+
+//Ruta que valida si el correo ya está registrado
+Route::post('/api/check-email', function (Request $request) {
+    $existe = User::where('email', $request->email)->exists();
+    return response()->json(['exists' => $existe]);
+});
+
