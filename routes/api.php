@@ -57,5 +57,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/vehiculos/{id}', [VehiculosController::class, 'veh_delete_desktop']);
     Route::get('/tickets', [TicketsController::class, 'index_desktop']);
     Route::get('/usuarios', [UsuariosController::class, 'index_desktop']);
+    Route::post('/usuarios', [UsuariosController::class, 'user_store_desktop']);
+    Route::put('/usuarios/{id}', [UsuariosController::class, 'user_update_desktop']);
+    Route::delete('/usuarios/{id}', [UsuariosController::class, 'user_delete_desktop']);
     Route::get('/metricas', [MetricasController::class, 'index_desktop']);
 });
