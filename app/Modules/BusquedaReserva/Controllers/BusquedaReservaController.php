@@ -69,7 +69,7 @@ class BusquedaReservaController extends Controller
             $vehiculos = $query->orderByDesc('cod')->get();
         }
 
-        return view("modules.busquedareserva.index", compact('vehiculos'));
+        return view("modules.BusquedaReserva.index", compact('vehiculos'));
     }
 
 
@@ -77,7 +77,7 @@ class BusquedaReservaController extends Controller
 
 
 
-  /**
+    /**
      * Guarda un nuevo registro de reserva en la base de datos.
      * 
      * Este método valida las fechas de recogida y devolución, asegura que el vehículo existe,
@@ -103,9 +103,9 @@ class BusquedaReservaController extends Controller
             // 3. Calcular la duración de la reserva en días
             $fecini = Carbon::parse($request->pickup_date);
             $fecfin = Carbon::parse($request->return_date);
-            
+
             // Si las fechas son iguales, se cuenta como 1 día mínimo
-            $dias = $fecini->diffInDays($fecfin) ?: 1; 
+            $dias = $fecini->diffInDays($fecfin) ?: 1;
 
             // 4. Calcular el valor total (Días * Precio de Renta del vehículo)
             $valorTotal = $dias * $vehiculo->prerent;
