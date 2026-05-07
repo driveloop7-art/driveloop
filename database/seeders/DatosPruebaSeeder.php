@@ -23,18 +23,18 @@ class DatosPruebaSeeder extends Seeder
 {
     public function run(): void
     {
-        self::insertUsers();
+        $this->insertUsers();
         for ($i = 0; $i < 10; $i++) {
-            $vehiculoId = self::insertVehiculo();
-            self::insertFotoVehiculoTest($vehiculoId, $i);
-            self::insertTicket($vehiculoId);
+            $vehiculoId = $this->insertVehiculo();
+            $this->insertFotoVehiculoTest($vehiculoId, $i);
+            $this->insertTicket($vehiculoId);
         }
 
         for ($i = 0; $i < 10; $i++) {
-            $userId = self::insertUserFake();
-            $vehiculoId = self::insertVehiculo($userId);
-            self::insertFotoVehiculoTest($vehiculoId, $i);
-            self::insertTicket($vehiculoId, $userId);
+            $userId = $this->insertUserFake();
+            $vehiculoId = $this->insertVehiculo($userId);
+            $this->insertFotoVehiculoTest($vehiculoId, $i);
+            $this->insertTicket($vehiculoId, $userId);
         }
 
 
@@ -74,10 +74,11 @@ class DatosPruebaSeeder extends Seeder
 
     private function insertUserFake(): int
     {
+        $name = $this->randomFirstName();
         $user = User::create([
-            'nom' => fake()->firstName(),
-            'ape' => fake()->lastName(),
-            'email' => fake()->unique()->safeEmail(),
+            'nom' => $name,
+            'ape' => $this->randomLastName(),
+            'email' => $this->randomEmail($name),
             'password' => Hash::make('password'),
             'fecreg' => now(),
             'created_at' => now(),
@@ -106,7 +107,7 @@ class DatosPruebaSeeder extends Seeder
             'user_id' => $userId,
             'vin' => Str::upper(Str::random(12)),
             'mod' => rand(2010, 2025),
-            'col' => fake()->colorName(),
+            'col' => $this->randomColor(),
             'pas' => rand(2, 4),
             'cil' => rand(1000, 2000),
             'codpol' => self::codPolizaVehiculo(),
@@ -123,7 +124,7 @@ class DatosPruebaSeeder extends Seeder
     private function codPolizaVehiculo(): int
     {
         return PolizaVehiculo::create([
-            'ase' => 'Seguros ' . fake()->company(),
+            'ase' => 'Seguros ' . $this->randomCompany(),
             'fini' => Carbon::now()->subYear(),
             'ffin' => Carbon::now()->addYear(),
         ])->cod;
@@ -160,8 +161,8 @@ class DatosPruebaSeeder extends Seeder
             'cod' => Str::upper(Str::random(10)),
             'codres' => self::codReserva($vehiculoId, $userId),
             'codesttic' => '1',
-            'asu' => fake()->sentence(5),
-            'des' => fake()->text(100),
+            'asu' => $this->randomSentence(5),
+            'des' => $this->randomText(100),
             'feccre' => now(),
             'idusu' => $userId,
         ]);
@@ -179,4 +180,45 @@ class DatosPruebaSeeder extends Seeder
         'https://www.auto-data.net/images/f127/XPENG-G6.jpg',
         'https://www.auto-data.net/images/f80/Zenvo-TSR-S.jpg',
     ];
+
+    private function randomFirstName(): string
+    {
+        $names = ['Juan', 'Carlos', 'Luis', 'Andrés', 'Miguel', 'Pedro', 'Jorge', 'David', 'Santiago', 'Mateo', 'Camilo', 'Alejandro', 'Diego', 'Fernando', 'Gabriel', 'Ignacio', 'Javier', 'Kevin', 'Leonardo', 'Manuel'];
+        return $names[array_rand($names)];
+    }
+
+    private function randomLastName(): string
+    {
+        $lastNames = ['García', 'Rodríguez', 'Martínez', 'López', 'Hernández', 'Gómez', 'Pérez', 'Díaz', 'Sánchez', 'Torres', 'Ramírez', 'Flores', 'Rivera', 'Reyes', 'Mendoza'];
+        return $lastNames[array_rand($lastNames)];
+    }
+
+    private function randomEmail(string $name): string
+    {
+        return strtolower($name) . rand(100, 999) . '@mail.com';
+    }
+
+    private function randomColor(): string
+    {
+        $colors = ['Rojo', 'Azul', 'Negro', 'Blanco', 'Gris', 'Verde', 'Plateado', 'Naranja', 'Amarillo', 'Morado', 'Marrón', 'Turquesa', 'Beige', 'Dorado'];
+        return $colors[array_rand($colors)];
+    }
+
+    private function randomCompany(): string
+    {
+        $companies = ['Bolívar', 'Sura', 'Mapfre', 'Allianz', 'AXA', 'Colpatria'];
+        return $companies[array_rand($companies)];
+    }
+
+    private function randomSentence(int $words = 5): string
+    {
+        $pool = ['sistema', 'vehículo', 'reserva', 'usuario', 'error', 'soporte', 'plataforma', 'servicio', 'contrato', 'poliza', 'combustible', 'gasolina', 'diesel', 'gas'];
+        shuffle($pool);
+        return ucfirst(implode(' ', array_slice($pool, 0, $words)));
+    }
+
+    private function randomText(int $length = 100): string
+    {
+        return substr(str_repeat('Texto de prueba ', 10), 0, $length);
+    }
 }
