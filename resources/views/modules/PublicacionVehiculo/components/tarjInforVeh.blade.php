@@ -30,10 +30,10 @@
 
     {{-- EDITAR --}}
     
-    <a href="{{ route('vehiculos.edit', $vehiculo->cod) }}"
+    {{-- <a href="{{ route('vehiculos.edit', $vehiculo->cod) }}"
         class="px-2 py-1 text-xs bg-orange-500 text-white rounded hover:bg-orange-600 transition inline-block">
         Editar
-    </a>
+    </a> --}}
 
     {{-- MODAL (UNO SOLO, controlado por Alpine) --}}
     <div x-show="open" x-cloak class="fixed inset-0 z-50 flex items-center justify-center">

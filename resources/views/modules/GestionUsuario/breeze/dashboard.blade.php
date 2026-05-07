@@ -24,6 +24,10 @@
                 @include('modules.GestionUsuario.breeze.partials.trips.section')
             </x-settings-tab>
 
+            <x-settings-tab name="payments" label="Mis pagos">
+                @include('modules.GestionUsuario.breeze.partials.payments.section')
+            </x-settings-tab>
+
             <!-- Tickets -->
              <x-settings-tab name="tickets" label="Tickets">
                 @include('modules.SoporteComunicacion.partials.tickets.section')

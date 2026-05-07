@@ -1,25 +1,16 @@
 <x-app-layout>
-    @if (session('docs_saved'))
-        <script>
-            window.dispatchEvent(new CustomEvent('open-modal', {
-                detail: 'docs-uploaded'
-            }))
-        </script>
-    @endif
-
-    
     <section class="docs-card">
         <h3 class="docs-title">Documentos del vehículo</h3>
 
         <form class="docs-form" action="{{ route('vehiculo.documentos.store') }}" method="POST"
             enctype="multipart/form-data">
             @csrf
+
             <div class="docs-grid">
                 <div class="docs-left">
 
                     <input type="hidden" name="codveh" value="{{ $vehiculo->cod }}">
 
-                    {{-- Placa --}}
                     <div class="docs-row">
                         <label class="docs-label" for="placa">Placa del vehículo</label>
                         <input id="placa" class="docs-input is-wide" type="text" name="placa"
@@ -27,7 +18,6 @@
                         <small class="help">Escribe la placa tal como aparece en la tarjeta de propiedad.</small>
                     </div>
 
-                    {{-- Tarjeta de propiedad --}}
                     <div class="docs-row">
                         <label class="docs-label" for="doc_tarjeta">Tarjeta de propiedad</label>
 
@@ -45,7 +35,6 @@
                         <small class="help">Formatos permitidos: PDF, JPG, JPEG, PNG (máx. 10MB).</small>
                     </div>
 
-                    {{-- SOAT --}}
                     <div class="docs-row">
                         <label class="docs-label" for="doc_soat">SOAT vigente</label>
 
@@ -63,7 +52,6 @@
                         <small class="help">Sube el SOAT vigente. Puede ser PDF o imagen.</small>
                     </div>
 
-                    {{-- TECNOMECÁNICA --}}
                     <div class="docs-row">
                         <label class="docs-label" for="doc_tecno">Certificado tecnomecánico</label>
 
@@ -83,7 +71,6 @@
 
                 </div>
 
-                {{-- Fotos --}}
                 <div class="grid-fotos">
                     <div class="docs-row">
                         <label class="docs-label" for="fotos">Fotos del vehículo</label>
@@ -102,10 +89,10 @@
                     </div>
 
                     <div class="docs-right">
-                        {{-- Panel preview --}}
                         <div class="photo-preview" id="photoPreview">
-                            <p class="photo-empty" id="photoEmpty">Aquí se mostrarán las fotos seleccionadas (máximo
-                                10).</p>
+                            <p class="photo-empty" id="photoEmpty">
+                                Aquí se mostrarán las fotos seleccionadas (máximo 10).
+                            </p>
                         </div>
 
                         <button id="btnContinuar" type="submit" class="btn-submit">Continuar</button>
@@ -115,16 +102,12 @@
         </form>
     </section>
 
-    {{-- MODAL: Documentos guardados --}}
     <div id="docsSavedModal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4" aria-hidden="true">
-        {{-- overlay --}}
         <div class="absolute inset-0 bg-black/60"></div>
 
-        {{-- card --}}
         <div class="relative w-full max-w-lg rounded-2xl bg-white shadow-2xl ring-1 ring-black/10">
             <div class="p-6">
                 <div class="flex items-start gap-4">
-                    {{-- icon --}}
                     <div class="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-100">
                         <svg class="h-6 w-6 text-emerald-600" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
@@ -136,9 +119,10 @@
                         <h3 id="docsSavedTitle" class="text-lg font-bold text-gray-900">
                             Documentos guardados
                         </h3>
+
                         <p class="mt-1 text-sm text-gray-600">
-                            Tus documentos fueron guardados correctamente y quedan <span class="font-semibold">en
-                                proceso de aprobación</span>.
+                            Tus documentos fueron guardados correctamente y quedan
+                            <span class="font-semibold">en proceso de aprobación</span>.
                             Te notificaremos cuando sean validados.
                         </p>
                     </div>
@@ -154,10 +138,10 @@
                 </div>
 
                 <div class="mt-6 flex justify-end gap-2">
-                    <a href="{{ route('dashboard') }}"
+                    <button type="button" id="closeDocsSavedModal"
                         class="inline-flex items-center justify-center rounded-xl bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900/30">
                         Entendido
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -186,6 +170,7 @@
             let selectedFiles = [];
 
             function showError(msg) {
+                if (!errorBox) return;
                 errorBox.textContent = msg;
                 errorBox.style.display = msg ? 'block' : 'none';
             }
@@ -197,20 +182,29 @@
             }
 
             function updateButtonState() {
+                if (!btn) return;
+
                 const placaOk = placaInput && placaInput.value.trim().length > 0;
-                const docsOk = doc0 && doc0.files.length === 1 &&
+
+                const docsOk =
+                    doc0 && doc0.files.length === 1 &&
                     doc1 && doc1.files.length === 1 &&
                     doc2 && doc2.files.length === 1;
+
                 btn.disabled = !(placaOk && docsOk);
             }
 
             function syncInputFiles() {
+                if (!fotosInput) return;
+
                 const dt = new DataTransfer();
                 selectedFiles.forEach(f => dt.items.add(f));
                 fotosInput.files = dt.files;
             }
 
             function render() {
+                if (!previewWrap || !emptyText || !help) return;
+
                 previewWrap.querySelector('.photo-grid')?.remove();
 
                 if (selectedFiles.length === 0) {
@@ -244,6 +238,7 @@
                     const removeBtn = document.createElement('button');
                     removeBtn.type = 'button';
                     removeBtn.textContent = 'Quitar';
+
                     removeBtn.addEventListener('click', () => {
                         selectedFiles.splice(idx, 1);
                         syncInputFiles();
@@ -260,13 +255,15 @@
                 updateButtonState();
             }
 
-            fotosInput.addEventListener('change', () => {
+            fotosInput?.addEventListener('change', () => {
                 showError('');
 
                 const incoming = Array.from(fotosInput.files || []);
                 const combined = [...selectedFiles, ...incoming];
 
-                selectedFiles = combined.slice(0, MAX).filter(f => f.type.startsWith('image/'));
+                selectedFiles = combined
+                    .slice(0, MAX)
+                    .filter(f => f.type.startsWith('image/'));
 
                 if (combined.length > MAX) {
                     showError(`Máximo ${MAX} fotos. Estás intentando seleccionar ${combined.length}.`);
@@ -299,15 +296,16 @@
             updateButtonState();
             render();
 
-            // =========================
-            // MODAL (Tailwind)
-            // =========================
             const modal = document.getElementById('docsSavedModal');
             const closeBtn = document.getElementById('closeDocsSavedModal');
             const closeBtnX = document.getElementById('closeDocsSavedModalX');
 
+            const shouldOpen = @json(session('docs_saved', false));
+            const dashboardUrl = @json(route('dashboard'));
+
             function openModal() {
                 if (!modal) return;
+
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
                 modal.setAttribute('aria-hidden', 'false');
@@ -316,29 +314,35 @@
 
             function closeModal() {
                 if (!modal) return;
+
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
                 modal.setAttribute('aria-hidden', 'true');
                 document.body.style.overflow = '';
             }
 
-            closeBtn?.addEventListener('click', closeModal);
+            function goToDashboard() {
+                window.location.href = dashboardUrl;
+            }
+
+            closeBtn?.addEventListener('click', goToDashboard);
             closeBtnX?.addEventListener('click', closeModal);
 
-            // Click fuera del card (overlay)
             modal?.addEventListener('click', (e) => {
-                if (e.target === modal || e.target.classList.contains('bg-black/60')) closeModal();
+                if (e.target === modal || e.target.classList.contains('bg-black/60')) {
+                    closeModal();
+                }
             });
 
-            // ESC
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') closeModal();
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
             });
 
-            // Abrir SOLO si el backend mandó el flag
-            const shouldOpen = @json(session('docs_saved', false));
-            if (shouldOpen) openModal();
-
+            if (shouldOpen) {
+                openModal();
+            }
         })();
     </script>
 </x-app-layout>

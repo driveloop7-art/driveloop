@@ -93,7 +93,10 @@ class VehController extends Controller
 
             $vehiculo->accesorios()->sync($data['accesorios'] ?? []);
 
-            return redirect()->route('vehiculo.documentos.create', ['codveh' => $vehiculo->cod]);
+            // return redirect()->route('vehiculo.documentos.create', ['codveh' => $vehiculo->cod]);
+            return redirect()
+                ->route('vehiculo.documentos.create', ['codveh' => $vehiculo->cod])
+                ->with('vehiculo_creado', true);
         });
     }
 
@@ -140,5 +143,10 @@ class VehController extends Controller
         return view('home', compact('vehiculos'));
     }
 
-    
+    public function rentarDirecto($codveh)
+    {
+        return redirect()
+            ->route('home')
+            ->with('abrir_reserva_directa', $codveh);
+    }
 }
