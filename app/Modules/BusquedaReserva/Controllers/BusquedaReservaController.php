@@ -102,21 +102,13 @@ class BusquedaReservaController extends Controller
             $vehiculos = $query->orderByDesc('cod')->get();
         }
 
-        return view("modules.BusquedaReserva.index", compact('vehiculos'));
+        return view('modules.BusquedaReserva.index', compact(
+            'vehiculos',
+            'pickup_date',
+            'return_date'
+        ));
     }
 
-
-
-
-
-
-    /**
-     * Guarda un nuevo registro de reserva en la base de datos.
-     * 
-     * Este método valida las fechas de recogida y devolución, asegura que el vehículo existe,
-     * calcula el costo total basado en los días de alquiler y crea el registro con
-     * estado "Pendiente" antes de redirigir al usuario.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -142,6 +134,27 @@ class BusquedaReservaController extends Controller
 
             // Si las fechas son iguales, se cuenta como 1 día mínimo
             $dias = $fecini->diffInDays($fecfin) ?: 1;
+
+            $reservaActivaSolapada = Reserva::where('codveh', $vehiculo->cod)
+                ->where('codestres', '!=', 3)
+                ->where(function ($q) use ($fecini, $fecfin) {
+                    $q->where('fecini', '<', $fecfin)
+                        ->where('fecfin', '>', $fecini);
+                })
+                ->lockForUpdate()
+                ->exists();
+
+            if ($reservaActivaSolapada) {
+                DB::rollBack();
+                return redirect()->back()
+                    ->with('error', 'El vehículo ya está reservado para esas fechas.')
+                    ->withInput();
+            }
+
+            $dias = $fecini->diffInDays($fecfin);
+            if ($dias < 1) {
+                $dias = 1;
+            }
 
             $valorTotal = $dias * $vehiculo->prerent;
 
