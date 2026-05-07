@@ -37,11 +37,14 @@ class vehPublicacion extends Controller
 
     public function edit(int $cod)
     {
-        $vehiculo = Vehiculo::with(['marca', 'linea', 'clase', 'ciudad'])
-            ->where('cod', $cod)
-            ->where('user_id', Auth::id()) 
-            ->firstOrFail();
+        $query = Vehiculo::with(['marca', 'linea', 'clase', 'ciudad'])
+            ->where('cod', $cod);
 
+        if (!Auth::user()->hasRole('Administrador')) {
+            $query->where('user_id', Auth::id());
+        }
+
+        $vehiculo = $query->firstOrFail();
 
         return view('modules.PublicacionVehiculo.editVeh', [
             'vehiculo' => $vehiculo,
@@ -55,9 +58,16 @@ class vehPublicacion extends Controller
 
     public function update(Request $request, int $cod)
     {
-        $vehiculo = Vehiculo::where('cod', $cod)
-            ->where('user_id', Auth::id())
-            ->firstOrFail();
+        // $vehiculo = Vehiculo::where('cod', $cod)
+        //     ->where('user_id', Auth::id())
+        //     ->firstOrFail();
+        $query = Vehiculo::where('cod', $cod);
+
+        if (!Auth::user()->hasRole('Administrador')) {
+            $query->where('user_id', Auth::id());
+        }
+
+        $vehiculo = $query->firstOrFail();
 
         $data = $request->validate([
             'vin' => ['required', 'string'],

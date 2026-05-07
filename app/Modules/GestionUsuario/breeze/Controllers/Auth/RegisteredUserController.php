@@ -32,8 +32,8 @@ class RegisteredUserController extends Controller
         $request->validate([
             'nom' => ['required', 'string', 'max:80'],
             'ape' => ['required', 'string', 'max:80'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:80', 'unique:'.User::class],
-            'tel' => ['nullable', 'string', 'max:30'], 
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:80', 'unique:' . User::class],
+            'tel' => ['nullable', 'string', 'max:30'],
             'fecnac' => ['nullable', 'date'],
             'lic' => ['nullable', 'string', 'max:30'],
             'numcue' => ['nullable', 'string', 'max:34'],
@@ -42,8 +42,8 @@ class RegisteredUserController extends Controller
         ]);
 
         $user = User::create([
-            'nom' => $request->nom,
-            'ape' => $request->ape,
+            'nom' => ucfirst(strtolower($request->nom)),
+            'ape' => ucfirst(strtolower($request->ape)),
             'email' => $request->email,
             'tel' => $request->tel,
             'fecnac' => $request->fecnac,

@@ -25,20 +25,29 @@ class PolizaServicio extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'fini' => 'datetime',
-		'ffin' => 'datetime',
-		'codres' => 'int'
-	];
+        'fini' => 'datetime',
+        'ffin' => 'datetime',
+        'codres' => 'int',
+        'valor_asegurado' => 'float',
+    ];
 
-	protected $fillable = [
-		'ase',
-		'fini',
-		'ffin',
-		'codres'
-	];
+	 protected $fillable = [
+        'numero_poliza',
+        'ase',
+        'empresa_aseguradora',
+        'tipo_cobertura',
+        'fini',
+        'ffin',
+        'codres',
+        'valor_asegurado',
+        'deducible',
+        'estado',
+        'pdf_path',
+        'observaciones',
+    ];
 
 	public function reserva()
-	{
-		return $this->belongsTo(Reserva::class, 'codres');
-	}
+    {
+        return $this->belongsTo(Reserva::class, 'codres', 'cod');
+    }
 }

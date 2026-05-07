@@ -2,44 +2,25 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Modules\PagoDigital\Controllers\PagoDigitalController;
-//use App\Http\Controllers\PaymentController;
 use App\Modules\PagoDigital\Controllers\PaymentController;
 
+Route::middleware(['web', 'auth'])->group(function () {
 
-Route::prefix('pago-digital')->group(function () {
-    Route::middleware(['verified_docs'])->group(function () {
-        Route::get('/', [PagoDigitalController::class, 'index'])->name('pago.digital');
-    });
+    Route::post('/checkout/reserva', [PaymentController::class, 'checkoutReserva'])
+        ->name('checkout.reserva');
+
+    Route::post('/checkout/pagar', [PaymentController::class, 'procesarPago'])
+        ->name('checkout.pagar');
+
+    Route::get('/checkout/exito/{id}', [PaymentController::class, 'success'])
+        ->name('checkout.exito');
+
+    Route::get('/checkout/error', [PaymentController::class, 'failure'])
+        ->name('checkout.error');
+
+    Route::get('/checkout/pendiente', [PaymentController::class, 'pending'])
+        ->name('checkout.pending');
 });
 
-
-
-
-/* Route::get('/checkout', function () {
-    return view('modules.PagoDigital.checkout');
-})->name('checkout'); */
-/* Route::get('/checkout', [PaymentController::class, 'checkout'])->name('checkout'); */
-
-Route::get('/checkout/{monto}', [PaymentController::class, 'checkout'])->name('checkout');
-
-
-Route::get('/pago-exitoso', function () {
-    return view('modules.PagoDigital.success');
-})->name('pago.exitoso');
-
-Route::get('/pago-fallido', function () {
-    return view('modules.PagoDigital.failure');
-})->name('pago.fallido');
-
-Route::get('/pago-pendiente', function () {
-    return view('modules.PagoDigital.pending');
-})->name('pago.pendiente');
-
-
-
-
-
-
-
-
-
+Route::post('/pagos/webhook/{provider}', [PaymentController::class, 'webhook'])
+    ->name('pagos.webhook');

@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $fecini
  * @property Carbon $fecfin
  * @property float|null $val
- * @property int $codusu
+ * @property int $idusu
  * @property int $codveh
  * @property int $codestres
  * 
@@ -34,14 +34,18 @@ class Reserva extends Model
 	protected $primaryKey = 'cod';
 	public $timestamps = false;
 
+
 	protected $casts = [
 		'fecrea' => 'datetime',
 		'fecini' => 'datetime',
 		'fecfin' => 'datetime',
+		'fecha_cierre_real' => 'datetime',
 		'val' => 'float',
 		'codusu' => 'int',
 		'codveh' => 'int',
-		'codestres' => 'int'
+		'codestres' => 'int',
+		'confirmado_propietario' => 'boolean',
+		'recibido_buen_estado' => 'boolean'
 	];
 
 	protected $fillable = [
@@ -49,9 +53,13 @@ class Reserva extends Model
 		'fecini',
 		'fecfin',
 		'val',
-		'codusu',
+		'idusu',
 		'codveh',
-		'codestres'
+		'codestres',
+		'fecha_cierre_real',
+		'confirmado_propietario',
+		'recibido_buen_estado',
+		'observacion_recepcion'
 	];
 
 	public function estado_reserva()
@@ -87,5 +95,23 @@ class Reserva extends Model
 	public function resenas()
 	{
 		return $this->hasMany(Resena::class, 'codres');
+	}
+
+	public function pagos()
+	{
+		return $this->hasMany(Pago::class, 'codres', 'cod');
+	}
+
+	public function pago()
+	{
+		return $this->hasOne(Pago::class, 'codres', 'cod');
+	}
+	public function contrato()
+	{
+		return $this->hasOne(ContratoReserva::class, 'codres', 'cod');
+	}
+	public function polizaServicio()
+	{
+		return $this->hasOne(PolizaServicio::class, 'codres', 'cod');
 	}
 }

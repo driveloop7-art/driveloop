@@ -3,7 +3,12 @@
 use App\Modules\GestionUsuario\Controllers\DocumentoUsuarioController;
 use App\Modules\GestionUsuario\Controllers\AdminRolesController;
 use App\Modules\GestionUsuario\Controllers\ValidacionDocumentosController;
+use App\Modules\GestionUsuario\Controllers\ReservaVehiculoController;
+use App\Modules\GestionUsuario\Controllers\ReservaDocumentoController;
+use App\Modules\GestionUsuario\Controllers\AdminPanelController;
 use Illuminate\Support\Facades\Route;
+use App\Models\MER\User;
+use Illuminate\Http\Request;
 
 Route::prefix('gestion-usuario')->group(function () {
     // Grupo de rutas que requieren autenticación
@@ -15,12 +20,27 @@ Route::prefix('gestion-usuario')->group(function () {
         Route::post('/mis-documentos/subir', [DocumentoUsuarioController::class, 'store'])
             ->name('usuario.documentos.store');
 
+        // Finalizar reserva desde Mis vehículos
+        Route::post('/reservas/{cod}/finalizar', [ReservaVehiculoController::class, 'finalizar'])
+            ->name('usuario.reservas.finalizar');
+
+        Route::get('/reservas/{reserva}/contrato/pdf', [ReservaDocumentoController::class, 'descargarContrato'])
+            ->name('usuario.reservas.contrato.pdf');
+
+        Route::get('/reservas/{reserva}/poliza/pdf', [ReservaDocumentoController::class, 'descargarPoliza'])
+            ->name('usuario.reservas.poliza.pdf');
+
+        Route::post('/reservas/{reserva}/generar-documentos', [ReservaDocumentoController::class, 'generarDocumentos'])
+            ->name('usuario.reservas.generar.documentos');
+
         // RUTAS DE ADMINISTRACIÓN DE ROLES (Spatie)
         // Solo accesibles por usuarios con rol de Administrador
         Route::middleware(['role:Administrador'])->prefix('admin')->group(function () {
             Route::get('/roles', [AdminRolesController::class, 'index'])->name('admin.roles.index');
             Route::get('/roles/{role}/edit', [AdminRolesController::class, 'edit'])->name('admin.roles.edit');
             Route::put('/roles/{role}', [AdminRolesController::class, 'update'])->name('admin.roles.update');
+
+             Route::post('/reservas/{reserva}/cancelar', [AdminPanelController::class, 'cancelarReserva'])->name('admin.reservas.cancelar');
         });
 
         // RUTAS DE SOPORTE (Validación de Documentos)
@@ -39,3 +59,10 @@ Route::prefix('gestion-usuario')->group(function () {
         });
     });
 });
+
+//Ruta que valida si el correo ya está registrado
+Route::post('/api/check-email', function (Request $request) {
+    $existe = User::where('email', $request->email)->exists();
+    return response()->json(['exists' => $existe]);
+});
+
