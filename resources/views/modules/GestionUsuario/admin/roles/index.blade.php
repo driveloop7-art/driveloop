@@ -16,7 +16,6 @@
                 <div class="flex justify-between items-start mb-4">
                     <div>
                         <h2 class="text-xl font-bold text-gray-800">{{ $role->name }}</h2>
-                        <span class="text-xs font-mono text-gray-400">Guard: {{ $role->guard_name }}</span>
                     </div>
                     <div class="bg-dl-light bg-opacity-10 p-2 rounded-full">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-dl" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -41,17 +40,6 @@
             </x-card>
         @endforeach
 
-        {{-- Tarjeta informativa para nuevos permisos --}}
-        <x-card class="bg-gray-50 p-6 border-dashed border-2 border-gray-300 flex flex-col justify-center items-center text-center">
-            <div class="text-gray-400 mb-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </div>
-            <h3 class="text-gray-600 font-medium">¿Necesitas nuevos permisos?</h3>
-            <p class="text-xs text-gray-500 mt-2 px-4">
-                Puedes agregar nuevos permisos desde la terminal usando Tinker o agregándolos al `RolesAndPermissionsSeeder` y ejecutándolo de nuevo.
-            </p>
-        </x-card>
+
     </div>
 </x-page>
