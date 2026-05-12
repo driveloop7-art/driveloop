@@ -158,7 +158,7 @@ class BusquedaReservaController extends Controller
 
             $valorTotal = $dias * $vehiculo->prerent;
 
-            Reserva::create([
+            $reserva = Reserva::create([
                 'fecrea' => Carbon::now(),
                 'fecini' => $fecini,
                 'fecfin' => $fecfin,

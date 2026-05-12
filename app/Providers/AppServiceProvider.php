@@ -53,5 +53,12 @@ class AppServiceProvider extends ServiceProvider
         View::composer('modules.BusquedaReserva.partials.modals.search-car', function ($view) {
             $view->with('marcas', \App\Models\MER\Marca::orderBy('des')->get());
         });
+
+        // Enlazar evento de reserva pagada con su listener
+        \Event::listen(
+            \App\Modules\BusquedaReserva\Events\ReservaPagada::class,
+            \App\Modules\BusquedaReserva\Listeners\EnviarCorreosReserva::class,
+        );
+
     }
 }

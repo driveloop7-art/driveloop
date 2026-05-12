@@ -23,7 +23,8 @@ class PaymentService
         protected MercadoPagoGatewayService $mercadoPagoGateway,
         protected WompiGatewayService $wompiGateway,
         protected ReservaDocumentoService $reservaDocumentoService
-    ) {}
+    ) {
+    }
 
     public function process(array $data, int $userId): array
     {
@@ -130,6 +131,8 @@ class PaymentService
 
             if ($gatewayResponse['status'] === 'aprobado') {
                 $this->generateDocuments($reserva);
+                //Disparar evento para enviar correos a los usuarios
+                \Illuminate\Support\Facades\Event::dispatch(new \App\Modules\BusquedaReserva\Events\ReservaPagada($reserva));
             }
 
             return [
