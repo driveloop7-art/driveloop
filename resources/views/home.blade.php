@@ -4,10 +4,7 @@
 
             <div class="lg:ml-[10rem] text-center lg:text-left">
 
-                <h1 class="text-xl sm:text-3xl md:text-5xl lg:text-7xl 
-                           font-extrabold italic drop-shadow-xl 
-                           mt-6 md:mt-10 lg:mt-20 
-                           leading-tight md:leading-snug">
+                <h1 class="text-2xl md:text-5xl lg:text-7xl font-extrabold italic drop-shadow-xl lg:mt-20">
 
                     EL AUTO QUE BUSCAS,<br class="hidden md:block">
                     LA OPORTUNIDAD<br class="hidden md:block">

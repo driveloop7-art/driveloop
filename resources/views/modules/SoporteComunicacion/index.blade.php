@@ -8,11 +8,11 @@
 
     <section class="flex justify-center">
         <div class="mx-auto px-8">
-            <h1 class="text-2xl md:text-4xl font-extrabold text-center mb-10">
+            <h1 class="mt-10 text-2xl md:text-4xl font-extrabold text-center mb-5">
                 ¿NECESITAS AYUDA?<br>
                 ESTAMOS AQUÍ PARA TI
             </h1>
-            <p class="mt-4 text-lg max-w-xl">
+            <p class="mt-4 text-lg max-w-xl text-center">
                 Encuentra soluciones, guías paso a paso o dejanos tu solicitud y uno de nuestros agentes se encargará de
                 resolverla.
             </p>
