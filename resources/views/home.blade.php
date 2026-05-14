@@ -22,32 +22,20 @@
                     poniendo el tuyo en movimiento.
                 </p>
 
-                <div class="flex flex-col sm:flex-row 
-                            font-semibold shadow-lg 
-                            gap-4 sm:gap-6 
-                            mt-8 md:mt-12 
-                            text-center justify-center lg:justify-start">
-
+                <div
+                    class="flex flex-col lg:flex-row font-semibold shadow-lg space-x-0 lg:space-x-8 space-y-5 lg:space-y-0 mt-12 text-center">
+                    
                     {{-- BOTÓN RESERVA --}}
                     <button type="button"
                         onclick="window.dispatchEvent(new CustomEvent('open-modal', { detail: 'search-car' }))"
-                        class="bg-dl hover:bg-dl-two 
-                               px-6 md:px-8 py-3 
-                               w-full sm:w-auto 
-                               tracking-wide -skew-x-12">
-
-                        <span class="skew-x-12 block">RESERVA</span>
+                        class="bg-dl hover:bg-dl-two px-8 py-3 w-[13.5rem] tracking-wide -skew-x-25">
+                        <span class="skew-x-25 block">RESERVA</span>
                     </button>
-
+                    
                     {{-- BOTÓN GENERA INGRESOS --}}
-                    <a href="{{ route('publicacion.vehiculo') }}"
-                        class="hover:from-dl-two hover:to-dl-two 
-                               px-6 md:px-8 py-3 
-                               w-full sm:w-auto 
-                               tracking-wide -skew-x-12
-                               bg-gradient-to-r from-dl to-dl-two transition-all">
-
-                        <span class="skew-x-12 block">GENERA INGRESOS</span>
+                    <a href="{{ route('publicacion.vehiculo') }}" class="hover:from-dl-two hover:to-dl-two px-8 py-3 w-[13.5rem] tracking-wide -skew-x-25
+                                bg-gradient-to-r from-dl to-dl-two transition-all">
+                        <span class="skew-x-25 block">GENERA INGRESOS</span>
                     </a>
                 </div>
 

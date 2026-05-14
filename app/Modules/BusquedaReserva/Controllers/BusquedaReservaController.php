@@ -102,7 +102,7 @@ class BusquedaReservaController extends Controller
             $vehiculos = $query->orderByDesc('cod')->get();
         }
 
-        return view('modules.busquedareserva.index', compact(
+        return view('modules.BusquedaReserva.index', compact(
             'vehiculos',
             'pickup_date',
             'return_date'
@@ -131,6 +131,9 @@ class BusquedaReservaController extends Controller
 
             $fecini = Carbon::parse($request->pickup_date);
             $fecfin = Carbon::parse($request->return_date);
+
+            // Si las fechas son iguales, se cuenta como 1 día mínimo
+            $dias = $fecini->diffInDays($fecfin) ?: 1;
 
             $reservaActivaSolapada = Reserva::where('codveh', $vehiculo->cod)
                 ->where('codestres', '!=', 3)
