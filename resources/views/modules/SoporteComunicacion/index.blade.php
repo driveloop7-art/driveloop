@@ -28,7 +28,7 @@
                 <br>
             @endauth
             <x-button class="text-xs w-full" x-data="" x-on:click.prevent="$dispatch('open-modal', 'mdl-fqa')">
-                ver fqa
+                ver
             </x-button>
         </x-card>
 

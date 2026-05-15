@@ -59,10 +59,7 @@ export default function () {
         },
 
         get allConditionsMet() {
-            const nombreValido = this.errors.nombre === null;
-            const apellidoValido = this.errors.apellido === null;
-            const passwordValida = this.conditions.length && this.conditions.uppercase && this.conditions.number && this.conditions.special;
-            return nombreValido && apellidoValido && passwordValida;
+            return this.conditions.length && this.conditions.uppercase && this.conditions.number && this.conditions.special;
         },
 
         async submitForm(e) {
@@ -74,53 +71,70 @@ export default function () {
                 return;
             }
 
-            if (validarTexto(this.nombre) != null) {
-                window.dispatchEvent(new CustomEvent('open-modal', { detail: 'nombre-invalido-modal' }));
-                return;
-            }
-            if (validarTexto(this.apellido) != null) {
-                window.dispatchEvent(new CustomEvent('open-modal', { detail: 'apellido-invalido-modal' }));
-                return;
-            }
-            // 3. Verificamos que las contraseñas coincidan
-            if (this.password !== this.password_confirmation) {
-                window.dispatchEvent(new CustomEvent('open-modal', { detail: 'password-mismatch-modal' }));
-                return;
-            }
+            // Detectar si estamos en el formulario de registro (tiene campos nombre y apellido)
+            const form = e.target;
+            const isRegistrationForm = form.querySelector('[name="nom"]') !== null;
 
-            // 4. Verificamos si el correo existe mediante la ruta en Laravel
-            try {
-                const tokenElement = document.querySelector('meta[name="csrf-token"]');
-                const token = tokenElement ? tokenElement.getAttribute('content') : '';
-
-                const response = await fetch('/api/check-email', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': token
-                    },
-                    body: JSON.stringify({ email: this.email })
-                });
-
-                // Si la ruta existe y devuelve JSON, lo leemos
-                if (response.ok) {
-                    const data = await response.json();
-
-                    // Si el servidor responde: { "exists": true }
-                    if (data.exists) {
-                        window.dispatchEvent(new CustomEvent('open-modal', { detail: 'email-exists-modal' }));
-                        return; // Detenemos aquí, el formulario no se envía
-                    }
+            if (isRegistrationForm) {
+                // Validaciones exclusivas del formulario de registro
+                if (validarTexto(this.nombre) != null) {
+                    window.dispatchEvent(new CustomEvent('open-modal', { detail: 'nombre-invalido-modal' }));
+                    return;
                 }
+                if (validarTexto(this.apellido) != null) {
+                    window.dispatchEvent(new CustomEvent('open-modal', { detail: 'apellido-invalido-modal' }));
+                    return;
+                }
+            }
 
-                // Si llegamos hasta aquí, todo está perfecto. Enviamos el formulario "manualmente"
-                e.target.submit();
+            // 3. Verificamos que las contraseñas coincidan (aplica a registro y reset-password)
+            const confirmationInput = form.querySelector('[name="password_confirmation"]');
+            if (confirmationInput) {
+                const confirmationValue = this.password_confirmation || confirmationInput.value;
+                if (this.password !== confirmationValue) {
+                    window.dispatchEvent(new CustomEvent('open-modal', { detail: 'password-mismatch-modal' }));
+                    return;
+                }
+            }
 
-            } catch (error) {
-                // Si la ruta no existe todavía o hay error de red, igual enviamos el formulario por precaución
-                console.error("Error validando el correo:", error);
-                e.target.submit();
+            // 4. Verificamos si el correo existe (solo en registro)
+            if (isRegistrationForm) {
+                try {
+                    const tokenElement = document.querySelector('meta[name="csrf-token"]');
+                    const token = tokenElement ? tokenElement.getAttribute('content') : '';
+
+                    const response = await fetch('/api/check-email', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': token
+                        },
+                        body: JSON.stringify({ email: this.email })
+                    });
+
+                    // Si la ruta existe y devuelve JSON, lo leemos
+                    if (response.ok) {
+                        const data = await response.json();
+
+                        // Si el servidor responde: { "exists": true }
+                        if (data.exists) {
+                            window.dispatchEvent(new CustomEvent('open-modal', { detail: 'email-exists-modal' }));
+                            return; // Detenemos aquí, el formulario no se envía
+                        }
+                    }
+
+                    // Si llegamos hasta aquí, todo está perfecto. Enviamos el formulario "manualmente"
+                    form.submit();
+
+                } catch (error) {
+                    // Si la ruta no existe todavía o hay error de red, igual enviamos el formulario por precaución
+                    console.error("Error validando el correo:", error);
+                    form.submit();
+                }
+            } else {
+                // Para reset-password y update-password, enviar directamente
+                form.submit();
             }
         }
     };
