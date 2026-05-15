@@ -68,7 +68,7 @@
                                     class="field-input w-full border border-red-300 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-red-500 bg-white"
                                 />
 
-                                <div class="grid grid-cols-2 gap-3">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     <div>
                                         <input
                                             id="card-expiry"
@@ -159,7 +159,7 @@
                             </div>
 
                             <div id="panel-nequi" class="hidden px-5 pb-5 space-y-3" onclick="event.stopPropagation()">
-                                <div class="grid grid-cols-2 gap-3">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     <div>
                                         <input
                                             id="nequi-nombre"
@@ -203,7 +203,7 @@
                     {{-- ===== DERECHA: RESUMEN ===== --}}
                     <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
 
-                        <div class="px-5 pt-5 pb-4 grid grid-cols-2 gap-3 border-b border-gray-100">
+                        <div class="px-5 pt-5 pb-4 grid grid-cols-1 md:grid-cols-2 gap-3 border-b border-gray-100">
                             <div>
                                 <p class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold">Fecha y hora de recogida</p>
                                 <p class="font-semibold text-gray-800 text-sm mt-1">

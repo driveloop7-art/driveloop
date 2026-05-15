@@ -60,6 +60,7 @@
   margin-top:6px;
 }
 
+
 .veh-col{
   display:flex;
   flex-direction:column;
@@ -134,11 +135,20 @@
   color:#777;
   cursor:not-allowed;
 }
+
 .grid__form__reg{
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0 20px;
 }
+
+@media (max-width: 768px) {
+  .grid__form__reg{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 .veh-field_1{
   grid-column: 1 / 2;
   grid-row: 1/2;
