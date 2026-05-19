@@ -23,7 +23,7 @@ class EnsureUserIsVerified
          * 2. Reutilización para Vehículos:
          * Si la ruta tiene un parámetro 'codveh' o similar, verificar documentos del vehículo.
          */
-        $vehId = $request->route('codveh') ?: $request->route('vehiculo');
+        /*$vehId = $request->route('codveh') ?: $request->route('vehiculo');
         if ($vehId) {
             $vehiculo = $vehId instanceof \App\Models\MER\Vehiculo
                 ? $vehId
@@ -34,7 +34,7 @@ class EnsureUserIsVerified
                     ->with('show_vehicle_verification_modal', true)
                     ->with('unverified_vehiculo_id', $vehiculo->cod);
             }
-        }
+        }*/
 
         return $next($request);
     }

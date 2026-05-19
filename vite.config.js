@@ -13,7 +13,7 @@ export default defineConfig({
     },
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js', 'resources/js/BusquedaReserva/validar_fecha_busqueda.js', 'resources/css/publicacion/pubVeh.css'],
+            input: ['resources/css/app.css', 'resources/js/app.js', 'resources/js/BusquedaReserva/validar_fecha_busqueda.js', 'resources/css/publicacion/pubVeh.css', 'resources/js/PublicacionVehiculo/validar_placa.js'],
             refresh: true,
         }),
     ],
