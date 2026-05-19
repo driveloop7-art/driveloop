@@ -65,7 +65,7 @@
         ]) }}
     >
         @if($title !== '')
-            <div class="bg-gradient-to-r from-dl to-dl-two -ml-8 w-[72%] px-6 py-3 text-2xl font-bold uppercase text-white skew-x-[35deg] xl:w-[58%]">
+            <div class="bg-gradient-to-r from-dl to-dl-two -ml-8 w-[72%] px-6 py-3 text-xl font-bold uppercase text-white skew-x-[35deg] xl:w-[58%]">
                 <span class="block ml-8 -skew-x-[35deg]">{{ $title }}</span>
             </div>
         @endif

@@ -13,9 +13,11 @@
 
                     <div class="docs-row">
                         <label class="docs-label" for="placa">Placa del vehículo</label>
-                        <input id="placa" class="docs-input is-wide" type="text" name="placa"
-                            placeholder="Ej: ABC123" required maxlength="10" style="text-transform: uppercase;">
+                        <input id="placa" class="docs-input is-wide" type="text" name="placa" placeholder="Ej: ABC123"
+                            required maxlength="6" style="text-transform: uppercase;">
                         <small class="help">Escribe la placa tal como aparece en la tarjeta de propiedad.</small>
+                        <small class="error" id="placaError"
+                            style="display:none; color: #dc2626; margin-top: 0.25rem;"></small>
                     </div>
 
                     <div class="docs-row">
@@ -109,8 +111,8 @@
             <div class="p-6">
                 <div class="flex items-start gap-4">
                     <div class="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-100">
-                        <svg class="h-6 w-6 text-emerald-600" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
+                        <svg class="h-6 w-6 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <path d="M20 6 9 17l-5-5" />
                         </svg>
                     </div>
@@ -128,10 +130,8 @@
                     </div>
 
                     <button type="button" id="closeDocsSavedModalX"
-                        class="rounded-lg p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100"
-                        aria-label="Cerrar">
-                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
+                        class="rounded-lg p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100" aria-label="Cerrar">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M18 6 6 18M6 6l12 12" />
                         </svg>
                     </button>
@@ -147,8 +147,9 @@
         </div>
     </div>
 
+    @vite('resources/js/PublicacionVehiculo/validar_placa.js')
     <script>
-        (function() {
+        (function () {
             const MAX = 10;
 
             const fotosInput = document.getElementById('fotos');
@@ -168,6 +169,8 @@
             const st2 = document.getElementById('status_tecno');
 
             let selectedFiles = [];
+
+            let isPlacaOk = false;
 
             function showError(msg) {
                 if (!errorBox) return;
@@ -191,7 +194,7 @@
                     doc1 && doc1.files.length === 1 &&
                     doc2 && doc2.files.length === 1;
 
-                btn.disabled = !(placaOk && docsOk);
+                btn.disabled = !(isPlacaOk && docsOk);
             }
 
             function syncInputFiles() {
@@ -273,7 +276,10 @@
                 render();
             });
 
-            placaInput?.addEventListener('input', updateButtonState);
+            placaInput?.addEventListener('placaValidated', (e) => {
+                isPlacaOk = e.detail.isValid;
+                updateButtonState();
+            });
 
             doc0?.addEventListener('change', () => {
                 updateFileStatus(doc0, st0);
