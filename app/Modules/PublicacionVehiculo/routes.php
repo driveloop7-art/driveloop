@@ -9,7 +9,7 @@ Route::get('/', [VehController::class, 'autosDestacados'])->name('home');
 
 Route::prefix('publi-vehiculo')->group(function () {
 
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth', 'verified_docs'])->group(function () {
 
         Route::get('/publicacion-vehiculo', [VehController::class, 'index'])
             ->name('publicacion.vehiculo');
@@ -37,7 +37,7 @@ Route::prefix('publi-vehiculo')->group(function () {
 
         Route::delete('/vehiculos/{cod}', [VehPublicacion::class, 'destroy'])
             ->name('vehiculos.destroy');
-            
+
         Route::get('/rentar/{codveh}', [VehController::class, 'rentarDirecto'])
             ->middleware(['auth'])
             ->name('vehiculo.rentar.directo');
