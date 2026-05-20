@@ -1,18 +1,18 @@
-<section class="relative py-20 bg-center bg-no-repeat"
-    style="background-image: url('{{ asset('img/fondo-carrusel.jpg.jpeg') }}'); background-size: 100%;">
+<section class="relative py-20 min-h-screen bg-center bg-no-repeat "
+    style="background-image: url('{{ asset('img/fondo-carrusel.jpg.jpeg') }}'); background-size: cover;">
 
     <div class="absolute inset-0 bg-black/70"></div>
 
     <div class="relative max-w-7xl mx-auto px-6">
 
-        <div class="mb-10">
-            <h2 class="text-white text-4xl font-bold">Autos destacados</h2>
-            <p class="text-gray-300 mt-2 text-sm">
+        <div class="mt-20 md:mt-32 mb-10 text-center md:text-left">
+            <h2 class="text-white text-5xl font-bold">Autos destacados</h2>
+            <p class="text-gray-300 mt-2 text-lg">
                 Alquila fácil, rápido y seguro, elige el que más te guste.
             </p>
         </div>
 
-        <div class="swiper mySwiper">
+        <div class="swiper mySwiper mt-20 md:mt-32 mb-10">
             <div class="swiper-wrapper">
 
                 @foreach ($vehiculos as $vehiculo)
