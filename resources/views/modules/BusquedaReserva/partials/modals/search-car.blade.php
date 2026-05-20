@@ -150,7 +150,7 @@
         </x-card>
 
         <!-- Rango de precio -->
-        <x-card class="p-[6px] min-w-24 h-[52px]">
+        <x-card class="p-[6px] min-w-24 h-[52px] overflow-hidden">
             <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Rango de
                 precio</label>
             <div class="flex items-center justify-between">
@@ -162,7 +162,8 @@
                     <option value="200000-300000">$200k - $300k</option>
                     <option value="300000+">$300k+</option>
                 </select>
-                <svg class="w-3 h-3 text-dl ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-3 h-3 text-dl ml-auto flex-shrink-0" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24 ">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
             </div>
