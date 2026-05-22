@@ -40,6 +40,7 @@ class BusquedaReservaController extends Controller
             $return_date = $request->return_date;
 
             $query = Vehiculo::with(['marca', 'linea', 'ciudad', 'fotos', 'combustible'])
+                ->where('user_id', '!=', Auth::id())
                 ->where('disp', 1)
                 ->whereDoesntHave('reservas', function ($q) use ($pickup_date, $return_date) {
                     $q->where('codestres', '!=', 3)
@@ -122,6 +123,13 @@ class BusquedaReservaController extends Controller
 
             $vehiculo = Vehiculo::lockForUpdate()->findOrFail($request->codveh);
 
+            if($vehiculo->user_id == Auth::id()){
+                DB::rollBack();
+                return redirect()->back()
+                    ->with('error', 'No puedes reservar tu propio vehículo.')
+                    ->withInput();
+            }
+            
             if (!(bool) $vehiculo->disp) {
                 DB::rollBack();
                 return redirect()->back()
