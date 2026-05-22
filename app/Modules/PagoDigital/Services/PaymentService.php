@@ -32,6 +32,13 @@ class PaymentService
 
             $vehiculo = Vehiculo::lockForUpdate()->findOrFail($data['codveh']);
 
+            if($vehiculo->user_id == $userId){
+                return [
+                    'status' => 'rechazado',
+                    'message' => 'No puedes reservar tu propio vehículo.',
+                ];
+            }
+
             if (!(bool) $vehiculo->disp) {
                 return [
                     'status' => 'rechazado',
