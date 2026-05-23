@@ -12,21 +12,21 @@
             {{-- MENÚ --}}
             <div class="hidden space-x-2 md:-my-px md:ms-10 xl:flex">
 
-                <x-breeze::nav-link :href="route('home')">
+                <x-breeze::nav-link :href="route('home')" :active="request()->routeIs('home')">
                     Inicio
                 </x-breeze::nav-link>
 
                 {{-- USUARIO NO AUTENTICADO --}}
                 @guest
-                    <x-breeze::nav-link :href="route('informacion.nosotros')">
+                    <x-breeze::nav-link :href="route('informacion.nosotros')" :active="request()->routeIs('informacion.nosotros')">
                         Nosotros
                     </x-breeze::nav-link>
 
-                    <x-breeze::nav-link :href="route('informacion.servicios')">
+                    <x-breeze::nav-link :href="route('informacion.servicios')" :active="request()->routeIs('informacion.servicios')">
                         Servicios
                     </x-breeze::nav-link>
 
-                    <x-breeze::nav-link href="#" x-on:click.prevent="$dispatch('open-modal', 'search-car')">
+                    <x-breeze::nav-link href="#" x-on:click.prevent="$dispatch('open-modal', 'search-car')" :active="request()->routeIs('publicacion.vehiculo')">
                         Alquilar
                     </x-breeze::nav-link>
 
@@ -34,44 +34,47 @@
                         Publicar
                     </x-breeze::nav-link>
 
-                    <x-breeze::nav-link :href="route('soporte.index')">
+                    <x-breeze::nav-link :href="route('soporte.index')" :active="request()->routeIs('soporte.index')">
                         Soporte
                     </x-breeze::nav-link>
-                @endguest
 
+                @endguest
+                
                 {{-- USUARIO AUTENTICADO --}}
                 @auth
 
-                    <x-breeze::nav-link href="#" x-on:click.prevent="$dispatch('open-modal', 'search-car')">
-                        Alquilar
-                    </x-breeze::nav-link>
-
-                    <x-breeze::nav-link :href="route('publicacion.vehiculo')">
-                        Publicar
-                    </x-breeze::nav-link>
-
-                    <x-breeze::nav-link :href="route('dashboard')">
+                    <x-breeze::nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         Dashboard
                     </x-breeze::nav-link>
 
-                    {{-- 🔐 SOLO ADMINISTRADOR --}}
-                    @role('Administrador')
-
+                    @role('Usuario')
+                        <x-breeze::nav-link href="#" x-on:click.prevent="$dispatch('open-modal', 'search-car')">
+                            Alquilar
+                        </x-breeze::nav-link>
+                        <x-breeze::nav-link :href="route('publicacion.vehiculo')" :active="request()->routeIs('publicacion.vehiculo')">
+                            Publicar
+                        </x-breeze::nav-link>
+                        <x-breeze::nav-link :href="route('soporte.index')" :active="request()->routeIs('soporte.index')">
+                            Soporte
+                        </x-breeze::nav-link>
+                    @endrole
+                    
+                    @role('Soporte|Administrador')
                         <x-breeze::nav-link :href="route('soporte.docs.index')"
                             :active="request()->routeIs('soporte.docs.*')">
                             Documentos
                         </x-breeze::nav-link>
-
                         <x-breeze::nav-link :href="route('tickets.soporte.index')"
                             :active="request()->routeIs('tickets.soporte.*')">
                             Tickets
                         </x-breeze::nav-link>
+                    @endrole
 
+                    @role('Administrador')                    
                         <x-breeze::nav-link :href="route('admin.roles.index')"
                             :active="request()->routeIs('admin.roles.*')">
                             Roles y Permisos
                         </x-breeze::nav-link>
-
                     @endrole
 
                 @endauth
@@ -184,22 +187,20 @@
 
                 <a href="{{ route('publicacion.vehiculo') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-dl hover:bg-gray-50 transition-colors">
                     Publicar
-                </a>
-                <a href="{{ route('soporte.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-dl hover:bg-gray-50 transition-colors">
-                    Soporte
-                </a>
+                </a>                
             @endguest
 
             @auth
+                <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-dl hover:bg-gray-50 transition-colors">
+                    Dashboard
+                </a>
+
                 <button x-on:click="$dispatch('open-modal', 'search-car')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-dl hover:bg-gray-50 transition-colors">
                     Alquilar
                 </button>
 
                 <a href="{{ route('publicacion.vehiculo') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-dl hover:bg-gray-50 transition-colors">
                     Publicar
-                </a>
-                <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-dl hover:bg-gray-50 transition-colors">
-                    Dashboard
                 </a>
 
                 {{-- 🔐 SOLO ADMIN --}}
@@ -216,6 +217,9 @@
                 @endrole
             @endauth
 
+            <a href="{{ route('soporte.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-dl hover:bg-gray-50 transition-colors">
+                Soporte
+            </a>
         </div>
     </div>
 
