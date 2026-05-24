@@ -1,6 +1,6 @@
 <div class="container-fluid page cont__gral_public">
 
-    <section class="card">
+    <x-card class="px-32 py-10">
         <header class="head">
             <h1>Registro de vehículo</h1>
             <p>Por favor llene toda la información solicitada, se verificará en las próximas 48 horas.</p>
@@ -122,7 +122,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="veh-field"> <label class="veh-label" for="municipio_bottom">Municipio</label>
+                            <div class="veh-field mt-3"> <label class="veh-label" for="municipio_bottom">Municipio</label>
                                 <div class="veh-select">
                                     <select id="municipio_bottom" name="codciu" required disabled>
                                         <option value="" selected disabled hidden>Seleccione un departamento
@@ -133,11 +133,13 @@
                             </div>
                         </div>
                     </div>
-                    <button class="veh-btn" type="submit">Siguiente</button>
+                    <x-button variant="primary" class="w-full mt-2">
+                        Siguiente
+                    </x-button>
                 </div>
             </div>
         </form>
-    </section>
+</x-card>
 </div>
 {{-- Inicio Selecctor dinamico de lineas segun marca de vehiculo --}}
 <script>

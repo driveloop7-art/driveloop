@@ -1,6 +1,6 @@
 <x-page>
     <div class="container-fluid page cont__gral_public">
-        <section class="card">
+        <x-card class="px-32 py-10">
             <header class="head">
                 <h1>Editar informacion del vehículo</h1>
                 <div class="rule"></div>
@@ -177,11 +177,13 @@
                             </div>
                         </div>
 
-                        <button class="veh-btn" type="submit">Guardar cambios</button>
+                    <x-button variant="primary" class="w-full mt-2">
+                            Guardar cambios
+                        </x-button>
                     </div>
                 </div>
             </form>
-        </section>
+        </x-card>
     </div>
 
     {{-- Script: Líneas según Marca (carga al entrar y en change) --}}
