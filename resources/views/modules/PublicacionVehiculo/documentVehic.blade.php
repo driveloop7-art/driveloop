@@ -1,5 +1,5 @@
-<x-app-layout>
-    <section class="docs-card">
+<x-page>
+    <x-card class="p-6">
         <h3 class="docs-title">Documentos del vehículo</h3>
 
         <form class="docs-form" action="{{ route('vehiculo.documentos.store') }}" method="POST"
@@ -97,12 +97,14 @@
                             </p>
                         </div>
 
-                        <button id="btnContinuar" type="submit" class="btn-submit">Continuar</button>
+                        <x-button id="btnContinuar" class="w-full">
+                            Continuar
+                        </x-button>
                     </div>
                 </div>
             </div>
         </form>
-    </section>
+</x-card>
 
     <div id="docsSavedModal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4" aria-hidden="true">
         <div class="absolute inset-0 bg-black/60"></div>
@@ -142,9 +144,9 @@
                         class="inline-flex items-center justify-center rounded-xl bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900/30">
                         Entendido
                     </button>
-                </div>
             </div>
         </div>
+    </div>
     </div>
 
     @vite('resources/js/PublicacionVehiculo/validar_placa.js')
@@ -351,4 +353,4 @@
             }
         })();
     </script>
-</x-app-layout>
+</x-page>

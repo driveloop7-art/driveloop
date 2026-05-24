@@ -11,12 +11,13 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // Validar que la placa tenga exactamente 6 caracteres alfanuméricos
-            const isValid = /^[A-Z0-9]{6}$/.test(val);
+            // const isValid = /^[A-Z0-9]{6}$/.test(val);
+            const isValid = /^[A-Z]{3}[0-9]{3}$/.test(val);
 
             // Mostrar u ocultar mensaje de error
             if (placaErrorBox) {
                 if (val.length > 0 && !isValid) {
-                    placaErrorBox.textContent = 'La placa debe tener exactamente 6 caracteres alfanuméricos.';
+                    placaErrorBox.textContent = 'La placa debe iniciar con 3 letras y terminar con 3 números.';
                     placaErrorBox.style.display = 'block';
                 } else {
                     placaErrorBox.style.display = 'none';
