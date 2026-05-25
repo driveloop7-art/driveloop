@@ -1,6 +1,6 @@
 <div class="container-fluid page cont__gral_public">
 
-    <x-card class="px-32 py-10">
+    <div class="px-32 py-10">
         <header class="head">
             <h1>Registro de vehículo</h1>
             <p>Por favor llene toda la información solicitada, se verificará en las próximas 48 horas.</p>
@@ -139,7 +139,7 @@
                 </div>
             </div>
         </form>
-</x-card>
+</div>
 </div>
 {{-- Inicio Selecctor dinamico de lineas segun marca de vehiculo --}}
 <script>
