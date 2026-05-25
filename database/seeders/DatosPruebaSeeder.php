@@ -218,7 +218,7 @@ class DatosPruebaSeeder extends Seeder
         ]);
 
         DB::table('pagos')->insert([
-            'codres' => Reserva::latest()->first()->cod,
+            'codres' => Reserva::latest('cod')->first()->cod,
             'idusu' => $userId,
             'referencia'=> 'SIM-ZADSRZP3QO',
             'metodo' => 'card',
