@@ -23,7 +23,7 @@
 
         <x-card class="text-center p-8 max-w-sm">
             <h3 class="text-xl font-bold mb-3">Preguntas Frecuentes</h3>
-            <p class="mb-6">Encuentra respuestas rápidas sobre reservas, pagos, cuentas y más.</p>
+            <p>Encuentra respuestas rápidas sobre reservas, pagos, cuentas y más.</p>
             @auth
                 <br>
             @endauth

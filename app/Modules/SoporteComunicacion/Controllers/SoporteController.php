@@ -39,7 +39,7 @@ class SoporteController extends Controller
 
         if ($request->hasFile('pdf')) {
             $file = $request->file('pdf');
-            $ruta = $file->storeAs('tickets', "$cod.pdf", 'local');
+            $ruta = $file->storeAs('tickets', "$cod.pdf", 'public');
             $ticket->urlpdf = $ruta;
             $ticket->save();
         }
@@ -74,10 +74,10 @@ class SoporteController extends Controller
         }
         $url = $pdfres ? $ticket->urlpdfres : $ticket->urlpdf;
 
-        if ($url === null || !Storage::disk('local')->exists($url))
+        if ($url === null || !Storage::disk('public')->exists($url))
             return abort(404);
 
-        return response()->file(Storage::disk('local')->path($url));
+        return response()->file(Storage::disk('public')->path($url));
     }
 
     public function ExportPDF(string $cod)

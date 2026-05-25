@@ -1,5 +1,5 @@
 <x-page>
-    <x-card class="p-6">
+    <div class="p-6">
         <h3 class="docs-title">Documentos del vehículo</h3>
 
         <form class="docs-form" action="{{ route('vehiculo.documentos.store') }}" method="POST"
@@ -104,7 +104,7 @@
                 </div>
             </div>
         </form>
-</x-card>
+</div>
 
     <div id="docsSavedModal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4" aria-hidden="true">
         <div class="absolute inset-0 bg-black/60"></div>
