@@ -25,19 +25,13 @@ class DatosPruebaSeeder extends Seeder
     {
         $this->insertUsers();
         for ($i = 0; $i < 10; $i++) {
-            $vehiculoId = $this->insertVehiculo();
+            $vehiculoId = $this->insertVehiculo($i);
             $this->insertFotoVehiculoTest($vehiculoId, $i);
-            $this->insertTicket($vehiculoId);
+            $this->insertDocsVehiculoTest($vehiculoId);
         }
-
-        for ($i = 0; $i < 10; $i++) {
-            $userId = $this->insertUserFake();
-            $vehiculoId = $this->insertVehiculo($userId);
-            $this->insertFotoVehiculoTest($vehiculoId, $i);
-            $this->insertTicket($vehiculoId, $userId);
-        }
-
-
+            
+        $this->insertTicketTest($vehiculoId);
+        $this->insertDocumentUsuario();
     }
 
     private function insertUsers()
@@ -66,28 +60,23 @@ class DatosPruebaSeeder extends Seeder
                 'updated_at' => now(),
                 'email_verified_at' => now(),
                 'remember_token' => Str::random(10)
+            ],
+            [
+                'id' => 4,
+                'nom' => 'Arrendador',
+                'ape' => 'Arrendador',
+                'email' => 'arrendador@driveloop.com',
+                'password' => Hash::make('password'),
+                'fecreg' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+                'email_verified_at' => now(),
+                'remember_token' => Str::random(10)
             ]
         ]);
         self::insertRol(2, 3);
         self::insertRol(3, 1);
-    }
-
-    private function insertUserFake(): int
-    {
-        $name = $this->randomFirstName();
-        $user = User::create([
-            'nom' => $name,
-            'ape' => $this->randomLastName(),
-            'email' => $this->randomEmail($name),
-            'password' => Hash::make('password'),
-            'fecreg' => now(),
-            'created_at' => now(),
-            'updated_at' => now(),
-            'email_verified_at' => now(),
-            'remember_token' => Str::random(10)
-        ]);
-        self::insertRol($user->id, rand(1, 3));
-        return $user->id;
+        self::insertRol(4, 1);
     }
 
     private function insertRol(int $idUser, int $roleId): void
@@ -101,24 +90,51 @@ class DatosPruebaSeeder extends Seeder
         ]);
     }
 
-    private function insertVehiculo(int $userId = 3): int
+    private function insertVehiculo(int $i): int
     {
         return Vehiculo::create([
-            'user_id' => $userId,
+            'user_id' => 4,
             'vin' => Str::upper(Str::random(12)),
-            'mod' => rand(2010, 2025),
-            'col' => $this->randomColor(),
-            'pas' => rand(2, 4),
-            'cil' => rand(1000, 2000),
+            'mod' => rand(2020, 2025),
+            'col' => $this->color($i),
+            'pas' => 4,
+            'cil' => $this->cilindrada($i),
             'codpol' => self::codPolizaVehiculo(),
-            'codmar' => Marca::inRandomOrder()->first()->cod,
-            'codlin' => Linea::inRandomOrder()->first()->cod,
-            'codcla' => Clase::inRandomOrder()->first()->cod,
-            'codcom' => Combustible::inRandomOrder()->first()->cod,
+            'codmar' => $this->marca($i),
+            'codlin' => $this->linea($i),
+            'codcla' => $this->clase($i),
+            'codcom' => 1,
             'codciu' => Ciudad::inRandomOrder()->first()->cod,
-            'prerent' => rand(100000, 200000),
-            'disp' => rand(0, 1)
+            'prerent' => rand(300000, 500000),
+            'disp' => 1
         ])->cod;
+    }
+
+    private function cilindrada(int $i): int
+    {
+        $cilindradas = [1600, 2000, 1800, 1500, 2500, 2200, 2000, 2400, 1400, 1600];
+        return $cilindradas[$i];
+    }
+
+    private function marca(int $i): int
+    {
+        $marcas = ['Chevrolet', 'Mazda', 'Toyota', 'Ford', 'Renault', 'Nissan', 'Hyundai', 'Kia', 'Volkswagen', 'Honda'];
+        $marcasCod = [1,6,25,54,8,15,208,5,9,21];
+        return $marcasCod[$i];
+    }
+
+    private function linea(int $i): int
+    {
+        $lineas = ['Onix', 'CX-5', 'Corolla', 'Fiesta', 'Duster', 'Sentra', 'Tucson', 'Sportage', 'Golf', 'Civic'];
+        $lineaCod = [1002, 6003, 25001, 54001, 8004, 15003, 208003, 5004, 9001, 21001];
+        return $lineaCod[$i];
+    }
+
+    private function clase(int $i): int
+    {
+        $clases = ['Automóvil', 'Camioneta', 'Automóvil', 'Automóvil', 'Camioneta', 'Automóvil', 'Camioneta', 'Camioneta', 'Automóvil', 'Automóvil'];
+        $claseCod = [1, 3, 1, 1, 3, 1, 3, 3, 1, 1];
+        return $claseCod[$i];
     }
 
     private function codPolizaVehiculo(): int
@@ -142,6 +158,40 @@ class DatosPruebaSeeder extends Seeder
         ]);
     }
 
+    private function insertDocsVehiculoTest(int $vehiculoId): void
+    {
+        $placa = Str::upper(Str::random(3)) . rand(100, 999);
+        DB::table('documentos_vehiculo')->insert([
+            [
+                'idtipdocveh' => 1,
+                'numdoc' => $placa,
+                'empexp' => '',
+                'descdoc' => 'https://example.com/tarjeta_propiedad.jpg',
+                'codveh' => $vehiculoId,
+                'estado' => 'APROBADO',
+                'mensaje_rechazo' => null,
+            ],
+            [
+                'idtipdocveh' => 2,
+                'numdoc' => $placa,
+                'empexp' => '',
+                'descdoc' => 'https://example.com/soat.jpg',
+                'codveh' => $vehiculoId,
+                'estado' => 'APROBADO',
+                'mensaje_rechazo' => null,
+            ],
+            [
+                'idtipdocveh' => 3,
+                'numdoc' => $placa,
+                'empexp' => '',
+                'descdoc' => 'https://example.com/tecnomecanica.jpg',
+                'codveh' => $vehiculoId,
+                'estado' => 'APROBADO',
+                'mensaje_rechazo' => null,
+            ],
+        ]);
+    }
+
     private function codReserva(int $vehiculoId, int $userId = 3): int
     {
         return Reserva::create([
@@ -155,7 +205,7 @@ class DatosPruebaSeeder extends Seeder
         ])->cod;
     }
 
-    private function insertTicket(int $vehiculoId, int $userId = 3): void
+    private function insertTicketTest(int $vehiculoId, int $userId = 3): void
     {
         Ticket::create([
             'cod' => Str::upper(Str::random(10)),
@@ -166,19 +216,58 @@ class DatosPruebaSeeder extends Seeder
             'feccre' => now(),
             'idusu' => $userId,
         ]);
+
+        DB::table('pagos')->insert([
+            'codres' => Reserva::latest()->first()->cod,
+            'idusu' => $userId,
+            'referencia'=> 'SIM-ZADSRZP3QO',
+            'metodo' => 'card',
+            'monto' => rand(100000, 200000),
+            'estado' => 'aprobado',
+            'moneda' => 'COP',
+            'fecha_pago' => now(),
+            'detalle' => '{"reserva_temporal":"TMP-20260524145024-10","codveh":"10","pickup_date":"2026-05-24","return_date":"2026-05-25","gateway_response":{"status":"aprobado","reference":"SIM-ZADSRZP3QO","external_payment_id":null,"external_reference":"TMP-20260524145024-10","status_detail":"transaccion_simulada","message":"Pago aprobado en simulaci\u00f3n."}}',
+        ]);
     }
 
+    private function insertDocumentUsuario(): void
+    {
+        for ($i=1; $i < 5; $i++) { 
+            DB::table('documentos_usuario')->insert([
+                [
+                    'idtipdocusu' => 1,
+                    'num' => '123456789',
+                    'codusu' => $i,
+                    'url_anverso' => 'https://example.com/documento_anverso.jpg',
+                    'url_reverso' => 'https://example.com/documento_reverso.jpg',
+                    'estado' => 'APROBADO',
+                    'mensaje_rechazo' => null,
+                ],
+                [
+                    'idtipdocusu' => 2,
+                    'num' => '987654321',
+                    'codusu' => $i,
+                    'url_anverso' => 'https://example.com/soat_anverso.jpg',
+                    'url_reverso' => null,
+                    'estado' => 'APROBADO',
+                    'mensaje_rechazo' => null,
+                ],
+            ]);            
+        }
+    }
+
+
     private const photos = [
-        'https://www.auto-data.net/images/f56/Alfa-Romeo-159.jpg',
-        'https://www.auto-data.net/images/f64/Volkswagen-Up.jpg',
-        'https://www.auto-data.net/images/f127/Volvo-XC60-II.jpg',
-        'https://www.auto-data.net/images/f69/Voyah-Free-facelift-2023.jpg',
-        'https://www.auto-data.net/images/f116/W-Motors-Fenyr-SuperSport.jpg',
-        'https://www.auto-data.net/images/f56/WEY-80-Long.jpg',
-        'https://www.auto-data.net/images/f25/wey-vv5.jpg',
-        'https://www.auto-data.net/images/f99/WEY-X-Concept.jpg',
-        'https://www.auto-data.net/images/f127/XPENG-G6.jpg',
-        'https://www.auto-data.net/images/f80/Zenvo-TSR-S.jpg',
+        'https://www.elcarrocolombiano.com/wp-content/webp-express/webp-images/uploads/2025/08/20250826-CHEVROLET-ONIX-Y-TRACKER-2026-ANUNCIO-PARA-COLOMBIA-ACTUALIZACION-01.jpg.webp',
+        'https://alciautosmazda.com/wp-content/uploads/2019/09/mazda-cx5-lateral-frente.jpg',
+        'https://autoamerica.com.co/wp-content/uploads/2021/05/COROLLA-SEDAN-EXT-1-1024x819.jpg.avif',
+        'https://pluralidadz.com/wp-content/uploads/2024/04/Ford-Fiesta-2018.-Foto-TuCarro-696x406.webp',
+        'https://autosdeprimera.com/wp-content/uploads/2024/05/renault-duster-iconic-turbo-4x4-colombia-frente.jpg',
+        'https://www.elespectador.com/resizer/v2/ZCGHZYBD3BAD7GCUOGTA56XAKI.jpg?auth=806c4160234bb63d4ce8c7b1012af7adecf28ba2cc21a3473be15aecef7ed705&width=920&height=613&smart=true&quality=60',
+        'https://www.elcarrocolombiano.com/wp-content/webp-express/webp-images/uploads/2022/07/20220722-HYUNDAI-TUCSON-NX4-2023-COLOMBIA-PRECIOS-VERSIONES-CARACTERISTICAS-NOVEDADES-01.jpg.webp',
+        'https://fuelcarmagazine.com/wp-content/uploads/2022/09/Kia-Sportage-GT-Line-Colombia-696x365.jpg',
+        'https://www.elcarrocolombiano.com/wp-content/webp-express/webp-images/uploads/2020/11/2022_Golf_R_European_model_shown-Large-12436.jpg.webp',
+        'https://www.elcarrocolombiano.com/wp-content/webp-express/webp-images/uploads/2019/11/20191116-HONDA-CIVIC-2020-COLOMBIA-PRECIO-CARACTERISTICAS-06.jpg.webp',
     ];
 
     private function randomFirstName(): string
@@ -198,10 +287,10 @@ class DatosPruebaSeeder extends Seeder
         return strtolower($name) . rand(100, 999) . '@mail.com';
     }
 
-    private function randomColor(): string
+    private function color(int $i): string
     {
-        $colors = ['Rojo', 'Azul', 'Negro', 'Blanco', 'Gris', 'Verde', 'Plateado', 'Naranja', 'Amarillo', 'Morado', 'Marrón', 'Turquesa', 'Beige', 'Dorado'];
-        return $colors[array_rand($colors)];
+        $colors = ['Vinotinto', 'Rojo', 'Blanco', 'Gris', 'Gris Ceniza', 'Vinotinto', 'Gris Oscuro', 'Gris', 'Azul', 'Gris Oscuro'];
+        return $colors[$i];
     }
 
     private function randomCompany(): string
