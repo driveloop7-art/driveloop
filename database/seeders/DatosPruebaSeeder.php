@@ -263,7 +263,7 @@ class DatosPruebaSeeder extends Seeder
         'https://autoamerica.com.co/wp-content/uploads/2021/05/COROLLA-SEDAN-EXT-1-1024x819.jpg.avif',
         'https://pluralidadz.com/wp-content/uploads/2024/04/Ford-Fiesta-2018.-Foto-TuCarro-696x406.webp',
         'https://autosdeprimera.com/wp-content/uploads/2024/05/renault-duster-iconic-turbo-4x4-colombia-frente.jpg',
-        'https://www.elespectador.com/resizer/v2/ZCGHZYBD3BAD7GCUOGTA56XAKI.jpg?auth=806c4160234bb63d4ce8c7b1012af7adecf28ba2cc21a3473be15aecef7ed705&width=920&height=613&smart=true&quality=60',
+        'https://www.elcarrocolombiano.com/wp-content/webp-express/webp-images/uploads/2020/07/20200729-NISSAN-SENTRA-2021-VIDEO-RESENA-COMENTARIOS-TEST-DRIVE-CAMPANA-01.jpg.webp',
         'https://www.elcarrocolombiano.com/wp-content/webp-express/webp-images/uploads/2022/07/20220722-HYUNDAI-TUCSON-NX4-2023-COLOMBIA-PRECIOS-VERSIONES-CARACTERISTICAS-NOVEDADES-01.jpg.webp',
         'https://fuelcarmagazine.com/wp-content/uploads/2022/09/Kia-Sportage-GT-Line-Colombia-696x365.jpg',
         'https://www.elcarrocolombiano.com/wp-content/webp-express/webp-images/uploads/2020/11/2022_Golf_R_European_model_shown-Large-12436.jpg.webp',
