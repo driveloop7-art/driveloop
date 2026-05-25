@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MER\Vehiculo;
 use App\Models\MER\DocumentoVehiculo;
 use App\Models\MER\FotoVehiculo;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -86,40 +87,98 @@ class VehiculoDocumentosController extends Controller
 
 
             if ($request->hasFile('fotos')) {
+                foreach ($request->file('fotos') as $i => $foto) {
+                    $ext = strtolower($foto->getClientOriginalExtension() ?: 'jpg');
+                    $nombre = $placa . '_' . str_pad($i + 1, 2, '0', STR_PAD_LEFT) . '.' . $ext;
 
-                if ($request->hasFile('fotos')) {
-                    foreach ($request->file('fotos') as $i => $foto) {
+                    $imgSize = @getimagesize($foto->getRealPath());
+                    $dim = $imgSize ? ($imgSize[0] . 'x' . $imgSize[1]) : '';
 
-                        $ext = strtolower($foto->getClientOriginalExtension() ?: 'jpg');
+                    $mim = $foto->getMimeType() ?? '';
+                    $pes = (int) $foto->getSize();
 
+                    $path = null;
 
-                        $nombre = $placa . '_' . str_pad($i + 1, 2, '0', STR_PAD_LEFT) . '.' . $ext;
+                    if ($imgSize && ($imgSize[0] > 800 || $imgSize[1] > 600)) {
+                        $tmpResized = $this->resizeImageToFit($foto->getRealPath(), $ext, 800, 600);
 
-
-                        $imgSize = @getimagesize($foto->getRealPath());
-                        $dim = $imgSize ? ($imgSize[0] . 'x' . $imgSize[1]) : '';
-
-
-                        $mim = $foto->getMimeType() ?? '';
-                        $pes = (int) $foto->getSize();
-
-
-                        $path = $foto->storeAs($fotosDir, $nombre, 'public');
-
-                        FotoVehiculo::create([
-                            'nom'    => $nombre,
-                            'ruta'   => $path,
-                            'dim'    => $dim,
-                            'mim'    => $mim,
-                            'pes'    => $pes,
-                            'codveh' => $codveh,
-                        ]);
+                        if ($tmpResized) {
+                            $path = Storage::disk('public')->putFileAs($fotosDir, new File($tmpResized), $nombre);
+                            @unlink($tmpResized);
+                        }
                     }
+
+                    if ($path === null) {
+                        $path = $foto->storeAs($fotosDir, $nombre, 'public');
+                    }
+
+                    FotoVehiculo::create([
+                        'nom'    => $nombre,
+                        'ruta'   => $path,
+                        'dim'    => $dim,
+                        'mim'    => $mim,
+                        'pes'    => $pes,
+                        'codveh' => $codveh,
+                    ]);
                 }
             }
         });
 
         return back()->with('docs_saved', true);
         
+    }
+
+    private function resizeImageToFit(string $filePath, string $extension, int $maxWidth, int $maxHeight): ?string
+    {
+        $imgSize = @getimagesize($filePath);
+        if (! $imgSize) {
+            return null;
+        }
+
+        [$width, $height] = $imgSize;
+        if ($width <= $maxWidth && $height <= $maxHeight) {
+            return null;
+        }
+
+        $source = @imagecreatefromstring(file_get_contents($filePath));
+        if (! $source) {
+            return null;
+        }
+
+        $ratio = min($maxWidth / $width, $maxHeight / $height);
+        $newWidth = max(1, (int) round($width * $ratio));
+        $newHeight = max(1, (int) round($height * $ratio));
+
+        $resized = imagecreatetruecolor($newWidth, $newHeight);
+        imagealphablending($resized, false);
+        imagesavealpha($resized, true);
+        imagecopyresampled($resized, $source, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+        $tmpPath = tempnam(sys_get_temp_dir(), 'veh_');
+        if ($tmpPath === false) {
+            imagedestroy($source);
+            imagedestroy($resized);
+            return null;
+        }
+
+        switch (strtolower($extension)) {
+            case 'png':
+                imagepng($resized, $tmpPath, 6);
+                break;
+            case 'gif':
+                imagegif($resized, $tmpPath);
+                break;
+            case 'webp':
+                imagewebp($resized, $tmpPath, 80);
+                break;
+            default:
+                imagejpeg($resized, $tmpPath, 90);
+                break;
+        }
+
+        imagedestroy($source);
+        imagedestroy($resized);
+
+        return $tmpPath;
     }
 }
