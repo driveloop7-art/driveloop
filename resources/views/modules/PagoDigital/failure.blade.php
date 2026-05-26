@@ -18,11 +18,6 @@
             @endif
 
             <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-                <a href="{{ url()->previous() }}"
-                   class="rounded-xl border border-[#981B39] px-6 py-3 text-[#981B39] font-bold hover:bg-[#fdf1f4] transition">
-                    Intentar nuevamente
-                </a>
-
                 <a href="{{ url('/') }}"
                    class="rounded-xl bg-[#C91843] px-6 py-3 text-white font-bold hover:bg-[#981B39] transition">
                     Ir al inicio
