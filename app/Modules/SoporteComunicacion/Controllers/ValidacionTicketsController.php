@@ -53,7 +53,7 @@ class ValidacionTicketsController extends Controller
         $ruta = null;
         if ($request->hasFile('pdf')) {
             $file = $request->file('pdf');
-            $ruta = $file->storeAs('tickets', "{$ticket->cod}_res.pdf", 'local');
+            $ruta = $file->storeAs('tickets', "{$ticket->cod}_res.pdf", 'public');
             $ticket->urlpdfres = $ruta;
             $ticket->save();
         }

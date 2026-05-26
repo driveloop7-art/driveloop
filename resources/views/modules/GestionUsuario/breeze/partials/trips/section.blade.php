@@ -1,5 +1,5 @@
-<x-card class="max-w-7xl mx-auto p-8">
-    <h3 class="text-lg font-medium mb-6 text-left">{{ __('Mis Viajes') }}</h3>
+<x-card class="mx-auto p-8">
+    <h3 class="text-xl mb-6 font-bold">{{ __('Viajes Realizados') }}</h3>
 
     @php
         $reservas = auth()->user()->reservas()

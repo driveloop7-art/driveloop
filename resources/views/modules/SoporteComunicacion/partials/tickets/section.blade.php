@@ -1,9 +1,9 @@
-<x-card class="max-w-7xl mx-auto p-8">
+<x-card class="mx-auto p-8">
     @php
         $allTickets = auth()->user()->tickets;
         $grpTickets = [$allTickets->where('codesttic', 1), $allTickets->where('codesttic', 2), $allTickets->where('codesttic', 3)];
     @endphp
-    <h3 class="text-lg font-medium mb-6 text-left">{{ __('Mis Tickets') }}</h3>
+    <h3 class="text-xl font-bold mb-6 text-left">{{ __('Estado de Tickets') }}</h3>
     @if($allTickets->isNotEmpty())
         <x-toggle>
             @include('modules.SoporteComunicacion.partials.tickets.my_tickets')

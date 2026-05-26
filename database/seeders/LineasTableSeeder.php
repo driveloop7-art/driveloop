@@ -36,7 +36,7 @@ class LineasTableSeeder extends Seeder
             ['cod' => '8002', 'des' => 'Sandero', 'codmar' => '8'],
             ['cod' => '8003', 'des' => 'Stepway', 'codmar' => '8'],
             ['cod' => '8004', 'des' => 'Duster', 'codmar' => '8'],
-            ['cod' => '9001', 'des' => 'Gol', 'codmar' => '9'],
+            ['cod' => '9001', 'des' => 'Golf', 'codmar' => '9'],
             ['cod' => '9002', 'des' => 'Polo', 'codmar' => '9'],
             ['cod' => '9003', 'des' => 'Jetta', 'codmar' => '9'],
             ['cod' => '9004', 'des' => 'Tiguan', 'codmar' => '9'],

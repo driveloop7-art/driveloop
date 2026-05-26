@@ -26,24 +26,24 @@
         $tienePoliza = !is_null($reserva->polizaServicio);
     @endphp
 
-    <div class="mb-3 rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-sm">
-        <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <div class="flex min-w-0 items-center gap-4">
-                <div class="h-20 w-24 shrink-0 overflow-hidden rounded-lg bg-gray-100">
+    <div class="mb-3 rounded-xl border border-gray-200 x-4 py-3 shadow-sm overflow-x-auto">
+        <div class="block xl:flex xl:flex-cols-2 items-center">
+            <div class="flex w-[65%] items-center">
+                <div class="h-20 w-24 shrink-0 overflow-hidden rounded-lg flex items-center px-2">
                     <img
                         src="{{ $foto }}"
                         alt="{{ $marca }} {{ $linea }}"
-                        class="h-full w-full object-cover"
+                        class="w-full object-cover"
                         loading="lazy"
                         onerror="this.onerror=null;this.src='{{ asset('img/no-image.jpg') }}';"
                     >
                 </div>
 
-                <div class="min-w-0">
-                    <h4 class="truncate text-lg font-bold uppercase text-gray-900">
+                <div>
+                    <h4 class="text-lg font-bold uppercase text-gray-900">
                         {{ $marca }}
                     </h4>
-                    <p class="truncate text-sm text-gray-600">
+                    <p class="text-sm text-gray-600">
                         {{ $linea }} {{ $modelo }}
                     </p>
                     <p class="mt-1 text-sm text-gray-500">
@@ -52,30 +52,25 @@
                 </div>
             </div>
 
-            <div class="flex flex-col gap-3 md:flex-row md:items-center">
-                <div>
+            <div class="block mx-4 xl:grid xl:grid-cols-2 xl:gap-2">
+                <div class="min-w-36 my-4 text-center">
                     @if($pagoEstado === 'aprobado')
-                        <span class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
-                            Pago aprobado
-                        </span>
+                    <span class="items-center rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+                        Pago aprobado
+                    </span>
                     @elseif($pagoEstado === 'pendiente')
-                        <span class="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-xs font-semibold text-yellow-700">
+                        <span class="items-center rounded-full bg-yellow-100 px-3 py-1 text-xs font-semibold text-yellow-700">
                             Pago pendiente
                         </span>
-                    @else
-                        <span class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
+                        @else
+                        <span class="items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
                             Sin pago confirmado
                         </span>
-                    @endif
+                        @endif
+                    </div>
+                <div class="min-w-52 block">
+                    <x-button class="text-xs w-full" x-on:click="$dispatch('open-modal', 'trip-detail-{{ $reserva->cod }}')"> Ver detalle</x-button>
                 </div>
-
-                <button
-                    type="button"
-                    class="rounded-lg bg-[#981B39] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#7c1630]"
-                    x-on:click="$dispatch('open-modal', 'trip-detail-{{ $reserva->cod }}')"
-                >
-                    Ver detalle
-                </button>
             </div>
         </div>
     </div>
@@ -111,11 +106,11 @@
 
             <div class="mt-6 grid grid-cols-1 gap-8 xl:grid-cols-[420px_minmax(0,1fr)]">
                 <div>
-                    <div class="overflow-hidden rounded-2xl border border-gray-200 bg-gray-100 shadow-sm">
+                    <div class="overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
                         <img
                             src="{{ $foto }}"
                             alt="{{ $marca }} {{ $linea }}"
-                            class="h-[320px] w-full object-cover"
+                            class="w-full object-cover"
                             loading="lazy"
                             onerror="this.onerror=null;this.src='{{ asset('img/no-image.jpg') }}';"
                         >
@@ -197,7 +192,7 @@
                             @if($tieneContrato)
                                 <a
                                     href="{{ route('usuario.reservas.contrato.pdf', $reserva->cod) }}"
-                                    class="rounded-xl bg-[#981B39] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#7c1630]"
+                                    class="rounded-md bg-[#C91843] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#9B1B39] uppercase"
                                 >
                                     Descargar contrato
                                 </a>
@@ -206,7 +201,7 @@
                             @if($tienePoliza)
                                 <a
                                     href="{{ route('usuario.reservas.poliza.pdf', $reserva->cod) }}"
-                                    class="rounded-xl border border-[#981B39] px-5 py-3 text-sm font-semibold text-[#981B39] transition hover:bg-[#fff4f7]"
+                                    class="rounded-md border border-[#C91843] px-5 py-3 text-sm font-semibold text-[#C91843] transition hover:bg-[#C91843] hover:text-white uppercase"
                                 >
                                     Descargar póliza
                                 </a>

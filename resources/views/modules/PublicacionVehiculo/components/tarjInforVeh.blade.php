@@ -24,16 +24,9 @@
     'color' => $vehiculo->col ?? '---',
     'precio' => $precio,
 ]))"
-        class="px-3 py-1 text-xs bg-gray-800 text-white rounded hover:bg-gray-900 transition">
+        class="px-[30px] h-7 rounded bg-indigo-100 hover:bg-indigo-200 text-indigo-800 font-semibold transition">
         Ver
     </button>
-
-    {{-- EDITAR --}}
-    
-    {{-- <a href="{{ route('vehiculos.edit', $vehiculo->cod) }}"
-        class="px-2 py-1 text-xs bg-orange-500 text-white rounded hover:bg-orange-600 transition inline-block">
-        Editar
-    </a> --}}
 
     {{-- MODAL (UNO SOLO, controlado por Alpine) --}}
     <div x-show="open" x-cloak class="fixed inset-0 z-50 flex items-center justify-center">
