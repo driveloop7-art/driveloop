@@ -103,8 +103,8 @@
 
             </div>
 
-            <div class="swiper-button-next custom-arrow"></div>
-            <div class="swiper-button-prev custom-arrow"></div>
+         <!--   <div class="swiper-button-next custom-arrow"></div>
+            <div class="swiper-button-prev custom-arrow"></div>    -->
             <div class="swiper-pagination mt-10"></div>
         </div>
 
@@ -119,26 +119,48 @@
     document.addEventListener('DOMContentLoaded', function () {
 
         if (typeof Swiper !== 'undefined') {
-            new Swiper(".mySwiper", {
+           new Swiper(".mySwiper", {
                 slidesPerView: 1,
                 spaceBetween: 20,
                 loop: true,
+                grabCursor: true,
+
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true,
+                },
 
                 pagination: {
                     el: ".swiper-pagination",
                     clickable: true,
                 },
 
-                navigation: {
+                    navigation: {
                     nextEl: ".swiper-button-next",
                     prevEl: ".swiper-button-prev",
                 },
 
+                mousewheel: {
+                    forceToAxis: true,
+                },
+
                 breakpoints: {
-                    640: { slidesPerView: 1 },
-                    768: { slidesPerView: 2 },
-                    1024: { slidesPerView: 3 },
-                    1280: { slidesPerView: 4 },
+                    640: {
+                        slidesPerView: 1,
+                    },
+
+                    768: {
+                        slidesPerView: 2,
+                    },
+
+                    1024: {
+                        slidesPerView: 3,
+                    },
+
+                    1280: {
+                        slidesPerView: 4,
+                    },
                 },
             });
         }
