@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('fotos_vehiculo', function (Blueprint $table) {
             $table->integer('cod', true);
             $table->string('nom', 45);
-            $table->string('ruta', 150);
+            $table->string('ruta', 183);
             $table->string('dim', 45);
             $table->string('mim', 25);
             $table->integer('pes');

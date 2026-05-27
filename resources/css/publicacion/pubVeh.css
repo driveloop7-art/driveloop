@@ -47,7 +47,6 @@
 .rule{
   height:1px;
   background:var(--border);
-  width:min(520px, 80%);
   margin:14px auto 0;
 }
 

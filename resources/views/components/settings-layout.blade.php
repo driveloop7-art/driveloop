@@ -1,11 +1,11 @@
 <div x-data="{ 
 tabs: [], 
     activeTab: new URLSearchParams(window.location.search).get('tab') || null
-}" class="flex flex-col md:flex-row gap-12 align-top">
+}" class="flex flex-col lg:flex-row gap-2 align-top">
     <!-- Sidebar -->
-    <div class="w-full md:w-64 flex-shrink-0">
-        <div class="w-full md:w-64 flex-shrink-0">
-            <ul class="space-y-6">
+    <div class="w-full lg:w-64 flex-shrink-0">
+        <div class="w-full lg:w-64 flex-shrink-0">
+            <ul class="space-y-1">
                 <template x-for="tab in tabs" :key="tab.name">
                     <li>
                         <button @click="activeTab = tab.name"
@@ -20,7 +20,7 @@ tabs: [],
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1 min-w-0 space-y-8">
+    <div class="flex-1 min-w-0">
         {{ $slot }}
     </div>
 </div>

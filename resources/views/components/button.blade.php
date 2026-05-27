@@ -22,6 +22,9 @@
     'class' => 'inline-flex
         xl:rounded-md
         justify-center
+        disabled:bg-gray-400
+        disabled:opacity-50
+        disabled:cursor-not-allowed
         px-14 py-3
         tracking-widest
         font-semibold uppercase

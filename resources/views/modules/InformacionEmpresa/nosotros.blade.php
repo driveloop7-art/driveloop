@@ -2,11 +2,11 @@
     <section class="max-w-6xl mx-auto px-6 py-12">
 
         <div class="text-center mb-12">
-            <h1 class="text-4xl font-extrabold text-black mb-4">
+            <h1 class="text-4xl font-extrabold mb-4">
                 Nosotros
             </h1>
 
-            <p class="text-black text-lg max-w-3xl mx-auto">
+            <p class="text-lg max-w-3xl mx-auto">
                 DriveLoop es una plataforma orientada al alquiler de vehículos, conectando usuarios
                 que necesitan movilizarse con propietarios que desean publicar sus vehículos de forma segura.
             </p>
@@ -14,7 +14,7 @@
 
         <div class="grid md:grid-cols-2 gap-6">
 
-            <div class="bg-white border-dl p-6 rounded-2xl shadow-sm border">
+            <x-card class="text-center p-8 max-w-sm">
                 <h2 class="text-xl font-bold text-dl mb-3">
                     Nuestra misión
                 </h2>
@@ -22,9 +22,9 @@
                     Facilitar el proceso de alquiler de vehículos mediante una plataforma clara,
                     segura y funcional, que permita gestionar publicaciones, reservas y pagos digitales.
                 </p>
-            </div>
+            </x-card>
 
-            <div class="bg-white border-dl p-6 rounded-2xl shadow-sm border">
+            <x-card class="text-center p-8 max-w-sm">
                 <h2 class="text-xl font-bold text-dl mb-3">
                     Nuestra visión
                 </h2>
@@ -32,9 +32,9 @@
                     Ser una solución confiable para la movilidad colaborativa, mejorando la experiencia
                     de usuarios y propietarios mediante herramientas digitales eficientes.
                 </p>
-            </div>
+            </x-card>
 
-            <div class="bg-white border-dl p-6 rounded-2xl shadow-sm border">
+            <x-card class="text-center p-8 max-w-sm">
                 <h2 class="text-xl font-bold text-dl mb-3">
                     Seguridad
                 </h2>
@@ -42,9 +42,9 @@
                     El sistema integra control de usuarios, validación documental, gestión de reservas
                     y seguimiento de publicaciones para mejorar la confianza dentro de la plataforma.
                 </p>
-            </div>
+            </x-card>
 
-            <div class="bg-white border-dl p-6 rounded-2xl shadow-sm border">
+            <x-card class="text-center p-8 max-w-sm">
                 <h2 class="text-xl font-bold text-dl mb-3">
                     Experiencia digital
                 </h2>
@@ -52,7 +52,7 @@
                     DriveLoop busca ofrecer una navegación sencilla, procesos claros y una experiencia
                     moderna tanto para usuarios invitados como para usuarios registrados.
                 </p>
-            </div>
+            </x-card>
 
         </div>
 
