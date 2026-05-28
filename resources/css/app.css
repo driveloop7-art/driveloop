@@ -16,6 +16,12 @@
     height: 100%;
 }
 
+@media (max-width: 768px) {
+    .img-background {
+        background-image: url(../../public/images/home-movil.jpg);
+    }
+}
+
 
 .custom-arrow {
     color: white !important;
