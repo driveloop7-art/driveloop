@@ -35,32 +35,32 @@
                             </div>
 
                             <div class="p-4">
-                                <div class="grid grid-cols-2 gap-x-10 gap-y-2 text-sm">
+                                <div class="grid grid-cols-2 gap-y-2 text-sm">
 
-                                    <div class="flex items-baseline gap-2">
-                                        <span class="font-bold text-gray-900">Marca:</span>
-                                        <span class="text-gray-700 uppercase">
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="font-bold">Marca:</span>
+                                        <span class=" uppercase">
                                             {{ $vehiculo->marca?->des ?? '---' }}
                                         </span>
                                     </div>
 
-                                    <div class="flex items-baseline justify-end gap-2 text-right">
-                                        <span class="font-bold text-gray-900">Modelo:</span>
-                                        <span class="text-gray-700">
+                                    <div class="flex items-baseline justify-end gap-1 text-right">
+                                        <span class="font-bold ">Modelo:</span>
+                                        <span>
                                             {{ $vehiculo->mod ?? '---' }}
                                         </span>
                                     </div>
 
-                                    <div class="flex items-baseline gap-2">
-                                        <span class="font-bold text-gray-900">Línea:</span>
-                                        <span class="text-gray-700">
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="font-bold ">Línea:</span>
+                                        <span>
                                             {{ $vehiculo->linea?->des ?? '---' }}
                                         </span>
                                     </div>
 
-                                    <div class="flex items-baseline justify-end gap-2 text-right">
-                                        <span class="font-bold text-gray-900">Color:</span>
-                                        <span class="text-gray-700">
+                                    <div class="felx items-baseline justify-end gap-1 text-right">
+                                        <span class="font-bold">Color:</span>
+                                        <span>
                                             {{ $vehiculo->col ?? '---' }}
                                         </span>
                                     </div>
@@ -126,7 +126,7 @@
                 grabCursor: true,
 
                 autoplay: {
-                    delay: 3000,
+                    delay: 1000,
                     disableOnInteraction: false,
                     pauseOnMouseEnter: true,
                 },
