@@ -103,7 +103,7 @@ class BusquedaReservaController extends Controller
             $vehiculos = $query->orderByDesc('cod')->get();
         }
 
-        return view('modules.busquedareserva.index', compact(
+        return view('modules.Busquedareserva.index', compact(
             'vehiculos',
             'pickup_date',
             'return_date'
