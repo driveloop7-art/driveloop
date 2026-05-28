@@ -134,7 +134,7 @@
                     {{-- ===== DERECHA: RESUMEN ===== --}}
                     <x-card class="bg-white overflow-hidden border-0">
 
-                        <div class="px-5 pt-5 pb-4 grid grid-cols-2 gap-3 border-b border-gray-100">
+                        <div class="px-5 pt-5 pb-4 grid grid-cols-1 md:grid-cols-2 gap-3 border-b border-gray-100">
                             <div>
                                 <p class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold">Fecha y hora de recogida</p>
                                 <p class="font-semibold text-gray-800 text-sm mt-1">
