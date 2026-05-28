@@ -1,21 +1,26 @@
 <x-app-layout>
-    <section class="flex text-white min-w-[15rem]">
-        <div class="flex flex-col lg:flex-row items-center lg:items-start">
-            <div class="lg:ml-[10rem]">
+    <section class="flex text-white px-4">
+        <div class="flex flex-col lg:flex-row items-center lg:items-start w-full ">
 
-                <h1 class="text-2xl md:text-5xl lg:text-7xl font-extrabold italic drop-shadow-xl lg:mt-20 ">
-                    EL AUTO QUE BUSCAS,<br>
-                    LA OPORTUNIDAD<br>
+            <div class="lg:ml-[10rem] text-center lg:text-left">
+
+                <h1 class="mt-32 text-3xl md:text-5xl lg:text-7xl font-extrabold italic drop-shadow-xl lg:mt-20">
+
+                    EL AUTO QUE BUSCAS,<br class="hidden md:block">
+                    LA OPORTUNIDAD<br class="hidden md:block">
                     QUE NECESITAS
                 </h1>
 
-                <p class="text-xl mt-4 lg:mt-[7rem] ">
-                    Reserva el auto que necesitas para tu viaje o genera ingresos<br>
+                <p class="text-base sm:text-base md:text-xl 
+                          mt-4 md:mt-8 lg:mt-[7rem] 
+                          leading-relaxed">
+
+                    Reserva el auto que necesitas para tu viaje o genera ingresos
                     poniendo el tuyo en movimiento.
                 </p>
 
                 <div
-                    class="flex flex-col lg:flex-row font-semibold shadow-lg space-x-0 lg:space-x-8 space-y-5 lg:space-y-0 mt-12 text-center">
+                    class="flex flex-col lg:flex-row items-center lg:items-start font-semibold shadow-lg space-x-0 lg:space-x-8 space-y-5 lg:space-y-0 mt-36 lg:mt-12 text-center">
 
                     {{-- BOTÓN RESERVA --}}
                     <button type="button"
@@ -30,6 +35,7 @@
                         <span class="skew-x-25 block">GENERA INGRESOS</span>
                     </a>
                 </div>
+
             </div>
         </div>
     </section>

@@ -9,7 +9,6 @@
         
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
         <!-- Icon -->
         <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
         
@@ -48,7 +47,6 @@
         </div>  
         
         <!-- Script para funcionamiento del carrusel -->
-        <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>        
     </body>
 </html>
