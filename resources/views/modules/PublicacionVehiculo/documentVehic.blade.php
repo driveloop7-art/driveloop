@@ -1,4 +1,9 @@
 <x-page>
+    @if(session()->has('message'))
+        <script>
+            alert("{{ session('message') }}");
+        </script>
+    @endif
     <div class="p-6">
         <h3 class="docs-title">Documentos del vehículo</h3>
 
