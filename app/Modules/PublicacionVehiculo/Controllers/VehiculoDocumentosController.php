@@ -47,9 +47,8 @@ class VehiculoDocumentosController extends Controller
 
         $codveh = (int) $request->codveh;
 
-
-        if (!Vehiculo::whereKey($codveh)->exists()) {
-            return back()->withInput()->withErrors(['codveh' => 'El vehículo no existe.']);
+        if (DocumentoVehiculo::where('numdoc', $placa)->exists()) {
+            return back()->with(['message' => 'La placa ingresada ya se encuentra en uso.']);
         }
 
         $docsDir  = "vehiculos/{$placa}/documentos";
@@ -57,7 +56,7 @@ class VehiculoDocumentosController extends Controller
 
         DB::transaction(function () use ($request, $placa, $codveh, $docsDir, $fotosDir) {
 
-            
+    
             foreach ($request->documentos as $doc) {
 
                 $idtipdoc = (int) $doc['idtipdoc'];
