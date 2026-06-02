@@ -30,7 +30,7 @@ class DatosPruebaSeeder extends Seeder
             $this->insertDocsVehiculoTest($vehiculoId);
         }
             
-        $this->insertTicketTest($vehiculoId);
+        // $this->insertTicketTest($vehiculoId);
         $this->insertDocumentUsuario();
     }
 
