@@ -4,7 +4,7 @@
 
             <div class="lg:ml-[10rem] text-center lg:text-left">
 
-                <h1 class="mt-32 text-3xl md:text-5xl lg:text-7xl font-extrabold italic drop-shadow-xl lg:mt-20">
+                <h1 class="mt-12 text-3xl md:text-5xl lg:text-7xl font-extrabold italic drop-shadow-xl lg:mt-20">
 
                     EL AUTO QUE BUSCAS,<br class="hidden md:block">
                     LA OPORTUNIDAD<br class="hidden md:block">
@@ -12,15 +12,16 @@
                 </h1>
 
                 <p class="text-base sm:text-base md:text-xl 
-                          mt-4 md:mt-8 lg:mt-[7rem] 
+                          mt-14 md:mt-16 lg:mt-20 
                           leading-relaxed">
 
-                    Reserva el auto que necesitas para tu viaje o genera ingresos
-                    poniendo el tuyo en movimiento.
+                    Reserva el auto que necesitas para tu viaje o genera 
+                    <br class="hidden sm:block">
+                    ingresos poniendo el tuyo en movimiento.
                 </p>
 
                 <div
-                    class="flex flex-col lg:flex-row items-center lg:items-start font-semibold shadow-lg space-x-0 lg:space-x-8 space-y-5 lg:space-y-0 mt-36 lg:mt-12 text-center">
+                    class="flex flex-col lg:flex-row items-center lg:items-start font-semibold shadow-lg space-x-0 lg:space-x-8 space-y-5 lg:space-y-0 mt-16 lg:mt-20 text-center">
 
                     {{-- BOTÓN RESERVA --}}
                     <button type="button"

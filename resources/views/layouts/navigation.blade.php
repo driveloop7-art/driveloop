@@ -70,12 +70,12 @@
                         </x-breeze::nav-link>
                     @endrole
 
-                    @role('Administrador')                    
+                    <!-- @role('Administrador')                    
                         <x-breeze::nav-link :href="route('admin.roles.index')"
                             :active="request()->routeIs('admin.roles.*')">
                             Roles y Permisos
                         </x-breeze::nav-link>
-                    @endrole
+                    @endrole -->
 
                 @endauth
 
@@ -211,9 +211,9 @@
                     <a href="{{ route('tickets.soporte.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-dl hover:bg-gray-50 transition-colors">
                         Tickets
                     </a>
-                    <a href="{{ route('admin.roles.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-dl hover:bg-gray-50 transition-colors">
+                    <!-- <a href="{{ route('admin.roles.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-dl hover:bg-gray-50 transition-colors">
                         Roles y Permisos
-                    </a>
+                    </a> -->
                 @endrole
             @endauth
 
