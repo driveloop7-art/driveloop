@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
-class EnviarCorreosReserva implements ShouldQueue
+class EnviarCorreosReserva
 {
     public function handle(ReservaPagada $event)
     {
